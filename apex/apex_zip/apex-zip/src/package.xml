@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>ImportStaticResourceController</members>
+        <members>MetadataService</members>
+        <members>UnzipDemoController</members>
+        <members>ZipDemoController</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>unzip</members>
+        <members>unzipfile</members>
+        <members>zip</members>
+        <members>zipentry</members>
+        <members>zipfile</members>
+        <name>ApexComponent</name>
+    </types>
+    <types>
+        <members>importstaticresource</members>
+        <members>unzipdemo</members>
+        <members>zipdemo</members>
+        <name>ApexPage</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>CustomTab</name>
+    </types>
+    <types>
+        <members>ZipFile__c-Zip File Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>jszip</members>
+        <name>StaticResource</name>
+    </types>
+    <version>24.0</version>
+</Package>
