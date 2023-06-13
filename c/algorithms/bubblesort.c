@@ -1,5 +1,8 @@
+.
+
 #include <stdio.h>
 
+// Function to sort an array using bubble sort
 void bubble_sort(int *array, int len) 
 {
     for (int i = 0; i < len; i++) {
@@ -17,6 +20,7 @@ int main(void)
 {
     int yarr[] = {3, 9, 4, 8, 7, 6, 1, 2, 0, 10};
     
+    // Call bubble sort
     bubble_sort(yarr, 10);
 
     printf("[");
