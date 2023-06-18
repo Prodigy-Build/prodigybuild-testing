@@ -1,4 +1,7 @@
+
+
 #include <stdio.h>
+#include <assert.h>
 
 void bubble_sort(int *array, int len) 
 {
@@ -23,5 +26,24 @@ int main(void)
     for (int i = 0; i < 10; i++)
         printf("%d, ", yarr[i]);	
     printf("\b\b]\n");
+    return 0;
+}
+
+// Unit Test
+void test_bubble_sort() {
+    int arr[] = {3, 9, 4, 8, 7, 6, 1, 2, 0, 10};
+    int expected[] = {0, 1, 2, 3, 4, 6, 7, 8, 9, 10};
+    int len = 10;
+
+    bubble_sort(arr, len);
+
+    for (int i = 0; i < len; i++) {
+        assert(arr[i] == expected[i]);
+    }
+}
+
+int main() {
+    test_bubble_sort();
+    printf("All tests passed!\n");
     return 0;
 }
