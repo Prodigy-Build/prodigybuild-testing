@@ -1,4 +1,7 @@
+
+
 #include <stdio.h>
+#include <assert.h>
 
 int main()
 {
@@ -11,4 +14,8 @@ int main()
     printf("Even");
     else
     printf("Odd");
+
+    // Unit Test
+    assert(rem == 0);
+    assert(rem != 0);
 }
