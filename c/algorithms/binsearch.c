@@ -1,4 +1,7 @@
+
+
 #include <stdio.h>
+#include <assert.h>
 
 int binsearch(int yarr[10], int element)
 {
@@ -26,4 +29,18 @@ int binsearch(int yarr[10], int element)
 int main(int argc, int argv[])
 {
     binsearch(argv[0], argv[1]);
+}
+
+// Unit Test
+void test_binsearch() {
+    int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int element = 5;
+    int result = binsearch(arr, element);
+    assert(result == 5);
+}
+
+int main() {
+    test_binsearch();
+    printf("All tests passed!");
+    return 0;
 }
