@@ -1,3 +1,6 @@
+
+
+
 /**
  * @file numericalIntegration.h
  *
@@ -18,6 +21,7 @@
 #include <iostream>
 #include <numeric>
 #include "statistics.h"
+#include <gtest/gtest.h>
 
 namespace NumericalIntegration {
 /**
@@ -163,5 +167,27 @@ T monteCarloIntegration(const T &a, const T &b, const unsigned long &n,
   std::cout << "Approximation to integral: " << result << std::endl;
   return result;
 }
+
+// Unit tests
+TEST(NumericalIntegration, CompositeSimpsons) {
+  auto func = [](double x) { return x * x; };
+  auto result = compositeSimpsons(0.0, 1.0, 10, func);
+  EXPECT_NEAR(result, 0.3333333333333333, 0.00001);
+}
+
+TEST(NumericalIntegration, DoubleIntegral) {
+  auto c = [](double x) { return x; };
+  auto d = [](double x) { return x * x; };
+  auto func = [](double x, double y) { return x * y; };
+  auto result = doubleIntegral(0.0, 1.0, 10, 10, c, d, func);
+  EXPECT_NEAR(result, 0.08333333333333333, 0.00001);
+}
+
+TEST(NumericalIntegration, MonteCarloIntegration) {
+  auto func = [](double x) { return x * x; };
+  auto result = monteCarloIntegration(0.0, 1.0, 10, func);
+  EXPECT_NEAR(result, 0.3333333333333333, 0.00001);
+}
+
 }  // namespace NumericalIntegration
 #endif /* NUMERICALINTEGRATION_H */
