@@ -1,4 +1,9 @@
+
+
+# python/algorithms/dynamic_programming/floyd_warshall.py
+
 import math
+import unittest
 
 
 class Graph:
@@ -24,19 +29,26 @@ class Graph:
         return self.dp[u][v]
 
 
+class TestFloydWarshall(unittest.TestCase):
+    def setUp(self):
+        self.graph = Graph(5)
+        self.graph.add_edge(0, 2, 9)
+        self.graph.add_edge(0, 4, 10)
+        self.graph.add_edge(1, 3, 5)
+        self.graph.add_edge(2, 3, 7)
+        self.graph.add_edge(3, 0, 10)
+        self.graph.add_edge(3, 1, 2)
+        self.graph.add_edge(3, 2, 1)
+        self.graph.add_edge(3, 4, 6)
+        self.graph.add_edge(4, 1, 3)
+        self.graph.add_edge(4, 2, 4)
+        self.graph.add_edge(4, 3, 9)
+
+    def test_floyd_warshall(self):
+        self.graph.floyd_warshall()
+        self.assertEqual(self.graph.show_min(1, 4), 8)
+        self.assertEqual(self.graph.show_min(0, 3), 12)
+
+
 if __name__ == "__main__":
-    graph = Graph(5)
-    graph.add_edge(0, 2, 9)
-    graph.add_edge(0, 4, 10)
-    graph.add_edge(1, 3, 5)
-    graph.add_edge(2, 3, 7)
-    graph.add_edge(3, 0, 10)
-    graph.add_edge(3, 1, 2)
-    graph.add_edge(3, 2, 1)
-    graph.add_edge(3, 4, 6)
-    graph.add_edge(4, 1, 3)
-    graph.add_edge(4, 2, 4)
-    graph.add_edge(4, 3, 9)
-    graph.floyd_warshall()
-    graph.show_min(1, 4)
-    graph.show_min(0, 3)
+    unittest.main()
