@@ -1,6 +1,8 @@
-// Implementation of Binary Search Tree 
+
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct BST {
     int data;
@@ -64,4 +66,47 @@ void main() {
     } else {
         printf("\nNot Found\n");
     }
+}
+
+// Unit Test Cases
+void test_CreateNode() {
+    struct BST* node = CreateNode();
+    assert(node != NULL);
+    assert(node->left == NULL);
+    assert(node->right == NULL);
+}
+
+void test_Insert() {
+    struct BST* root = NULL;
+    Insert(&root, 10);
+    assert(root != NULL);
+    assert(root->data == 10);
+    assert(root->left == NULL);
+    assert(root->right == NULL);
+}
+
+void test_Search() {
+    struct BST* root = NULL;
+    Insert(&root, 10);
+    Insert(&root, 5);
+    Insert(&root, 15);
+    Insert(&root, 3);
+    Insert(&root, 7);
+    Insert(&root, 12);
+    Insert(&root, 17);
+    assert(Search(root, 10) == 1);
+    assert(Search(root, 5) == 1);
+    assert(Search(root, 15) == 1);
+    assert(Search(root, 3) == 1);
+    assert(Search(root, 7) == 1);
+    assert(Search(root, 12) == 1);
+    assert(Search(root, 17) == 1);
+    assert(Search(root, 20) == 0);
+}
+
+int main() {
+    test_CreateNode();
+    test_Insert();
+    test_Search();
+    return 0;
 }
