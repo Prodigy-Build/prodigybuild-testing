@@ -1,0 +1,19 @@
+
+
+
+
+File 1: Prod_github_testing.js
+
+// Prod_github_testing.js
+
+const assert = require('assert');
+
+function add(a, b) {
+  return a + b;
+}
+
+// Unit test cases
+assert.equal(add(2, 3), 5);
+assert.equal(add(4, 5), 9);
+assert.equal(add(-2, 3), 1);
+assert.equal(add(0, 0), 0);
