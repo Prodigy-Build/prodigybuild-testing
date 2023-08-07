@@ -1,0 +1,14 @@
+
+
+
+
+File 1: test3.java
+
+public class test3 {
+    public static void main(String[] args) {
+        System.out.println("Table of 39:");
+        for (int i = 1; i <= 10; i++) {
+            System.out.println(i + " * 39 = " + (i * 39));
+        }
+    }
+}
