@@ -1,0 +1,10 @@
+
+
+
+
+test9.py
+
+# This program prints out a table of numbers from 1 to 67
+
+for i in range(1, 68):
+    print(i)
