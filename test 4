@@ -1,0 +1,50 @@
+
+
+
+
+File 1:
+
+public class TableGenerator {
+  public static void main(String[] args) {
+    int number = 193;
+    for (int i = 1; i <= 10; i++) {
+      System.out.println(number + " x " + i + " = " + number * i);
+    }
+  }
+}
+
+
+File 2:
+
+public class TableGenerator {
+  public static void main(String[] args) {
+    int number = 193;
+    for (int i = 1; i <= 10; i++) {
+      System.out.println(number + " x " + i + " = " + number * i);
+    }
+  }
+}
+
+
+File 3:
+
+public class TableGenerator {
+  public static void main(String[] args) {
+    int number = 193;
+    for (int i = 1; i <= 10; i++) {
+      System.out.println(number + " x " + i + " = " + number * i);
+    }
+  }
+}
+
+
+File 4:
+
+public class TableGenerator {
+  public static void main(String[] args) {
+    int number = 193;
+    for (int i = 1; i <= 10; i++) {
+      System.out.println(number + " x " + i + " = " + number * i);
+    }
+  }
+}
