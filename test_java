@@ -1,0 +1,83 @@
+
+
+// Java Program to Read The Number From Standard Input
+import java.util.Scanner;
+
+public class TestJava {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a number: ");
+        int number = scanner.nextInt();
+        System.out.println("The number entered is: " + number);
+    }
+}
+
+// Java Program to Get Input from the User
+import java.util.Scanner;
+
+public class TestJava {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+        System.out.println("Your name is: " + name);
+    }
+}
+
+// Java Program to Multiply Two Floating-Point Numbers
+public class TestJava {
+    public static void main(String[] args) {
+        double num1 = 5.5;
+        double num2 = 4.5;
+        double product = num1 * num2;
+        System.out.println("Product of two numbers: " + product);
+    }
+}
+
+// Java Program to Swap Two Numbers
+public class TestJava {
+    public static void main(String[] args) {
+        int num1 = 5;
+        int num2 = 10;
+        int temp;
+        temp = num1;
+        num1 = num2;
+        num2 = temp;
+        System.out.println("After swapping:");
+        System.out.println("num1 = " + num1);
+        System.out.println("num2 = " + num2);
+    }
+}
+
+// Java Program to Add Two Binary Strings
+public class TestJava {
+    public static void main(String[] args) {
+        String str1 = "1010";
+        String str2 = "1011";
+        int result = Integer.parseInt(str1, 2) + Integer.parseInt(str2, 2);
+        System.out.println("Result of addition of two binary strings: " + Integer.toBinaryString(result));
+    }
+}
+
+// Java Program to Add Two Complex numbers
+public class TestJava {
+    public static void main(String[] args) {
+        int real1 = 5, imaginary1 = 4;
+        int real2 = 6, imaginary2 = 8;
+        int realResult = real1 + real2;
+        int imaginaryResult = imaginary1 + imaginary2;
+        System.out.println("Result of addition of two complex numbers: " + realResult + " + " + imaginaryResult + "i");
+    }
+}
+
+// Java Program to Check Even or Odd Integers
+public class TestJava {
+    public static void main(String[] args) {
+        int num = 5;
+        if (num % 2 == 0) {
+            System.out.println(num + " is an even number");
+        } else {
+            System.out.println(num + " is an odd number");
+        }
+    }
+}
