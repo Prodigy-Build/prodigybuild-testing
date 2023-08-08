@@ -1,0 +1,13 @@
+
+
+
+
+File 1: test1.java
+
+public class test1 {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 19; i++) {
+            System.out.println(i + " * 19 = " + (i * 19));
+        }
+    }
+}
