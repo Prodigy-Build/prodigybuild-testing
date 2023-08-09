@@ -1,0 +1,31 @@
+
+
+
+
+File 1: test123
+
+# This program adds even numbers
+
+def add_even_numbers(numbers):
+    result = 0
+    for num in numbers:
+        if num % 2 == 0:
+            result += num
+    return result
+
+nums = [1, 2, 3, 4, 5, 6]
+print(add_even_numbers(nums))
+
+File 2: test123
+
+# This program adds even numbers
+
+def add_even_numbers(numbers):
+    result = 0
+    for num in numbers:
+        if num % 2 == 0:
+            result += num
+    return result
+
+nums = [1, 2, 3, 4, 5, 6]
+print(add_even_numbers(nums))
