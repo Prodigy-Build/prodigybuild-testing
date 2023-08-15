@@ -1,6 +1,8 @@
-// Implementing Doubly linked list.
+
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct Node {
     int value;
@@ -60,4 +62,40 @@ void main() {
     }
     Display();
     ReverseDisplay();
+}
+
+// Unit Test Cases
+
+void test_CreateNode() {
+    struct Node *node = CreateNode();
+    assert(node != NULL);
+    free(node);
+}
+
+void test_Insert() {
+    Insert(1);
+    assert(head->value == 1);
+    Insert(2);
+    assert(head->value == 2);
+    assert(head->next->value == 1);
+}
+
+void test_Display() {
+    Display();
+    assert(head->value == 2);
+    assert(head->next->value == 1);
+}
+
+void test_ReverseDisplay() {
+    ReverseDisplay();
+    assert(head->value == 2);
+    assert(head->next->value == 1);
+}
+
+int main() {
+    test_CreateNode();
+    test_Insert();
+    test_Display();
+    test_ReverseDisplay();
+    return 0;
 }
