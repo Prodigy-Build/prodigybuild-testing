@@ -1,0 +1,61 @@
+
+
+
+
+File 1: test1.js
+
+// Create a Chess Game class
+class ChessGame {
+  constructor() {
+    // Initialize the board
+    this.board = [
+      ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'],
+      ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+      [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+      ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
+      ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r']
+    ];
+  }
+
+  // Method to print the board
+  printBoard() {
+    console.log(this.board.map(row => row.join(' ')).join('\n'));
+  }
+
+  // Method to move a piece
+  movePiece(start, end) {
+    // Get the piece at the start position
+    const piece = this.board[start[0]][start[1]];
+
+    // Check if the start position is valid
+    if (piece === ' ') {
+      console.log('No piece at start position');
+      return;
+    }
+
+    // Check if the end position is valid
+    if (this.board[end[0]][end[1]] !== ' ') {
+      console.log('End position is occupied');
+      return;
+    }
+
+    // Move the piece
+    this.board[end[0]][end[1]] = piece;
+    this.board[start[0]][start[1]] = ' ';
+  }
+}
+
+// Create a new instance of the ChessGame class
+const game = new ChessGame();
+
+// Print the board
+game.printBoard();
+
+// Move a piece
+game.movePiece([0, 0], [2, 0]);
+
+// Print the board again
+game.printBoard();
