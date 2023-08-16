@@ -1,0 +1,12 @@
+
+
+
+
+File 1: testing2.js
+
+// This program adds negative numbers
+function addNegativeNumbers(num1, num2) {
+  return num1 + num2;
+}
+
+console.log(addNegativeNumbers(-5, -10)); // Output: -15
