@@ -1,0 +1,19 @@
+
+
+
+
+File 1: testing1.js
+
+// This program adds two even numbers
+function addEvenNumbers(num1, num2) {
+  // Check if both numbers are even
+  if (num1 % 2 !== 0 || num2 % 2 !== 0) {
+    return 'Error: both numbers must be even';
+  }
+  
+  // Add the two numbers
+  return num1 + num2;
+}
+
+// Test the function
+console.log(addEvenNumbers(2, 4)); // 6
