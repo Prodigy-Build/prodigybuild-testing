@@ -1,6 +1,9 @@
+
+
 #include<stdio.h>
 #include<time.h>
 #include<stdlib.h>
+#include <assert.h>
 
 // function to merge the sub-arrays
 void merge(int a[],int low,int mid ,int high)
@@ -50,4 +53,20 @@ int main()
 	for(k = 0; k < 7; k++)
 	    printf("%d, ",a[k]);
 	return 0;
+}
+
+// Unit Test Cases
+void test_mergesort() {
+    int a[7] = {83, 20, 9, 50, 115, 61, 17};
+    int expected[7] = {9, 17, 20, 50, 61, 83, 115};
+    mergesort(a, 0, 6);
+    for (int i = 0; i < 7; i++) {
+        assert(a[i] == expected[i]);
+    }
+}
+
+int main() {
+    test_mergesort();
+    printf("All tests passed!\n");
+    return 0;
 }
