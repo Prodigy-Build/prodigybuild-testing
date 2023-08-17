@@ -1,0 +1,39 @@
+
+
+
+
+File 1: testing_12.py
+
+# Program to add two prime numbers 
+
+def is_prime(num): 
+    # Corner cases 
+    if num <= 1: 
+        return False
+    if num <= 3: 
+        return True
+  
+    # This is checked so that we can skip  
+    # middle five numbers in below loop 
+    if (num % 2 == 0 or num % 3 == 0): 
+        return False
+  
+    i = 5
+    while(i * i <= num): 
+        if (num % i == 0 or num % (i + 2) == 0): 
+            return False
+        i = i + 6
+  
+    return True
+
+def add_prime_numbers(num1, num2): 
+    if is_prime(num1) and is_prime(num2): 
+        return num1 + num2 
+    else: 
+        return "The numbers are not both prime."
+
+# Driver code 
+num1 = 7
+num2 = 11
+
+print(add_prime_numbers(num1, num2))
