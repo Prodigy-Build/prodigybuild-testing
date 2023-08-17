@@ -1,0 +1,35 @@
+
+
+
+
+test21.js
+
+// This program adds two prime numbers
+function addPrimes(a, b) {
+  // Check if both numbers are prime
+  if (isPrime(a) && isPrime(b)) {
+    // If so, add them together
+    return a + b;
+  } else {
+    // Otherwise, return an error
+    return "Error: one or both numbers are not prime";
+  }
+}
+
+// This function checks if a number is prime
+function isPrime(num) {
+  // Check if number is less than 2
+  if (num < 2) {
+    return false;
+  }
+  // Check if number is divisible by any number between 2 and itself
+  for (let i = 2; i < num; i++) {
+    if (num % i === 0) {
+      return false;
+    }
+  }
+  // If none of the above conditions are met, the number is prime
+  return true;
+}
+
+module.exports = addPrimes;
