@@ -1,0 +1,26 @@
+
+
+
+
+test18_1.py
+
+# Program for Table 21
+
+def table_21():
+    # Initialize the table
+    table = []
+    for i in range(10):
+        table.append([])
+        for j in range(10):
+            table[i].append(0)
+    
+    # Populate the table
+    for i in range(10):
+        for j in range(10):
+            table[i][j] = i * j
+    
+    # Print the table
+    for row in table:
+        print(row)
+
+table_21()
