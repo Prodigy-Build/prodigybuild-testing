@@ -1,0 +1,20 @@
+
+
+
+
+test18_2.py
+
+# Program for Table 22
+
+def table22():
+    # Initialize variables
+    table_size = 22
+    table_range = range(1, table_size + 1)
+
+    # Print table
+    print("Table of", table_size)
+    for num in table_range:
+        print(num, "x", table_size, "=", num * table_size)
+
+# Call table22()
+table22()
