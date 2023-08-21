@@ -1,0 +1,26 @@
+
+
+
+
+test5.js
+
+// Function to check if a number is prime
+function isPrime(num) {
+  for (let i = 2; i < num; i++) {
+    if (num % i === 0) {
+      return false;
+    }
+  }
+  return num > 1;
+}
+
+// Function to add two prime numbers
+function addTwoPrimes(num1, num2) {
+  if (isPrime(num1) && isPrime(num2)) {
+    return num1 + num2;
+  }
+  return 'Error: at least one of the numbers is not prime';
+}
+
+// Test the function
+console.log(addTwoPrimes(3, 5)); // 8
