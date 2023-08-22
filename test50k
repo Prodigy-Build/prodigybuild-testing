@@ -1,0 +1,32 @@
+
+
+
+
+test50k.js
+
+// Test50k
+// Unit test cases for the Test50k module
+
+const Test50k = require('./test50k');
+
+describe('Test50k', () => {
+  let test50k;
+
+  beforeEach(() => {
+    test50k = new Test50k();
+  });
+
+  it('should have a method called getData', () => {
+    expect(test50k.getData).toBeDefined();
+  });
+
+  it('should return an array of data when getData is called', () => {
+    const data = test50k.getData();
+    expect(Array.isArray(data)).toBe(true);
+  });
+
+  it('should return an array of length 50,000 when getData is called', () => {
+    const data = test50k.getData();
+    expect(data.length).toBe(50000);
+  });
+});
