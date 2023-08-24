@@ -1,0 +1,18 @@
+
+
+
+
+File 1: test5-24
+
+#include <stdio.h>
+
+int main()
+{
+    int i;
+    printf("Table of 25\n");
+    for (i = 1; i <= 10; i++)
+    {
+        printf("%d * 25 = %d\n", i, i * 25);
+    }
+    return 0;
+}
