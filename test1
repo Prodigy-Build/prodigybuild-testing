@@ -1,0 +1,29 @@
+test1.py:
+
+```python
+import unittest
+
+class TestLogin(unittest.TestCase):
+    def setUp(self):
+        self.username = "test_user"
+        self.password = "test_password"
+        
+    def test_correct_login(self):
+        result = login(self.username, self.password)
+        self.assertTrue(result)
+
+    def test_incorrect_login(self):
+        result = login(self.username, "incorrect_password")
+        self.assertFalse(result)
+
+    def test_empty_username(self):
+        result = login("", self.password)
+        self.assertFalse(result)
+        
+    def test_empty_password(self):
+        result = login(self.username, "")
+        self.assertFalse(result)
+
+if __name__ == "__main__":
+    unittest.main()
+```
