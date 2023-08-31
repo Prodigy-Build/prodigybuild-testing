@@ -1,0 +1,30 @@
+# test2.py
+import unittest
+
+class TestLogin(unittest.TestCase):
+
+    def setUp(self):
+        self.username = "TestUser"
+        self.password = "TestPass"
+
+    def test_login_success(self):
+        result = login(self.username, self.password)
+        self.assertEqual(result, "Login Successful")
+
+    def test_login_failure(self):
+        result = login(self.username, "WrongPass")
+        self.assertEqual(result, "Login Failed")
+
+    def test_empty_username(self):
+        result = login("", self.password)
+        self.assertEqual(result, "Username cannot be empty")
+
+    def test_empty_password(self):
+        result = login(self.username, "")
+        self.assertEqual(result, "Password cannot be empty")
+
+if __name__ == "__main__":
+    unittest.main()
+    
+# Note: This test case assumes the existence of a 'login' function.
+
