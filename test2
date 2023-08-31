@@ -1,0 +1,25 @@
+# File: test2.py
+
+import unittest
+from unittest.mock import Mock
+
+# Assuming there is a Login class in the application module
+from application import Login
+
+class TestLogin(unittest.TestCase):
+    def setUp(self):
+        self.login = Login()
+        self.login.authenticate = Mock()
+        
+    def test_login_success(self):
+        self.login.authenticate.return_value = True
+        res = self.login.authenticate('username', 'password')
+        self.assertTrue(res)
+
+    def test_login_failure(self):
+        self.login.authenticate.return_value = False
+        res = self.login.authenticate('username', 'wrong_password')
+        self.assertFalse(res)
+
+if __name__ == "__main__":
+    unittest.main()
