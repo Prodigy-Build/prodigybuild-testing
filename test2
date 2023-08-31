@@ -1,0 +1,22 @@
+import unittest
+from login import authenticate_user
+
+class TestLogin(unittest.TestCase):
+
+    def setUp(self):
+        self.username_correct = "correct_username"
+        self.password_correct = "correct_password"
+        self.username_incorrect = "incorrect_username"
+        self.password_incorrect = "incorrect_password"
+
+    def test_authenticate_user_correct(self):
+        result = authenticate_user(self.username_correct, self.password_correct)
+        self.assertEqual(result, "You are logged in!")
+
+    def test_authenticate_user_incorrect(self):
+        result = authenticate_user(self.username_incorrect, self.password_incorrect)
+        self.assertEqual(result, "Invalid username or password!")
+
+if __name__ == "__main__":
+    unittest.main()
+
