@@ -1,0 +1,73 @@
+java
+import java.util.*;
+
+abstract class Piece {
+    abstract boolean canMove(String position,String destination);
+}
+
+
+class King extends Piece {
+
+    boolean canMove(String position,String destination) {
+        // Logic for checking the valid move for the king
+    }
+}
+
+class Queen extends Piece {
+
+    boolean canMove(String position,String destination) {
+        // Logic for checking the valid move for the Queen
+    }
+}
+
+class Bishop extends Piece {
+
+    boolean canMove(String position,String destination) {
+        // Logic for checking the valid move for the Bishop
+    }
+}
+
+class Rook extends Piece {
+
+    boolean canMove(String position,String destination) {
+        // Logic for checking the valid move for the Rook
+    }
+}
+
+class Knight extends Piece {
+
+    boolean canMove(String position,String destination) {
+        // Logic for checking the valid move for the knight
+    }
+}
+
+class Pawn extends Piece {
+
+    boolean canMove(String position,String destination) {
+        // Logic for checking the valid move for the Pawn
+    }
+} 
+
+public class Chess {
+
+    Piece[][] board = new Piece[8][8];
+
+    // Initialize the board
+    public void setup() {
+        // placePieces
+    }
+
+    public void movePiece(String from, String to) {
+        if(board[from.charAt(0)][from.charAt(1)].canMove(from, to)) {
+            // make move
+            // if position is end, show result
+        } else {
+            // show error
+        }
+    }
+    public static void main(String[] args){
+    // Create a new Chess Game
+        Chess newGame = new Chess();
+        newGame.setup();
+    }
+}
