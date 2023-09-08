@@ -1,0 +1,87 @@
+c
+#include <stdio.h>
+#include <stdlib.h>
+
+char board[3][3]; 
+
+void drawBoard() {
+  int i, j;
+  printf("\n");
+
+  for (i = 0; i < 3; i++) {
+    printf("\t");
+
+    for (j = 0; j < 3; j++) {
+      printf(" %c ", board[i][j]);
+      if(j != 2) printf("|");
+    }
+
+    printf("\n");
+
+    if(i != 2) printf("\t---|---|---\n");
+  }
+}
+
+void markBoard(char mark) {
+  int row, column;
+
+  printf("\nEnter row and column: ");
+  scanf("%d%d", &row, &column);
+
+  row--; column--;
+
+  if(row < 0 || row > 2 || column < 0 || column > 2) {
+    printf("Invalid move! Try again.");
+    markBoard(mark);
+  }
+  else if(board[row][column] != ' ') {
+    printf("The cell is already marked! Try again.");
+    markBoard(mark);
+  }  
+  else board[row][column] = mark;
+}
+
+int checkWin() {
+  int i;
+
+  for(i = 0; i < 3; i++)
+    if(board[i][0] == board[i][1] && board[i][0] == board[i][2]) return 1;
+
+  for(i = 0; i < 3; i++)
+    if(board[0][i] == board[1][i] && board[0][i] == board[2][i]) return 1;
+
+  if(board[0][0] == board[1][1] && board[0][0] == board[2][2]) return 1;
+
+  if(board[0][2] == board[1][1] && board[0][2] == board[2][0]) return 1;
+
+  return 0;
+}
+
+int main() {
+  int i, j;
+
+  for(i = 0; i < 3; i++)
+    for(j = 0; j < 3; j++) board[i][j] = ' ';
+
+  drawBoard();
+
+  while(1) {
+    markBoard('X');
+    drawBoard();
+
+    if(checkWin() == 1) {
+      printf("\nPlayer X wins!\n");
+      break;
+    }
+
+    markBoard('O');
+    drawBoard();
+
+    if(checkWin() == 1) {
+      printf("\nPlayer O wins!\n");
+      break;
+    }
+  }
+
+  return 0;
+}
