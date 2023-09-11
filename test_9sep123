@@ -1,0 +1,64 @@
+python
+# test_9sep123.py
+class Piece:
+    def __init__(self, color):
+        self.color = color
+
+
+class Pawn(Piece):
+    pass
+
+
+class Rook(Piece):
+    pass
+
+
+class Knight(Piece):
+    pass
+
+
+class Bishop(Piece):
+    pass
+
+
+class Queen(Piece):
+    pass
+
+
+class King(Piece):
+    pass
+
+
+class Board:
+    def __init__(self):
+        self.board = self.create_board()
+
+    @staticmethod
+    def create_board():
+        board = [[None] * 8 for _ in range(8)]
+        for i in range(8):
+            board[1][i] = Pawn('black')
+            board[6][i] = Pawn('white')
+        board[0][0] = Rook('black')
+        # Add the rest of the pieces...
+        return board
+
+    def move(self, start, end):
+        piece = self.board[start[0]][start[1]]
+        self.board[end[0]][end[1]] = piece
+        self.board[start[0]][start[1]] = None
+
+    def print_board(self):
+        print(self.board)
+
+
+def main():
+    board = Board()
+    board.print_board()
+    board.move((6, 3), (4, 3))
+    board.print_board()
+
+
+if __name__ == '__main__':
+    main()
+
