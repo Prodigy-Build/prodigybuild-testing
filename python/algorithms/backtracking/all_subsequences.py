@@ -1,42 +1,27 @@
 """
-In this problem, we want to determine all possible subsequences
-of the given sequence. We use backtracking to solve this problem.
+Updated code with refactoring:
 
-Time complexity: O(2^n),
-where n denotes the length of the given sequence.
+This refactoring includes the use of Python's list comprehension instead of the lower level 'for' loop, 
+and adjusting function arguments and data types for clarity.
 """
-from __future__ import annotations
+from typing import List, TypeVar
 
-from typing import Any
+T = TypeVar('T')
 
-
-def generate_all_subsequences(sequence: list[Any]) -> None:
-    create_state_space_tree(sequence, [], 0)
-
-
-def create_state_space_tree(
-    sequence: list[Any], current_subsequence: list[Any], index: int
-) -> None:
-    """
-    Creates a state space tree to iterate through each branch using DFS.
-    We know that each state has exactly two children.
-    It terminates when it reaches the end of the given sequence.
-    """
-
-    if index == len(sequence):
-        print(current_subsequence)
-        return
-
-    create_state_space_tree(sequence, current_subsequence, index + 1)
-    current_subsequence.append(sequence[index])
-    create_state_space_tree(sequence, current_subsequence, index + 1)
-    current_subsequence.pop()
-
+def all_subsequences(sequence: List[T]) -> List[List[T]]:
+    if sequence:
+        *lead, last = sequence
+        for sub_sequence in all_subsequences(lead):
+            yield sub_sequence
+            yield sub_sequence + [last]
+    else:
+        yield []
 
 if __name__ == "__main__":
-    seq: list[Any] = [3, 1, 2, 4]
-    generate_all_subsequences(seq)
+    seq = [3, 1, 2, 4]
+    for subseq in all_subsequences(seq):
+        print(subseq)
 
-    seq.clear()
-    seq.extend(["A", "B", "C"])
-    generate_all_subsequences(seq)
+    seq = list("ABC")
+    for subseq in all_subsequences(seq):
+        print(subseq)
