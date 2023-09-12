@@ -1,0 +1,28 @@
+```java
+import java.util.*;
+
+abstract class ChessPiece {
+    int x, y;
+    // Remainder omitted
+}
+
+class King extends ChessPiece {
+    boolean checkmate() {
+        // Remainder omitted
+    }
+}
+
+class Game {
+    ChessPiece[][] board;
+    Game() {
+        board = new ChessPiece[8][8];
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Game game = new Game();
+        // Now populate the board, and play!
+    }
+}
+```
