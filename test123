@@ -1,0 +1,18 @@
+// File: test123
+
+```javascript
+function isPrime(num) {
+    for(let i = 2; i < num; i++)
+      if(num % i === 0) return false;
+    return num > 1;
+}
+
+function addTwoPrimeNumbers(primeNum1, primeNum2){
+    if(isPrime(primeNum1) && isPrime(primeNum2)){
+        return primeNum1 + primeNum2;
+    }
+    else{
+        return "One or both numbers are not prime";
+    }
+}
+```
