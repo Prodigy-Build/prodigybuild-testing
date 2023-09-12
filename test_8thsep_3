@@ -1,0 +1,70 @@
+```c
+#include<stdio.h>
+#include<stdlib.h>
+
+char board[3][3]; 
+
+void drawBoard() {
+    int i, j;
+    for(i=0; i<3; i++) {
+        for(j=0; j<3; j++) {
+            printf("%c ", board[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void markBoard(char mark, int pos) {
+    int row = pos / 3;
+    int col = pos % 3;
+    board[row][col] = mark;
+}
+
+int checkWin() {
+    int i;
+    for(i=0; i<3; i++) {
+        if(board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][0] != ' ')
+            return 1;
+        if(board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != ' ')
+            return 1;
+    }
+    
+    if(board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != ' ')
+        return 1;
+    if(board[0][2] == board[1][1] && board[1][1] == board[2][0] && board[0][2] != ' ')
+        return 1;
+    return 0;
+}
+
+int main() {
+    int pos;
+    char mark;
+    int currPlayer = 0;
+    
+    for(int i=0; i<3; i++)
+        for(int j=0; j<3; j++)
+            board[i][j] = ' ';
+
+    drawBoard();
+
+    while(1) {
+        printf("Player %d, enter a number:  ", currPlayer+1);
+        scanf("%d", &pos);
+        
+        mark = (currPlayer == 0) ? 'X' : 'O';
+        
+        markBoard(mark, pos);
+
+        drawBoard();
+        
+        if(checkWin()) {
+            printf("Player %d Wins!\n", currPlayer+1);
+            break;
+        }
+        currPlayer = (currPlayer == 0) ? 1 : 0;
+
+    }
+
+    return 0;
+}
+```
