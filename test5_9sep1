@@ -1,0 +1,13 @@
+//File: test5_9sep1.js
+
+function printTable(start, end) {
+    for(let i = start; i <= end; i++) {
+        for(let j = 1; j <= 10; j++) {
+            console.log(`${i} * ${j} = ${i*j}`);
+        }
+        console.log('\n');
+    }
+}
+
+printTable(11, 20);
+
