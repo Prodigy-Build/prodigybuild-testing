@@ -1,0 +1,33 @@
+```python
+class Piece:
+    def __init__(self, color):
+        self.color = color
+
+class Pawn(Piece):
+    pass
+
+# Create other chess pieces (King, Queen, Rook, Knight and Bishop)
+
+class Board:
+    def __init__(self):
+        self.board = self.create_board()
+
+    def create_board(self):
+        board = [['' for _ in range(8)] for _ in range(8)]
+        return board
+
+    def add_piece(self, piece, x, y):
+        self.board[x][y] = piece
+
+# Similarly, create method to move pieces, check state of the game etc.
+
+def main():
+    game_board = Board()
+    white_pawn = Pawn('white')
+    game_board.add_piece(white_pawn, 0, 0)
+    # Similarly add the rest of the pieces to the board
+
+if __name__ == "__main__":
+    main()
+```
+Please save this code with file name "Test12sep.py" and it will represent basic structure of a simple chess game in Python. Please note this is a basic representation and does not contain all the functionalities of a chess game like particular moves of pieces, state of the game etc.
