@@ -1,0 +1,39 @@
+```python
+class ChessBoard:
+    def __init__(self):
+        self.board = self.create_board()
+
+    @staticmethod
+    def create_board():
+        board_x = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+        board_y = ['1', '2', '3', '4', '5', '6', '7', '8']
+        board = [[(x+y) for x in board_x] for y in board_y]
+        return board
+
+class Piece:
+    def __init__(self, color, name, position):
+        self.color = color
+        self.name = name
+        self.position = position
+
+class Game:
+    def __init__(self):
+        self.active = True
+        self.board = ChessBoard().board
+        self.white_pieces = self.initial_pieces('white')
+        self.black_pieces = self.initial_pieces('black')
+
+    @staticmethod
+    def initial_pieces(color):
+        return [Piece(color, 'Pawn', '') for _ in range(8)] + \
+                [Piece(color, 'Rook', ''), Piece(color, 'Knight', ''), Piece(color, 'Bishop', ''), Piece(color, 'Queen', ''), Piece(color, 'King', ''), 
+                 Piece(color, 'Bishop', ''), Piece(color, 'Knight', ''), Piece(color, 'Rook', '')]
+
+    def play(self):
+        while self.active:
+            self.turn()
+
+    def turn(self):
+        # Insert the logic of a player's turn
+        pass
+```
