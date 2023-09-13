@@ -1,0 +1,64 @@
+```python
+# file: test_9sep_xyz.py
+
+class ChessPiece:
+    position = ""
+    color = ""
+    
+    def move(self, new_position):
+        self.position = new_position
+
+
+class King(ChessPiece):
+    def __init__(self, position, color):
+        self.position = position
+        self.color = color
+
+
+class Queen(ChessPiece):
+    def __init__(self, position, color):
+        self.position = position
+        self.color = color
+
+
+class Rook(ChessPiece):
+    def __init__(self, position, color):
+        self.position = position
+        self.color = color
+
+
+class Bishop(ChessPiece):
+    def __init__(self, position, color):
+        self.position = position
+        self.color = color
+
+
+class Knight(ChessPiece):
+    def __init__(self, position, color):
+        self.position = position
+        self.color = color
+
+
+class Pawn(ChessPiece):
+    def __init__(self, position, color):
+        self.position = position
+        self.color = color
+
+
+class ChessBoard:
+    def __init__(self):
+        self.board = self.create_board()
+
+    def create_board(self):
+        return [[None for _ in range(8)] for _ in range(8)]
+
+
+if __name__ == "__main__":
+    game = ChessBoard()
+
+    black_king = King("e8", "black")
+    white_king = King("e1", "white")
+
+    white_king.move("e2")
+    black_king.move("e7")
+```
