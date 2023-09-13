@@ -1,0 +1,52 @@
+```python
+class Piece:
+    def __init__(self, position):
+        self.position = position
+
+    def move(self, new_position):
+        self.position = new_position
+
+class Pawn(Piece):
+    pass
+
+class Bishop(Piece):
+    pass
+
+class Knight(Piece):
+    pass
+
+class Rook(Piece):
+    pass
+
+class Queen(Piece):
+    pass
+
+class King(Piece):
+    pass
+
+class ChessBoard:
+    def __init__(self):
+        self.board = self.create_board()
+
+    def create_board(self):
+        board = [[None for _ in range(8)] for _ in range(8)]
+        return board
+
+    def place_piece(self, piece, position):
+        self.board[position[0]][position[1]] = piece
+
+    def move_piece(self, piece, new_position):
+        piece.move(new_position)
+        self.board[new_position[0]][new_position[1]] = piece
+        self.board[piece.position[0]][piece.position[1]] = None
+
+    def print_board(self):
+        for row in self.board:
+            print(row)
+
+if __name__ == "__main__":
+    chess_game = ChessBoard()
+    pawn = Pawn((1, 1))
+    chess_game.place_piece(pawn, (1, 1))
+    chess_game.print_board()
+```
