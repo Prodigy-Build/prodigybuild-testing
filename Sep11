@@ -1,0 +1,49 @@
+```python
+class ChessPiece:
+  def __init__(self, color, position):
+    self.color = color
+    self.position = position
+
+class King(ChessPiece):
+  def __init__(self, color):
+    super().__init__(color, "e1" if color == "white" else "e8")
+
+class Queen(ChessPiece):
+  def __init__(self, color):
+    super().__init__(color, "d1" if color == "white" else "d8")
+
+class Rook(ChessPiece):
+  def __init__(self, color, side):
+    super().__init__(color, side + "1" if color == "white" else side + "8")
+
+class Bishop(ChessPiece):
+  def __init__(self, color, side):
+    super().__init__(color, side + "1" if color == "white" else side + "8")
+
+class Knight(ChessPiece):
+  def __init__(self, color, side):
+    super().__init__(color, side + "1" if color == "white" else side + "8")
+
+class Pawn(ChessPiece):
+  def __init__(self, color, file):
+    super().__init__(color, file + "2" if color == "white" else file + "7")
+
+class ChessBoard:
+  def __init__(self):
+    self.board = self.initialize_board()
+
+  def initialize_board(self):
+    board = [[None for _ in range(8)] for _ in range(8)]
+    pieces = [(Rook, "a"), (Knight, "b"), (Bishop, "c"), (Queen, "d"),
+              (King, "e"), (Bishop, "f"), (Knight, "g"), (Rook, "h")]
+    for i, (piece, file) in enumerate(pieces):
+      board[0][i] = piece("white", file)
+      board[7][i] = piece("black", file)
+    for i in range(8):
+      board[1][i] = Pawn("white", chr(ord('a') + i))
+      board[6][i] = Pawn("black", chr(ord('a') + i))
+    return board
+
+if __name__ == "__main__":
+  chess_board = ChessBoard()
+```
