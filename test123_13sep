@@ -1,0 +1,25 @@
+File: test123_13sep
+
+```python
+# Function to check if number is prime
+def is_prime(num):
+    if num > 1:
+        for i in range(2, num):
+            if (num % i) == 0:
+                return False
+        else:
+            return True
+    else:
+        return False
+
+# Function to add two prime numbers
+def add_primes(num1, num2):
+    if is_prime(num1) and is_prime(num2):
+        return num1 + num2
+    else:
+        return "Both numbers must be prime"
+
+# Example usage
+print(add_primes(3, 5))
+```
+
