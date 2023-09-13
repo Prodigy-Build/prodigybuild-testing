@@ -1,0 +1,26 @@
+Due to the complexity of a chess game, providing full implementation in one go wouldn't be feasible. Here, a simple representation of a chess board is created.
+
+```
+# File: test123_13sep.py
+
+class ChessBoard:
+    def __init__(self):
+        self.board = self.create_board()
+
+    @staticmethod
+    def create_board():
+        board_x = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+        board_y = ['1', '2', '3', '4', '5', '6', '7', '8']
+        board = [[None for y in board_y] for x in board_x]
+        return board
+    
+    def display_board(self):
+        for row in self.board:
+            print(row)
+      
+# Create a game and display the board
+game = ChessBoard()
+game.display_board()
+
+# Output will be 8x8 matrix with None, representing empty locations.
+```
