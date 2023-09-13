@@ -1,0 +1,48 @@
+Since specifying a language was not mentioned, I'll use Python.
+
+```python
+class Game:
+    
+    def __init__(self):
+        self.initialize_game()
+
+    def initialize_game(self):
+        self.board = [['--' for _ in range(8)] for _ in range(8)]
+        self.white_to_move = True
+
+    def print_board(self):
+        for i in range(8):
+            for j in range(8):
+                print(self.board[i][j], end=' ')
+            print()
+
+    def move(self, move):
+        if self.valid_move(move):
+            self.board[move.start_row][move.start_col] = '--'
+            self.board[move.end_row][move.end_col] = 'W' if self.white_to_move else 'B'
+            self.white_to_move = not self.white_to_move
+
+    def valid_move(self, move):
+        if self.board[move.start_row][move.start_col] == '--':
+            return False
+        if self.board[move.end_row][move.end_col] != '--':
+            return False
+        return True
+
+class Move:
+    
+    def __init__(self, start_row, start_col, end_row, end_col):
+        self.start_row = start_row
+        self.start_col = start_col
+        self.end_row = end_row
+        self.end_col = end_col
+ 
+# Test code:
+game = Game()
+game.print_board()
+game.move(Move(0, 0, 1, 0))
+game.print_board()
+...
+```
+Please note that this is a basic setup and doesn't handle all the rules of chess yet (like different piece movements, check, checkmate, promotion, etc.) and it simply moves a "piece" from one square to another.
+
