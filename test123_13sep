@@ -1,0 +1,28 @@
+Since the scope of a chess program could be extremely large, here's a simple representation for a Chessboard class in Python.
+
+File: `test123_13sep.py`
+
+```python
+class ChessBoard:
+    def __init__(self):
+        self.board = self.create_board()
+
+    @staticmethod
+    def create_board():
+        board = [['-' for _ in range(8)] for _ in range(8)]
+        for i in range(8):
+            if i == 0 or i == 1:
+                board[i] = ['P' for _ in range(8)]
+            if i == 6 or i == 7:
+                board[i] = ['p' for _ in range(8)]
+        return board
+
+    def print_board(self):
+        for row in self.board:
+            print('')
+            for spot in row:
+                print(spot, end=' ')
+
+chess = ChessBoard()
+chess.print_board()
+```
