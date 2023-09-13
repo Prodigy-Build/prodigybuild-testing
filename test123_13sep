@@ -1,0 +1,37 @@
+```python
+# File: test123_13sep.py
+
+class Piece:
+    def __init__(self, color, name):
+        self.color = color
+        self.name = name
+
+class Board:
+    def __init__(self):
+        self.board = self.create_board()
+
+    def create_board(self):
+        board = [[None for _ in range(8)] for _ in range(8)]
+        colors = ['black', 'white']
+        for i in range(8):
+            for color in colors:
+                board[1 if color == 'black' else 6][i] = Piece(color, 'pawn')
+        pieces = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook']
+        for i in range(8):
+            for color in colors:
+                board[0 if color == 'black' else 7][i] = Piece(color, pieces[i])
+        return board
+
+    def display_board(self):
+        for row in self.board:
+            for piece in row:
+                if piece is None:
+                    print("--", end=" ")
+                else:
+                    print(piece.color[0] + piece.name[0], end=" ")
+            print("\n")
+            
+if __name__ == "__main__":
+    game = Board()
+    game.display_board()
+```
