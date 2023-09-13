@@ -1,0 +1,22 @@
+```python
+# test123_13sep.py
+
+def check_prime(num):
+    if num > 1:
+        for i in range(2, num):
+            if (num % i) == 0:
+                return False
+        else:
+            return True
+    else:
+        return False
+
+def add_primes(num1, num2):
+    if check_prime(num1) and check_prime(num2):
+        sum = num1 + num2
+        return sum
+    else:
+        return "Both numbers must be prime"
+
+print(add_primes(3, 5))
+```
