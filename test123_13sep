@@ -1,0 +1,26 @@
+test123_13sep.py
+
+    def is_prime(n):
+        if n <= 1:
+            return False
+        if n <= 3:
+            return True
+        if n % 2 == 0 or n % 3 == 0:
+            return False
+        i = 5
+        while i * i <= n:
+            if n % i == 0 or n % (i + 2) == 0:
+                return False
+            i = i + 6
+        return True
+
+    def add_two_primes(prime1, prime2):
+        if is_prime(prime1) and is_prime(prime2):
+            return prime1 + prime2
+        else:
+            return "Invalid input, both numbers must be primes."
+
+    print(add_two_primes(7,13))
+
+
+
