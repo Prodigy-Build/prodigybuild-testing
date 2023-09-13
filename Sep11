@@ -1,0 +1,64 @@
+```python
+class Piece:
+
+    def __init__(self, color):
+        self.color = color
+
+
+class Pawn(Piece):
+
+    def valid_move(self, start_pos, end_pos):
+        # Implementation of Pawn move validation 
+
+
+class Rook(Piece):
+
+    def valid_move(self, start_pos, end_pos):
+        # Implementation of Rook move validation 
+
+
+class Knight(Piece):
+
+    def valid_move(self, start_pos, end_pos):
+        # Implementation of Knight move validation 
+
+
+class Bishop(Piece):
+
+    def valid_move(self, start_pos, end_pos):
+        # Implementation of Bishop move validation
+
+
+class Queen(Piece):
+
+    def valid_move(self, start_pos, end_pos):
+        # Implementation of Queen move validation 
+
+
+class King(Piece):
+
+    def valid_move(self, start_pos, end_pos):
+        # Implementation of King move validation 
+
+
+class ChessBoard:
+
+    def __init__(self):
+        self.board = self.initialize_board()
+
+    def initialize_board(self):
+        # Implementation of Board creation
+
+
+class Game:
+
+    def __init__(self):
+        self.board = ChessBoard()
+    
+    def start(self):
+        # Possible Implementation of game start
+        pass
+
+game = Game()
+game.start()
+```
