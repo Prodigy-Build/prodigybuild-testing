@@ -1,0 +1,18 @@
+// test123_13sep.js
+
+function isPrime(num) {
+  for(let i = 2; i < num; i++)
+    if(num % i === 0) return false;
+  return num > 1;
+}
+
+function addTwoPrimes(prime1, prime2) {
+  if(isPrime(prime1) && isPrime(prime2)){
+    return prime1 + prime2;
+  }
+  throw new Error("Both inputs should be prime numbers");
+}
+
+module.exports = addTwoPrimes; // Export function for testing
+
+// End of test123_13sep.js
