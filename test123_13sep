@@ -1,0 +1,20 @@
+```python
+# File: test123_13sep.py
+
+def is_prime(n):
+    if n <= 1:
+        return False
+    elif n == 2:
+        return True
+    else:
+        for i in range(2, n):
+            if n % i == 0:
+                return False
+        return True
+    
+def add_prime_numbers(prime1, prime2):
+    if is_prime(prime1) and is_prime(prime2):
+        return prime1 + prime2
+    else:
+        return "Both numbers must be prime"
+```
