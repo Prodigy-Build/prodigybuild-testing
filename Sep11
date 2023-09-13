@@ -1,0 +1,62 @@
+```python
+# Python code to implement a simple chess game
+class Piece:
+    def __init__(self, color):
+        self.color = color
+
+class Pawn(Piece):
+    def __init__(self, color):
+        super().__init__(color)
+
+class Knight(Piece):
+    def __init__(self, color):
+        super().__init__(color)
+
+class Bishop(Piece):
+    def __init__(self, color):
+        super().__init__(color)
+
+class Rook(Piece):
+    def __init__(self, color):
+        super().__init__(color)
+
+class Queen(Piece):
+    def __init__(self, color):
+        super().__init__(color)
+
+class King(Piece):
+    def __init__(self, color):
+        super().__init__(color)
+
+
+class ChessBoard:
+    def __init__(self):
+        # Setup initial board with pieces
+        self.board = self.create_board()
+
+    def create_board(self):
+        board = [[None for _ in range(8)] for _ in range(8)]
+
+        # Create pieces and add them to the board
+        for i in range(8):
+            board[1][i] = Pawn('black')
+            board[6][i] = Pawn('white')
+
+        pieces = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
+        
+        for i, piece in enumerate(pieces):
+            board[0][i] = piece('black')
+            board[7][i] = piece('white')
+
+        return board
+
+    def move_piece(self, start, end):
+        # Basic move of piece from start to end
+        x1, y1 = start
+        x2, y2 = end
+
+        piece = self.board[x1][y1]
+
+        self.board[x1][y1] = None
+        self.board[x2][y2] = piece
+```
