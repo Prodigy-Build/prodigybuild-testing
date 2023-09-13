@@ -1,0 +1,30 @@
+```python
+class Piece:
+    def __init__(self, color, name):
+        self.color = color
+        self.name = name
+
+class Board:
+    def __init__(self):
+        self.board = self.create_board()
+
+    def create_board(self):
+        board = [[' ' for _ in range(8)] for _ in range(8)]
+        for i in range(8):
+            board[1][i] = Piece('black', 'pawn')
+            board[6][i] = Piece('white', 'pawn')
+
+        pieces = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook']
+        for i in range(8):
+            board[0][i] = Piece('black', pieces[i])
+            board[7][i] = Piece('white', pieces[i])
+
+        return board
+
+    def print_board(self):
+        for row in self.board:
+            print([f"{i.name[0]}{i.color[0]}" if i != ' ' else ' ' for i in row])
+
+board = Board()
+board.print_board()
+```
