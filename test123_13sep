@@ -1,0 +1,57 @@
+```python
+# File: test123_13sep.py
+
+class ChessPiece:
+    def __init__(self, piece_color):
+        self.piece_color = piece_color
+
+
+class King(ChessPiece):
+    def __init__(self, piece_color):
+        super().__init__(piece_color)
+
+
+class Queen(ChessPiece):
+    def __init__(self, piece_color):
+        super().__init__(piece_color)
+
+
+class Bishop(ChessPiece):
+    def __init__(self, piece_color):
+        super().__init__(piece_color)
+
+
+class Knight(ChessPiece):
+    def __init__(self, piece_color):
+        super().__init__(piece_color)
+
+
+class Rook(ChessPiece):
+    def __init__(self, piece_color):
+        super().__init__(piece_color)
+
+
+class Pawn(ChessPiece):
+    def __init__(self, piece_color):
+        super().__init__(piece_color)
+
+
+class ChessBoard:
+    def __init__(self):
+        self.board = self.create_board()
+
+    @staticmethod
+    def create_board():
+        board = [[None for _ in range(8)] for _ in range(8)]
+        for i in range(8):
+            board[1][i] = Pawn('black')
+            board[6][i] = Pawn('white')
+        pieces = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
+        for i in range(8):
+            board[0][i] = pieces[i]('black')
+            board[7][i] = pieces[i]('white')
+        return board
+
+if __name__ == '__main__':
+    game = ChessBoard()
+```
