@@ -1,0 +1,36 @@
+```python
+# Filename: test123_13sep.py
+
+class Piece:
+    def __init__(self, color, position):
+        self.color = color
+        self.position = position
+
+
+class King(Piece):
+    def __init__(self, color, position):
+        super().__init__(color, position)
+
+    def is_valid_move(self, new_position):
+        # sample logic for King's movement (1 square any direction)
+        return abs(new_position[0] - self.position[0]) in [0, 1] and abs(new_position[1] - self.position[1]) in [0, 1]
+
+# Add other pieces (Queen, Bishop, Knight, Rook, Pawn) with their is_valid_move methods
+
+class ChessBoard:
+    def __init__(self):
+        self.board = self.initialize_board()
+
+    @staticmethod
+    def initialize_board():
+        # initialize chess board with pieces at starting positions
+        return [[None for _ in range(8)] for _ in range(8)]
+
+    def move_piece(self, piece, new_position):
+        if piece.is_valid_move(new_position):
+            self.board[new_position[0]][new_position[1]] = piece
+            self.board[piece.position[0]][piece.position[1]] = None
+            piece.position = new_position
+
+# Additional functions and classes can be added as per game requirements
+```
