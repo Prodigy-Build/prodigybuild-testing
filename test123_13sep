@@ -1,0 +1,33 @@
+# File: test123_13sep.py
+
+```python
+
+class ChessPiece:
+    def __init__(self, color, type):
+        self.color = color
+        self.type = type
+
+
+class ChessBoard:
+    def __init__(self):
+        self.board = self.create_board()
+
+    def create_board(self):
+        board = [['' for _ in range(8)] for _ in range(8)]
+        for i in range(8):
+            for j in range(8):
+                if i < 2:
+                    board[i][j] = ChessPiece('Black', 'Pawn')
+                elif i > 5:
+                    board[i][j] = ChessPiece('White', 'Pawn')
+                else:
+                    board[i][j] = None
+        return board
+
+    def get_board(self):
+        return self.board
+
+if __name__ == "__main__":
+    chess_game = ChessBoard()
+    print(chess_game.get_board())
+```
