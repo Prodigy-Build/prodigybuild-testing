@@ -1,0 +1,24 @@
+```python
+class Piece:
+    def __init__(self, color, name):
+        self.color = color
+        self.name = name
+   
+class Board:
+    def __init__(self):
+        self.board = self.create_board()
+   
+    def create_board(self):
+        board = [[None for _ in range(8)] for _ in range(8)]
+        for i in range(8):
+            board[1][i], board[6][i] = Piece('black', 'Pawn'), Piece('white', 'Pawn')
+        pieces = ['Rook', 'Knight', 'Bishop', 'Queen', 'King', 'Bishop', 'Knight', 'Rook']
+        for i in range(8):
+            board[0][i], board[7][i] = Piece('black', pieces[i]), Piece('white', pieces[i])
+        return board
+   
+if __name__ == "__main__":
+    game = Board()
+    for row in game.board:
+        print([f"{piece.color[0]}{piece.name[0]}" if piece else '--' for piece in row])
+``` 
