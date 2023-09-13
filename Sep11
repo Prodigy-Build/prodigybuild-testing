@@ -1,0 +1,28 @@
+```python
+import chess
+
+class ChessGame:
+    def __init__(self):
+        self.board = chess.Board()
+
+    def move_piece(self, move):
+        if chess.Move.from_uci(str(move)) in self.board.legal_moves:
+            self.board.push_san(str(move))
+            return True
+        return False
+
+    def print_board(self):
+        print(self.board)
+
+    def game_over(self):
+        return self.board.is_game_over()
+
+if __name__ == "__main__":
+    game = ChessGame()
+    while not game.game_over():
+        print(game.board)
+        move = input('Enter your move: ')
+        while not game.move_piece(move):
+            move = input('Invalid move, try again: ')
+        print(game.board)
+```
