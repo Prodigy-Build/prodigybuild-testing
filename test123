@@ -1,0 +1,22 @@
+```python
+# File: test123.py
+def is_prime(n):
+    """Check if a number is prime"""
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def find_two_primes(start):
+    """Find two consecutive primes starting from a given number"""
+    primes = []
+    while len(primes) < 2:
+        if is_prime(start):
+            primes.append(start)
+        start += 1
+    return tuple(primes)
+
+two_primes = find_two_primes(100)
+print(two_primes)
