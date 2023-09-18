@@ -6,23 +6,16 @@ int count(int num)
 {
     printf("[");
     
-    if(num > 20)
+    int i;
+    for(i = 0; i < num; i++)
     {
-        int i;
-        for(i = 0; i < num; i++)
+        if(num > 20)
             printf("\n%d, \n", i);
-            
-        if(i == num + 1)
-            printf("]");
-    } else
-    {
-        int i;
-        for(i = 0; i < num; i++)
+        else
             printf("%d", i);
-            
-        if(i == num)
-            printf("]");
     }
+            
+    printf("]");
 }
 
 int main()
