@@ -1,0 +1,24 @@
+```python
+def is_prime(num):
+    if num <= 1:
+        return False
+    elif num <= 3:
+        return True
+    elif num % 2 == 0 or num % 3 == 0:
+        return False
+    i = 5
+    while i * i <= num:
+        if num % i == 0 or num % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def add_prime_numbers(num1, num2):
+    if is_prime(num1) and is_prime(num2):
+        return num1 + num2
+    else:
+        return "One or both numbers are not prime"
+
+with open('test123', 'w') as file:
+    file.write(str(add_prime_numbers(2, 3)))
+```
