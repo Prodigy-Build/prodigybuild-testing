@@ -15,12 +15,10 @@ matrix and raise an error if no such decomposition exists.
 
 Reference: https://en.wikipedia.org/wiki/LU_decomposition
 """
-from __future__ import annotations
-
 import numpy as np
+from typing import Tuple
 
-
-def lower_upper_decomposition(table: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+def lower_upper_decomposition(table: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     """
     Perform LU decomposition on a given matrix and raises an error if the matrix
     isn't square or if no such decomposition exists
