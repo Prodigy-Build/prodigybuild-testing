@@ -2,7 +2,7 @@
 # Author: Saksham Gupta
 #
 # The Newton-Raphson method (also known as Newton's method) is a way to
-# quickly find a good approximation for the root of a functreal-valued ion
+# quickly find a good approximation for the root of a funcreal-valued ion
 # The method can also be extended to complex functions
 #
 # Newton's Method - https://en.wikipedia.org/wiki/Newton's_method
