@@ -1,4 +1,5 @@
-from collections.abc import Callable
+```python
+from typing import Callable
 
 
 def bisection(function: Callable[[float], float], a: float, b: float) -> float:
@@ -53,3 +54,4 @@ if __name__ == "__main__":
     import doctest
 
     doctest.testmod()
+```
