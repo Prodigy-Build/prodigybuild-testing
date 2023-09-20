@@ -2,16 +2,15 @@
 # Author: Syed Haseeb Shah (github.com/QuantumNovice)
 # The Newton-Raphson method (also known as Newton's method) is a way to
 # quickly find a good approximation for the root of a real-valued function
-from __future__ import annotations
 
 from decimal import Decimal
-from math import *  # noqa: F403
+from math import *  
 
 from sympy import diff
 
 
 def newton_raphson(
-    func: str, a: float | Decimal, precision: float = 10**-10
+    func: str, a: Decimal, precision: Decimal = Decimal(10**-10)
 ) -> float:
     """Finds root from the point 'a' onwards by Newton-Raphson method
     >>> newton_raphson("sin(x)", 2)
@@ -35,10 +34,10 @@ def newton_raphson(
 if __name__ == "__main__":
     # Find root of trigonometric function
     # Find value of pi
-    print(f"The root of sin(x) = 0 is {newton_raphson('sin(x)', 2)}")
+    print(f"The root of sin(x) = 0 is {newton_raphson('sin(x)', Decimal(2))}")
     # Find root of polynomial
-    print(f"The root of x**2 - 5*x + 2 = 0 is {newton_raphson('x**2 - 5*x + 2', 0.4)}")
+    print(f"The root of x**2 - 5*x + 2 = 0 is {newton_raphson('x**2 - 5*x + 2', Decimal(0.4))}")
     # Find Square Root of 5
-    print(f"The root of log(x) - 1 = 0 is {newton_raphson('log(x) - 1', 2)}")
+    print(f"The root of log(x) - 1 = 0 is {newton_raphson('log(x) - 1', Decimal(2))}")
     # Exponential Roots
-    print(f"The root of exp(x) - 1 = 0 is {newton_raphson('exp(x) - 1', 0)}")
+    print(f"The root of exp(x) - 1 = 0 is {newton_raphson('exp(x) - 1', Decimal(0))}")
