@@ -1,5 +1,6 @@
 """
 Implementing Secant method in Python
+Updated for Python 3.9
 Author: dimgrichr
 """
 from math import exp
@@ -26,4 +27,5 @@ def secant_method(lower_bound: float, upper_bound: float, repeats: int) -> float
 
 
 if __name__ == "__main__":
-    print(f"Example: {secant_method(1, 3, 2)}")
+    results = secant_method(1, 3, 2)
+    print(f"Example: {results=}")
