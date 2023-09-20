@@ -1,23 +1,29 @@
+// count.c
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 
-int count(int num) 
+// Function to print numbers till 'num'
+void count(int num) 
 {
-    printf("[");
+    printf("["); // Start symbol
     
-    int i;
-    for(i = 0; i < num; i++)
+    // Looping from 0 to num
+    for(int i = 0; i < num; i++)
     {
+        // Print with newline if num > 20
         if(num > 20)
         {
             printf("\n%d, \n", i);
         }
+        // Else print on the same line
         else 
         {
             printf("%d", i);
         }
         
+        // End symbol
         if(i == num - 1)
         {
             printf("]");
@@ -28,7 +34,13 @@ int count(int num)
 int main()
 {
     int num;
+
+    // Taking user input
     printf("Count:~$ ");
     scanf("%d", &num);
+
+    // Calling function with the input
     count(num);
+
+    return 0; // Program exited without errors
 }
