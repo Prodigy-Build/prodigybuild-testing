@@ -1,6 +1,7 @@
 """
 Implementing Secant method in Python
 Author: dimgrichr
+Updated for Python 3.9
 """
 from math import exp
 
