@@ -1,85 +1,55 @@
-class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy,
-                                        :following, :followers]
-  before_action :correct_user,   only: [:edit, :update]
-  before_action :admin_user,     only: :destroy
+require 'test_helper'
 
-  def index
-    @users = User.where(activated: true).paginate(page: params[:page])
+class UsersControllerTest < ActionController::TestCase
+
+  def setup
+    @user = users(:one)
+    @other_user = users(:two)
   end
 
-  def show
-    @user = User.find(params[:id])
-    redirect_to root_url and return unless @user.activated?
-    @microposts = @user.microposts.paginate(page: params[:page])
+  test "should get new" do
+    get :new
+    assert_response :success
   end
 
-  def new
-    @user = User.new
+  test "should redirect edit when not logged in" do
+    get :edit, id: @user
+    assert_not flash.empty?
+    assert_redirected_to login_url
   end
 
-  def create
-    @user = User.new(user_params)
-    if @user.save
-      @user.send_activation_email
-      flash[:info] = "Please check your email to activate your account."
-      redirect_to root_url
-    else
-      render 'new'
+  test "should redirect update when not logged in" do
+    patch :update, id: @user, user: { name: @user.name, email: @user.email }
+    assert_not flash.empty?
+    assert_redirected_to login_url
+  end
+
+  test "should redirect edit when logged in as wrong user" do
+    log_in_as(@other_user)
+    get :edit, id: @user
+    assert flash.empty?
+    assert_redirected_to root_url
+  end
+
+  test "should redirect update when logged in as wrong user" do
+    log_in_as(@other_user)
+    patch :update, id: @user, user: { name: @user.name, email: @user.email }
+    assert flash.empty?
+    assert_redirected_to root_url
+  end
+
+  test "should redirect destroy when not logged in" do
+    assert_no_difference 'User.count' do
+      delete :destroy, id: @user
     end
+    assert_redirected_to login_url
   end
 
-  def edit
-    @user = User.find(params[:id])
-  end
-
-  def update
-    @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
-      flash[:success] = "Profile updated"
-      redirect_to @user
-    else
-      render 'edit'
+  test "should redirect destroy when logged in as a non-admin" do
+    log_in_as(@other_user)
+    assert_no_difference 'User.count' do
+      delete :destroy, id: @user
     end
+    assert_redirected_to root_url
   end
-
-  def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "User deleted"
-    redirect_to users_url
-  end
-
-  def following
-    @title = "Following"
-    @user  = User.find(params[:id])
-    @users = @user.following.paginate(page: params[:page])
-    render 'show_follow'
-  end
-
-  def followers
-    @title = "Followers"
-    @user  = User.find(params[:id])
-    @users = @user.followers.paginate(page: params[:page])
-    render 'show_follow'
-  end
-  
-  private
-
-    def user_params
-      params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation)
-    end
-
-    # Before filters
-
-    # Confirms the correct user.
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
-    end
-
-    # Confirms an admin user.
-    def admin_user
-      redirect_to(root_url) unless current_user.admin?
-    end
 end
