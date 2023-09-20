@@ -43,11 +43,9 @@ def newton_raphson(
     prev_guess = starting_point
 
     while True:
-        if diff_function(prev_guess) != 0:
-            next_guess = prev_guess - multiplicity * func(prev_guess) / diff_function(
-                prev_guess
-            )
-        else:
+        try:
+            next_guess = prev_guess - multiplicity * func(prev_guess) / diff_function(prev_guess)
+        except ZeroDivisionError:
             raise ZeroDivisionError("Could not find root") from None
 
         # Precision is checked by comparing the difference of consecutive guesses
@@ -80,4 +78,7 @@ if __name__ == "__main__":
     )
 
     # Find root of cos(x)
-    print(f"The root of cos(x) = 0 is {newton_raphson('cos(x)', 0)}")
+    try:
+        print(f"The root of cos(x) = 0 is {newton_raphson('cos(x)', 0)}")
+    except ZeroDivisionError:
+        print("The Newton-Raphson method failed to find a root for cos(x) = 0")
