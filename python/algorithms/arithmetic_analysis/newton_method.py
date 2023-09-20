@@ -1,12 +1,11 @@
 """Newton's Method."""
 
 # Newton's Method - https://en.wikipedia.org/wiki/Newton%27s_method
+from __future__ import annotations
 from collections.abc import Callable
 
 RealFunc = Callable[[float], float]  # type alias for a real -> real function
 
-
-# function is the f(x) and derivative is the f'(x)
 def newton(
     function: RealFunc,
     derivative: RealFunc,
