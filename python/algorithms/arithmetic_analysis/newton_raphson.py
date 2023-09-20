@@ -2,12 +2,10 @@
 # Author: Syed Haseeb Shah (github.com/QuantumNovice)
 # The Newton-Raphson method (also known as Newton's method) is a way to
 # quickly find a good approximation for the root of a real-valued function
-from __future__ import annotations
 
 from decimal import Decimal
-from math import *  # noqa: F403
-
 from sympy import diff
+from math import sin, exp, log
 
 
 def newton_raphson(
