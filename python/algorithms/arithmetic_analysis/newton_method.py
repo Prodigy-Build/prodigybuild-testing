@@ -2,15 +2,16 @@
 
 # Newton's Method - https://en.wikipedia.org/wiki/Newton%27s_method
 from collections.abc import Callable
+from typing import Tuple, Any, Union
 
-RealFunc = Callable[[float], float]  # type alias for a real -> real function
+RealFunc = Callable[[Union[float, Any]], float]  # type alias for a real -> real function
 
 
 # function is the f(x) and derivative is the f'(x)
 def newton(
     function: RealFunc,
     derivative: RealFunc,
-    starting_int: int,
+    starting_int: Union[float, Any],
 ) -> float:
     """
     >>> newton(lambda x: x ** 3 - 2 * x - 5, lambda x: 3 * x ** 2 - 2, 3)
@@ -42,11 +43,11 @@ def newton(
         prev_guess = next_guess
 
 
-def f(x: float) -> float:
+def f(x: Union[float, Any]) -> float:
     return (x**3) - (2 * x) - 5
 
 
-def f1(x: float) -> float:
+def f1(x: Union[float, Any]) -> float:
     return 3 * (x**2) - 2
 
 
