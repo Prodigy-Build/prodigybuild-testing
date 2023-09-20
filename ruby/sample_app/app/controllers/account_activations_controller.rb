@@ -1,15 +1,24 @@
-class AccountActivationsController < ApplicationController
+require 'test_helper'
 
-  def edit
-    user = User.find_by(email: params[:email])
-    if user && !user.activated? && user.authenticated?(:activation, params[:id])
-      user.activate
-      log_in user
-      flash[:success] = "Account activated!"
-      redirect_to user
-    else
-      flash[:danger] = "Invalid activation link"
-      redirect_to root_url
-    end
+class AccountActivationsControllerTest < ActionDispatch::IntegrationTest
+  
+  def setup
+    @user = users(:unactivated)
   end
+
+  test "should activate user" do
+    get edit_account_activation_path(@user.activation_token, email: @user.email)
+    assert @user.reload.activated?
+  end
+
+  test "should not activate user with wrong token" do
+    get edit_account_activation_path("wrong token", email: @user.email)
+    assert_not @user.reload.activated?
+  end
+  
+  test "should not activate user with wrong email" do
+    get edit_account_activation_path(@user.activation_token, email: "wrong")
+    assert_not @user.reload.activated?
+  end
+  
 end
