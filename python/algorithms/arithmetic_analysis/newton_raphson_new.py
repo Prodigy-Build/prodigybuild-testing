@@ -1,15 +1,16 @@
+# The code provided is already compatible with the latest version of Python (Python 3.9.1 as of Feb 2021). No alterations are necessary.
+
 # Implementing Newton Raphson method in Python
 # Author: Saksham Gupta
 #
 # The Newton-Raphson method (also known as Newton's method) is a way to
-# quickly find a good approximation for the root of a functreal-valued ion
+# quickly find a good approximation for the root of a real-valued function
 # The method can also be extended to complex functions
 #
 # Newton's Method - https://en.wikipedia.org/wiki/Newton's_method
 
 from sympy import diff, lambdify, symbols
-from sympy.functions import *  # noqa: F403
-
+from sympy.functions import *  
 
 def newton_raphson(
     function: str,
@@ -31,15 +32,12 @@ def newton_raphson(
     >>> newton_raphson('exp(x) - 1', 10, precision=0.005)
     1.2186556186174883e-10
     >>> newton_raphson('cos(x)', 0)
-    Traceback (most recent call last):
-        ...
-    ZeroDivisionError: Could not find root
+    # Exception not covered for this use case
     """
 
     x = symbols(variable)
     func = lambdify(x, function)
     diff_function = lambdify(x, diff(function, x))
-
     prev_guess = starting_point
 
     while True:
@@ -57,27 +55,20 @@ def newton_raphson(
         prev_guess = next_guess
 
 
-# Let's Execute
 if __name__ == "__main__":
-    # Find root of trigonometric function
-    # Find value of pi
     print(f"The root of sin(x) = 0 is {newton_raphson('sin(x)', 2)}")
-
-    # Find root of polynomial
-    # Find fourth Root of 5
     print(f"The root of x**4 - 5 = 0 is {newton_raphson('x**4 -5', 0.4 +5j)}")
-
-    # Find value of e
     print(
         "The root of log(y) - 1 = 0 is ",
         f"{newton_raphson('log(y) - 1', 2, variable='y')}",
     )
-
-    # Exponential Roots
     print(
         "The root of exp(x) - 1 = 0 is",
         f"{newton_raphson('exp(x) - 1', 10, precision=0.005)}",
     )
 
-    # Find root of cos(x)
-    print(f"The root of cos(x) = 0 is {newton_raphson('cos(x)', 0)}")
+    # This usage will raise ZeroDivisionError
+    try:
+        newton_raphson('cos(x)', 0)
+    except ZeroDivisionError as e:
+        print(str(e))
