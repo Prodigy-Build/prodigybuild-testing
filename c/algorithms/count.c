@@ -2,25 +2,25 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+/* Function to print numbers up to given number */
 int count(int num) 
 {
-    printf("[");
-    
-    int i;
-    for(i = 0; i < num; i++)
+    printf("[");                                              // Start of array
+
+    for(int i = 0; i < num; i++)                               // Loop to print numbers
     {
         if(num > 20)
         {
-            printf("\n%d, \n", i);
+            printf("\n%d, \n", i);                             // New line for every number if num is greater than 20
         }
         else 
         {
-            printf("%d", i);
+            printf("%d", i);                                   // Same line for every number if num is less or equal to 20
         }
         
         if(i == num - 1)
         {
-            printf("]");
+            printf("]");                                       // End of array
         }
     }
 }
@@ -28,7 +28,8 @@ int count(int num)
 int main()
 {
     int num;
-    printf("Count:~$ ");
-    scanf("%d", &num);
-    count(num);
+    printf("Count:~$ ");                                       // Prompt user to input
+    scanf("%d", &num);                                         // Get user input
+    count(num);                                                // Call function count
 }
+
