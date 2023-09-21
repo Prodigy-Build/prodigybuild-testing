@@ -1,8 +1,10 @@
 class PasswordResetsController < ApplicationController
   before_action :get_user,         only: [:edit, :update]
   before_action :valid_user,       only: [:edit, :update]
-  before_action :check_expiration, only: [:edit, :update]    # Case (1)
+  before_action :check_expiration, only: [:edit, :update]  
 
+  rescue_from ActiveRecord::RecordNotUnique, with: :redirect_if_email_not_found
+  
   def new
   end
 
@@ -23,15 +25,15 @@ class PasswordResetsController < ApplicationController
   end
 
   def update
-    if params[:user][:password].empty?                  # Case (3)
+    if params[:user][:password].empty?                  
       @user.errors.add(:password, :blank)
       render 'edit'
-    elsif @user.update_attributes(user_params)          # Case (4)
+    elsif @user.update_attributes(user_params)
       log_in @user
       flash[:success] = "Password has been reset."
       redirect_to @user
     else
-      render 'edit'                                     # Case (2)
+      render 'edit'
     end
   end
 
@@ -40,26 +42,27 @@ class PasswordResetsController < ApplicationController
     def user_params
       params.require(:user).permit(:password, :password_confirmation)
     end
-
-    # Before filters
-
+    
     def get_user
       @user = User.find_by(email: params[:email])
+      raise ActiveRecord::RecordNotFound if @user.nil?
     end
 
-    # Confirms a valid user.
     def valid_user
-      unless (@user && @user.activated? &&
-              @user.authenticated?(:reset, params[:id]))
+      unless (@user && @user.activated? && @user.authenticated?(:reset, params[:id]))
         redirect_to root_url
       end
     end
 
-    # Checks expiration of reset token.
     def check_expiration
       if @user.password_reset_expired?
         flash[:danger] = "Password reset has expired."
         redirect_to new_password_reset_url
       end
+    end
+
+    def redirect_if_email_not_found
+      flash[:warning] = 'Email address not found. Please retry.'
+      redirect_to new_password_reset_path
     end
 end
