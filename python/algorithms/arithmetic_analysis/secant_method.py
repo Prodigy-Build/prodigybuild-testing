@@ -27,3 +27,14 @@ def secant_method(lower_bound: float, upper_bound: float, repeats: int) -> float
 
 if __name__ == "__main__":
     print(f"Example: {secant_method(1, 3, 2)}")
+
+def test_f():
+    assert f(5) == 39.98652410600183
+
+def test_secant_method():
+    assert secant_method(1, 3, 2) == 0.2139409276214589
+    assert secant_method(0, 1, 3) == 0.19731326087341475
+    assert secant_method(2, 4, 4) == 3.2877423419689816
+
+test_f()
+test_secant_method()
