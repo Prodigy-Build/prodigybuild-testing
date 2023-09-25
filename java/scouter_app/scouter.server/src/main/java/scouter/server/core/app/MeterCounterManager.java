@@ -21,7 +21,18 @@ package scouter.server.core.app;
 import scouter.util.LinkedMap;
 
 /**
- * @author Gun Lee (gunlee01@gmail.com) on 2018. 8. 11.
+ * TODO: Write unit tests
+ *
+ * This class manages the MeterCounter objects by creating or retrieving them based on a key.
+ * A MeterCounter represents a counter for a specific object hash and counter name.
+ * The MeterCounterManager uses a LinkedMap to store the MeterCounter objects.
+ * Each key consists of an object hash (int) and a counter name (String).
+ *
+ * This class is a singleton class.
+ * To get the instance of this class, use the getInstance() method.
+ *
+ * To get a MeterCounter object, use the getMeterCounter() method.
+ * If the MeterCounter object does not exist, a new MeterCounter object is created and added to the map.
  */
 public class MeterCounterManager {
     private static MeterCounterManager instance = new MeterCounterManager();
