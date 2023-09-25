@@ -8,7 +8,7 @@ int binsearch(int yarr[10], int element)
     extern int i;
     
     if(element == mid)
-    printf("%d", &mid);
+        printf("%d", &mid);
     
     if(element != yarr[right])
     {
@@ -16,14 +16,32 @@ int binsearch(int yarr[10], int element)
         {
             if(element == i)
             {
-            //Does this so that it doesn't print multiple times
-            printf("%d", i);
+                //Does this so that it doesn't print multiple times
+                printf("%d", i);
             }
         }
     }
-};
+}
+
+void test_binsearch()
+{
+    int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    
+    // Test case 1: Element exists
+    int result = binsearch(arr, 7);
+    printf("Result: %d\n", result);
+    
+    // Test case 2: Element does not exist
+    result = binsearch(arr, 11);
+    printf("Result: %d\n", result);
+    
+    // Test case 3: Element is at the middle
+    result = binsearch(arr, 5);
+    printf("Result: %d\n", result);
+}
 
 int main(int argc, int argv[])
 {
-    binsearch(argv[0], argv[1]);
+    test_binsearch();
+    return 0;
 }
