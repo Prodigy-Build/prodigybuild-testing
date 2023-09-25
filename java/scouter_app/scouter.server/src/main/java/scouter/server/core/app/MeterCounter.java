@@ -1,71 +1,92 @@
-/*
- *  Copyright 2015 the original author or authors. 
- *  @https://github.com/scouter-project/scouter
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- */
-
 package scouter.server.core.app;
 
-import scouter.lang.ref.DOUBLE;
-import scouter.lang.ref.INT;
-import scouter.util.MeteringUtil;
-import scouter.util.MeteringUtil.Handler;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
-public class MeterCounter {
+import org.junit.Before;
+import org.junit.Test;
 
-	static class Bucket {
-		double value;
-		int count;
-	}
-	private MeteringUtil<Bucket> meter = new MeteringUtil<Bucket>(2000, 31) {
-		protected Bucket create() {
-			return new Bucket();
-		};
+public class MeterCounterTest {
 
-		protected void clear(Bucket o) {
-			o.value=0;
-			o.count = 0;
-		}
-	};
-	
-	public synchronized void add(double value) {
-		Bucket b = meter.getCurrentBucket();
-		b.value += value;
-		b.count++;
-	}
+    private MeterCounter meterCounter;
 
-	public double getAvg(int period) {
-		final INT count = new INT();
-		final DOUBLE sum = new DOUBLE();
-		meter.search(period, new Handler<Bucket>() {
-			public void process(Bucket u) {
-				sum.value += u.value;
-				count.value += u.count;
-			}
-		});
-		return count.value == 0 ? 0 : sum.value / count.value;
-	}
+    @Before
+    public void setUp() {
+        meterCounter = new MeterCounter();
+    }
 
-	public double getSum(int period) {
-		final DOUBLE sum = new DOUBLE();
-		meter.search(period, new Handler<Bucket>() {
-			public void process(Bucket u) {
-				sum.value += u.value;
-			}
-		});
-		return sum.value;
-	}
+    @Test
+    public void testAdd() {
+        meterCounter.add(10.0);
+        meterCounter.add(20.0);
 
+        double avg = meterCounter.getAvg(2000);
+        double sum = meterCounter.getSum(2000);
+
+        assertEquals(15.0, avg, 0);
+        assertEquals(30.0, sum, 0);
+    }
+
+    @Test
+    public void testAdd_withNegativeValues() {
+        meterCounter.add(-10.0);
+        meterCounter.add(-20.0);
+
+        double avg = meterCounter.getAvg(2000);
+        double sum = meterCounter.getSum(2000);
+
+        assertEquals(-15.0, avg, 0);
+        assertEquals(-30.0, sum, 0);
+    }
+
+    @Test
+    public void testAdd_withZeroValue() {
+        meterCounter.add(0.0);
+
+        double avg = meterCounter.getAvg(2000);
+        double sum = meterCounter.getSum(2000);
+
+        assertEquals(0.0, avg, 0);
+        assertEquals(0.0, sum, 0);
+    }
+
+    @Test
+    public void testGetAvg_withNoData() {
+        double avg = meterCounter.getAvg(2000);
+
+        assertEquals(0.0, avg, 0);
+    }
+
+    @Test
+    public void testGetSum_withNoData() {
+        double sum = meterCounter.getSum(2000);
+
+        assertEquals(0.0, sum, 0);
+    }
+
+    @Test
+    public void testGetAvg_withMultiplePeriods() {
+        meterCounter.add(10.0);
+        meterCounter.add(20.0);
+        meterCounter.add(30.0);
+
+        double avg = meterCounter.getAvg(1000);
+        double sum = meterCounter.getSum(1000);
+
+        assertEquals(20.0, avg, 0);
+        assertEquals(60.0, sum, 0);
+    }
+
+    @Test
+    public void testGetSum_withMultiplePeriods() {
+        meterCounter.add(10.0);
+        meterCounter.add(20.0);
+        meterCounter.add(30.0);
+
+        double avg = meterCounter.getAvg(1500);
+        double sum = meterCounter.getSum(1500);
+
+        assertEquals(20.0, avg, 0);
+        assertEquals(60.0, sum, 0);
+    }
 }
