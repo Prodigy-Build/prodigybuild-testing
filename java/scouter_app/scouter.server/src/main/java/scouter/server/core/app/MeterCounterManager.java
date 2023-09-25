@@ -21,13 +21,22 @@ package scouter.server.core.app;
 import scouter.util.LinkedMap;
 
 /**
- * @author Gun Lee (gunlee01@gmail.com) on 2018. 8. 11.
+ * 
+ * The MeterCounterManager class manages the meter counter objects and provides an interface to get the meter counter for a specified object and counter name.
+ *
+ * 
+ * 
  */
 public class MeterCounterManager {
     private static MeterCounterManager instance = new MeterCounterManager();
 
     private LinkedMap<Key, MeterCounter> meterCounterMap = new LinkedMap<Key, MeterCounter>().setMax(10000);
 
+    /**
+     * 
+     * The Key class represents a unique key for a meter counter. It contains the object hash and counter name.
+     * 
+     */
     public static class Key {
         public int objHash;
         public String counterName;
@@ -52,11 +61,24 @@ public class MeterCounterManager {
         }
     }
 
+    /**
+     * 
+     * Returns the instance of MeterCounterManager.
+     * 
+     * @return the MeterCounterManager instance
+     */
     public static MeterCounterManager getInstance() {
         return instance;
     }
 
-    //without syncronize, but it's ok in the key scope.
+    /**
+     * 
+     * Returns the meter counter object for the specified object hash and counter name. Creates a new meter counter object if it doesn't exist.
+     * 
+     * @param objHash the object hash
+     * @param counterName the counter name
+     * @return the meter counter object
+     */
     public MeterCounter getMeterCounter(int objHash, String counterName) {
         Key key = new Key(objHash, counterName);
         MeterCounter meterCounter = meterCounterMap.get(key);
