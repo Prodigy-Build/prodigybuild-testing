@@ -1,29 +1,47 @@
 #include <stdio.h>
+#include <stdbool.h>
 
-int binsearch(int yarr[10], int element)
+int binsearch(int yarr[], int size, int element)
 {
-    int mid = sizeof(yarr) % 2;
-    int left = (int)yarr / 2 - mid;
-    int right = yarr - left;
-    extern int i;
-    
-    if(element == mid)
-    printf("%d", &mid);
-    
-    if(element != yarr[right])
+    int left = 0;
+    int right = size - 1;
+    int mid;
+
+    while (left <= right)
     {
-        for(i = 0; i < left; i++)
+        mid = (left + right) / 2;
+
+        if (yarr[mid] == element)
         {
-            if(element == i)
-            {
-            //Does this so that it doesn't print multiple times
-            printf("%d", i);
-            }
+            return mid;
+        }
+        else if (yarr[mid] < element)
+        {
+            left = mid + 1;
+        }
+        else
+        {
+            right = mid - 1;
         }
     }
-};
 
-int main(int argc, int argv[])
+    return -1;
+}
+
+void test_binsearch()
 {
-    binsearch(argv[0], argv[1]);
+    int arr[] = {1, 2, 3, 4, 5};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    // Test cases
+    printf("%d\n", binsearch(arr, size, 3)); // Expected output: 2
+    printf("%d\n", binsearch(arr, size, 6)); // Expected output: -1
+    printf("%d\n", binsearch(arr, size, 1)); // Expected output: 0
+}
+
+int main()
+{
+    test_binsearch();
+
+    return 0;
 }
