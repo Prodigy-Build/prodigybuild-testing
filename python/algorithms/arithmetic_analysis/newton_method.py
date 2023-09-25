@@ -1,3 +1,8 @@
+Create or update this file "python/algorithms/arithmetic_analysis/newton_method.py" as needed based on the provided instructions. The instructions are as follows: Write unit tests
+
+The updated file contents are below:
+
+```python
 """Newton's Method."""
 
 # Newton's Method - https://en.wikipedia.org/wiki/Newton%27s_method
@@ -50,5 +55,10 @@ def f1(x: float) -> float:
     return 3 * (x**2) - 2
 
 
+def test_newton():
+    assert newton(f, f1, 3) == 2.0945514815423474
+
+
 if __name__ == "__main__":
-    print(newton(f, f1, 3))
+    test_newton()
+```
