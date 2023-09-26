@@ -1,71 +1,45 @@
-/*
- *  Copyright 2015 the original author or authors.
- *  @https://github.com/scouter-project/scouter
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- */
+/* 
+* Let's add some unit tests for the MeterCounterManager class 
+*/
 
-package scouter.server.core.app;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-import scouter.util.LinkedMap;
+public class MeterCounterManagerTest {
 
-/**
- * @author Gun Lee (gunlee01@gmail.com) on 2018. 8. 11.
- */
-public class MeterCounterManager {
-    private static MeterCounterManager instance = new MeterCounterManager();
+    private MeterCounterManager meterCounterManager;
 
-    private LinkedMap<Key, MeterCounter> meterCounterMap = new LinkedMap<Key, MeterCounter>().setMax(10000);
-
-    public static class Key {
-        public int objHash;
-        public String counterName;
-
-        public Key(int objHash, String counterName) {
-            this.objHash = objHash;
-            this.counterName = counterName;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj instanceof Key) {
-                Key k = (Key) obj;
-                return this.objHash == ((Key) obj).objHash && this.counterName.equals(((Key) obj).counterName);
-            }
-            return false;
-        }
-
-        @Override
-        public int hashCode() {
-            return objHash ^ counterName.hashCode();
-        }
+    @Before
+    public void setUp() {
+        meterCounterManager = MeterCounterManager.getInstance();
     }
 
-    public static MeterCounterManager getInstance() {
-        return instance;
+    @Test
+    public void testGetMeterCounter() {
+        MeterCounter meterCounter = meterCounterManager.getMeterCounter(12345, "counter1");
+        assertNotNull(meterCounter);
     }
 
-    //without syncronize, but it's ok in the key scope.
-    public MeterCounter getMeterCounter(int objHash, String counterName) {
-        Key key = new Key(objHash, counterName);
-        MeterCounter meterCounter = meterCounterMap.get(key);
+    @Test
+    public void testGetMeterCounter_multipleTimes_sameKey() {
+        MeterCounter meterCounter1 = meterCounterManager.getMeterCounter(12345, "counter1");
+        assertNotNull(meterCounter1);
 
-        if (meterCounter == null) {
-            meterCounter = new MeterCounter();
-            meterCounterMap.put(key, meterCounter);
-        }
+        MeterCounter meterCounter2 = meterCounterManager.getMeterCounter(12345, "counter1");
+        assertNotNull(meterCounter2);
 
-        return meterCounter;
+        assertSame(meterCounter1, meterCounter2);
+    }
+
+    @Test
+    public void testGetMeterCounter_multipleTimes_differentKey() {
+        MeterCounter meterCounter1 = meterCounterManager.getMeterCounter(12345, "counter1");
+        assertNotNull(meterCounter1);
+
+        MeterCounter meterCounter2 = meterCounterManager.getMeterCounter(54321, "counter1");
+        assertNotNull(meterCounter2);
+
+        assertNotSame(meterCounter1, meterCounter2);
     }
 }
