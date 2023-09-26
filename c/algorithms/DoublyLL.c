@@ -1,6 +1,7 @@
 // Implementing Doubly linked list.
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct Node {
     int value;
@@ -48,16 +49,55 @@ void ReverseDisplay() {
     printf("\n");
 }
 
-void main() {
-    int n, val;
-    printf("Enter number of elements: ");
-    scanf("%d",&n);
+void testInsert() {
+    // Test case 1: Inserting 5
+    Insert(5);
+    assert(head->value == 5);
+    assert(head->next == NULL);
+    assert(head->prev == NULL);
 
-    for (int i=0; i<n; i++) {
-        printf("Enter element: ");
-        scanf("%d",&val);
-        Insert(val); /*Inserting value everytime loop executes*/
-    }
-    Display();
-    ReverseDisplay();
+    // Test case 2: Inserting 10
+    Insert(10);
+    assert(head->value == 10);
+    assert(head->next->value == 5);
+    assert(head->next->prev == head);
+
+    // Test case 3: Inserting 15
+    Insert(15);
+    assert(head->value == 15);
+    assert(head->next->value == 10);
+    assert(head->next->prev == head);
+}
+
+void testDisplay() {
+    // Test case 1: Displaying an empty list
+    Display(); // No assertions, just verifying no errors occur
+
+    // Test case 2: Displaying a list with elements
+    Insert(5);
+    Insert(10);
+    Insert(15);
+    Display(); // No assertions, just verifying no errors occur
+}
+
+void testReverseDisplay() {
+    // Test case 1: Reverse displaying an empty list
+    ReverseDisplay(); // No assertions, just verifying no errors occur
+
+    // Test case 2: Reverse displaying a list with elements
+    Insert(5);
+    Insert(10);
+    Insert(15);
+    ReverseDisplay(); // No assertions, just verifying no errors occur
+}
+
+void test() {
+    testInsert();
+    testDisplay();
+    testReverseDisplay();
+}
+
+int main() {
+    test();
+    return 0;
 }
