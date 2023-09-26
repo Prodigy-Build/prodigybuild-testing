@@ -59,3 +59,7 @@ class EqualLoudnessFilter:
         """
         tmp = self.yulewalk_filter.process(sample)
         return self.butterworth_filter.process(tmp)
+
+    def test_process(self):
+        filt = EqualLoudnessFilter()
+        assert filt.process(0.0) == 0.0
