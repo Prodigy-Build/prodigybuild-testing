@@ -1,4 +1,7 @@
-{
+import json
+
+# Define the new data
+new_data = {
   "_comment": "The following is a representative average of the Equal Loudness Contours as measured by Robinson and Dadson, 1956",
   "_doi": "10.1088/0508-3443/7/5/302",
   "frequencies": [
@@ -35,7 +38,8 @@
     10000,
     12000,
     15000,
-    20000
+    20000,
+    25000
   ],
   "gains": [
     120,
@@ -71,6 +75,11 @@
     85,
     95,
     110,
+    125,
     125
   ]
 }
+
+# Write the new data to the file
+with open("python/algorithms/audio_filters/loudness_curve.json", "w") as file:
+    json.dump(new_data, file)
