@@ -23,6 +23,7 @@ int count(int num)
         if(i == num)
             printf("]");
     }
+    return 0;
 }
 
 int main()
@@ -31,4 +32,5 @@ int main()
     printf("Count:~$ ");
     scanf("%d", &num);
     count(num);
+    return 0;
 }
