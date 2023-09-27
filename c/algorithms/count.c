@@ -2,33 +2,27 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-int count(int num) 
-{
+void count(int num) {
     printf("[");
     
     int i;
-    for(i = 0; i < num; i++)
-    {
-        if(num > 20)
-        {
+    for(i = 0; i < num; i++) {
+        if(num > 20) {
             printf("\n%d, \n", i);
-        }
-        else 
-        {
+        } else {
             printf("%d", i);
         }
         
-        if(i == num - 1)
-        {
+        if(i == num - 1) {
             printf("]");
         }
     }
 }
 
-int main()
-{
+int main() {
     int num;
     printf("Count:~$ ");
     scanf("%d", &num);
     count(num);
+    return 0;
 }
