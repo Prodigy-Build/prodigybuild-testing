@@ -1,6 +1,7 @@
 // Implementing Doubly linked list.
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct Node {
     int value;
@@ -48,7 +49,32 @@ void ReverseDisplay() {
     printf("\n");
 }
 
-void main() {
+void Test_Insert() {
+    Insert(5);
+    Insert(10);
+    Insert(15);
+    Insert(20);
+    Display();
+    ReverseDisplay();
+}
+
+void Test_Display() {
+    Insert(5);
+    Insert(10);
+    Insert(15);
+    Insert(20);
+    Display();
+}
+
+void Test_ReverseDisplay() {
+    Insert(5);
+    Insert(10);
+    Insert(15);
+    Insert(20);
+    ReverseDisplay();
+}
+
+int main() {
     int n, val;
     printf("Enter number of elements: ");
     scanf("%d",&n);
@@ -60,4 +86,10 @@ void main() {
     }
     Display();
     ReverseDisplay();
+    
+    Test_Insert();
+    Test_Display();
+    Test_ReverseDisplay();
+
+    return 0;
 }
