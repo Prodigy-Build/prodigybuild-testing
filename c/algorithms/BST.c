@@ -1,6 +1,6 @@
-// Implementation of Binary Search Tree 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct BST {
     int data;
@@ -38,13 +38,14 @@ int Search(struct BST* RootPtr, int item) { /*Implemented search using recursion
     } else if(item == RootPtr->data) {
         return 1; /*Returns 1 when element found*/
     } else if(item < RootPtr->data) {
-        Search(RootPtr->left, item); /*Otherwise search in left side of binary tree if searching value is less then the current node value*/
+        return Search(RootPtr->left, item); /*Otherwise search in left side of binary tree if searching value is less then the current node value*/
     } else {
-        Search(RootPtr->right, item); /*Otherwise search in right side of binary tree if searching value is greater then the current node value*/
+        return Search(RootPtr->right, item); /*Otherwise search in right side of binary tree if searching value is greater then the current node value*/
     }
 }
 
-void main() {
+void test_bst() {
+    // Test case 1
     struct BST* RootPtr = NULL;
     int item, cont, key;
     do {
@@ -59,9 +60,10 @@ void main() {
     printf("\nEnter element to search: ");
     scanf("%d",&key);
 
-    if(Search(RootPtr, key) == 0) {
-        printf("\nFound\n");
-    } else {
-        printf("\nNot Found\n");
-    }
+    assert(Search(RootPtr, key) == 0);
+}
+
+int main() {
+    test_bst();
+    return 0;
 }
