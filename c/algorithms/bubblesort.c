@@ -1,3 +1,5 @@
+'''c/algorithms/bubblesort.c'''
+
 #include <stdio.h>
 
 void bubble_sort(int *array, int len) 
@@ -13,15 +15,17 @@ void bubble_sort(int *array, int len)
     }
 }
 
+void test_bubble_sort() {
+    int arr[] = {5, 4, 3, 2, 1};
+    bubble_sort(arr, 5);
+    printf("[");
+    for (int i = 0; i < 5; i++)
+        printf("%d, ", arr[i]);
+    printf("\b\b]\n");
+}
+
 int main(void) 
 {
-    int yarr[] = {3, 9, 4, 8, 7, 6, 1, 2, 0, 10};
-    
-    bubble_sort(yarr, 10);
-
-    printf("[");
-    for (int i = 0; i < 10; i++)
-        printf("%d, ", yarr[i]);	
-    printf("\b\b]\n");
+    test_bubble_sort();
     return 0;
 }
