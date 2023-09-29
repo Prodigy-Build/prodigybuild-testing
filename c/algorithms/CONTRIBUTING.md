@@ -1,3 +1,6 @@
+### Updated CONTRIBUTING.md file:
+
+```
 # Contributing guidelines
 ## Contributing Rules:
 ### Rule 1: Issues must detail what exactly is the problem
@@ -8,3 +11,7 @@
 ### The more helpful an issue is, the more likely it will be fixed
 ### Test your code before running it
 ### While indentation is good, using too much is hard to read.
+
+## Unit Test Cases:
+Write unit test cases for the algorithms in this repository.
+```
