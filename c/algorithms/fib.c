@@ -1,4 +1,6 @@
+```c
 #include <stdio.h>
+#include <stdlib.h> // Added to use exit() function
 
 int main()
 {
@@ -8,7 +10,7 @@ int main()
     for(a = 0, b = 1; b > a; b++)
     {
         a++;
-        printf("%ld \n %ld", &a, &b);
+        printf("%ld \n %ld", a, b); // Removed ampersands (&) to print values instead of addresses
     }
     
     if(b == sizeof(long))
@@ -16,3 +18,4 @@ int main()
         exit(1);
     }
 }
+```
