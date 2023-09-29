@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
+// Function to print the elements of an array
 void print_arr(int *ptr, int size)
 {
     putchar('[');
@@ -13,6 +15,7 @@ void print_arr(int *ptr, int size)
     printf("]\n");
 }
 
+// Function to swap two elements
 void swap(int *a, int *b)
 {
     int tmp;
@@ -22,6 +25,7 @@ void swap(int *a, int *b)
     *b = tmp;
 }
 
+// Function to find the minimum element in an array
 int *find_min(int *ptr, int size)
 {
     int *min;
@@ -33,9 +37,10 @@ int *find_min(int *ptr, int size)
 	    min = ptr;
 	ptr++;
     }
-    return (min);
+    return min;
 }
 
+// Function to perform selection sort on an array
 void selection_sort(int *ptr, int size)
 {
     int *min;
@@ -51,6 +56,7 @@ void selection_sort(int *ptr, int size)
     }
 }
 
+// Function to fill the array with elements
 void fill(char **av, int *ptr, int size)
 {
     int i;
@@ -58,6 +64,39 @@ void fill(char **av, int *ptr, int size)
     i = 2;
     while(av[i] && size--)
 	*ptr++ = atoi(av[i++]); 
+}
+
+// Unit tests for selection sort algorithm
+void test_cases()
+{
+    int arr1[] = {3, 2, 1, 4};
+    int arr2[] = {10, 5, 8, 3};
+    int arr3[] = {-1, -5, 0, 7, 2};
+
+    // Test case 1
+    int size1 = sizeof(arr1)/sizeof(arr1[0]);
+    selection_sort(arr1, size1);
+    assert(arr1[0] == 1);
+    assert(arr1[1] == 2);
+    assert(arr1[2] == 3);
+    assert(arr1[3] == 4);
+
+    // Test case 2
+    int size2 = sizeof(arr2)/sizeof(arr2[0]);
+    selection_sort(arr2, size2);
+    assert(arr2[0] == 3);
+    assert(arr2[1] == 5);
+    assert(arr2[2] == 8);
+    assert(arr2[3] == 10);
+
+    // Test case 3
+    int size3 = sizeof(arr3)/sizeof(arr3[0]);
+    selection_sort(arr3, size3);
+    assert(arr3[0] == -5);
+    assert(arr3[1] == -1);
+    assert(arr3[2] == 0);
+    assert(arr3[3] == 2);
+    assert(arr3[4] == 7);
 }
 
 int main(int argc, char *argv[])
@@ -88,5 +127,9 @@ int main(int argc, char *argv[])
     print_arr(arr, size);
 
     free(arr);
+
+    // Run unit tests
+    test_cases();
+
     return EXIT_SUCCESS;
 }
