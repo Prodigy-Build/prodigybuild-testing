@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <assert.h>
 
 int count(int num) 
 {
@@ -23,6 +24,13 @@ int count(int num)
         if(i == num)
             printf("]");
     }
+}
+
+void testCount()
+{
+    assert(count(5) == NULL);
+    assert(count(10) == NULL);
+    assert(count(25) == NULL);
 }
 
 int main()
