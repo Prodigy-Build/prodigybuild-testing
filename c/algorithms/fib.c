@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <assert.h>
 
 int main()
 {
@@ -15,4 +16,12 @@ int main()
     {
         exit(1);
     }
+    
+    // Unit test cases
+    assert(a == 1);
+    assert(b == 2);
+    assert(sizeof(a) == sizeof(long));
+    assert(sizeof(b) == sizeof(long));
+    
+    return 0;
 }
