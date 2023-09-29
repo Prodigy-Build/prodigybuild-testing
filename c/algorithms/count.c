@@ -1,6 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <assert.h>
+
+int count(int num);
+
+void test_count()
+{
+    // Test case 1
+    int num1 = 5;
+    count(num1);
+    
+    // Test case 2
+    int num2 = 10;
+    count(num2);
+    
+    // Test case 3
+    int num3 = 25;
+    count(num3);
+}
+
+int main()
+{
+    test_count();
+    return 0;
+}
 
 int count(int num) 
 {
@@ -23,12 +47,4 @@ int count(int num)
         if(i == num)
             printf("]");
     }
-}
-
-int main()
-{
-    int num;
-    printf("Count:~$ ");
-    scanf("%d", &num);
-    count(num);
 }
