@@ -1,6 +1,6 @@
-// Implementation of Binary Search Tree 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct BST {
     int data;
@@ -8,7 +8,36 @@ struct BST {
     struct BST* right;
 };
 
-struct BST *CreateNode() {
+// Function declarations
+struct BST* CreateNode();
+void Insert(struct BST** RootPtr, int value);
+int Search(struct BST* RootPtr, int item);
+
+int main() {
+    struct BST* RootPtr = NULL;
+    int item, cont, key;
+    do {
+        printf("Enter item: ");
+        scanf("%d",&item);
+        Insert(&RootPtr, item);
+
+        printf("\n1 to keep inserting/ 0 to Exit: ");
+        scanf("%d",&cont);
+    } while(cont == 1);
+
+    printf("\nEnter element to search: ");
+    scanf("%d",&key);
+
+    if(Search(RootPtr, key) == 0) {
+        printf("\nFound\n");
+    } else {
+        printf("\nNot Found\n");
+    }
+
+    return 0;
+}
+
+struct BST* CreateNode() {
     struct BST* new = (struct BST*) malloc(sizeof(struct BST));
     new->left = NULL;
     new->right = NULL;
@@ -38,30 +67,8 @@ int Search(struct BST* RootPtr, int item) { /*Implemented search using recursion
     } else if(item == RootPtr->data) {
         return 1; /*Returns 1 when element found*/
     } else if(item < RootPtr->data) {
-        Search(RootPtr->left, item); /*Otherwise search in left side of binary tree if searching value is less then the current node value*/
+        return Search(RootPtr->left, item); /*Otherwise search in left side of binary tree if searching value is less then the current node value*/
     } else {
-        Search(RootPtr->right, item); /*Otherwise search in right side of binary tree if searching value is greater then the current node value*/
-    }
-}
-
-void main() {
-    struct BST* RootPtr = NULL;
-    int item, cont, key;
-    do {
-        printf("Enter item: ");
-        scanf("%d",&item);
-        Insert(&RootPtr, item);
-
-        printf("\n1 to keep inserting/ 0 to Exit: ");
-        scanf("%d",&cont);
-    } while(cont == 1);
-
-    printf("\nEnter element to search: ");
-    scanf("%d",&key);
-
-    if(Search(RootPtr, key) == 0) {
-        printf("\nFound\n");
-    } else {
-        printf("\nNot Found\n");
+        return Search(RootPtr->right, item); /*Otherwise search in right side of binary tree if searching value is greater then the current node value*/
     }
 }

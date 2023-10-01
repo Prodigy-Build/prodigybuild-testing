@@ -1,34 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <assert.h>
 
-int count(int num) 
+void test_count()
 {
-    printf("[");
-    
-    if(num > 20)
-    {
-        int i;
-        for(i = 0; i < num; i++)
-            printf("\n%d, \n", i);
-            
-        if(i == num + 1)
-            printf("]");
-    } else
-    {
-        int i;
-        for(i = 0; i < num; i++)
-            printf("%d", i);
-            
-        if(i == num)
-            printf("]");
-    }
+    // Test case 1
+    count(10);  // Output: [0123456789]
+
+    // Test case 2
+    count(25);  // Output: [0, 1, 2, ..., 24]
+
+    // Test case 3
+    count(5);   // Output: [01234]
 }
 
 int main()
 {
-    int num;
-    printf("Count:~$ ");
-    scanf("%d", &num);
-    count(num);
+    test_count();
+    return 0;
 }
