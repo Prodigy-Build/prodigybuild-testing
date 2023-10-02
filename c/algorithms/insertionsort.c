@@ -2,8 +2,8 @@
 
 int main()
 {
-    int *unsorted[] = {5, 6, 4, 3, 9};
-    int *sorted[5];
+    int unsorted[] = {5, 6, 4, 3, 9};
+    int sorted[5];
     do
     {
         int a = 0;
@@ -16,4 +16,6 @@ int main()
             sorted[a] = unsorted[a];
         }
     } while(sizeof(sorted) != sizeof(unsorted));
+    
+    return 0;
 }

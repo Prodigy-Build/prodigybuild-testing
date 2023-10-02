@@ -1,8 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <assert.h>
 
-int count(int num) 
+int count(int num);
+
+int main()
+{
+    // Unit test cases
+    assert(count(0) == 0);
+    assert(count(5) == 5);
+    assert(count(20) == 20);
+    assert(count(21) == 22);
+    assert(count(-1) == 0);
+
+    printf("All test cases pass\n");
+
+    return 0;
+}
+
+int count(int num)
 {
     printf("[");
     
@@ -23,12 +40,6 @@ int count(int num)
         if(i == num)
             printf("]");
     }
-}
 
-int main()
-{
-    int num;
-    printf("Count:~$ ");
-    scanf("%d", &num);
-    count(num);
+    return num;
 }

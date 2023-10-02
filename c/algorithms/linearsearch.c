@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 int linsearch(int *yarr, int val)
 {
@@ -6,18 +7,18 @@ int linsearch(int *yarr, int val)
     {
         if(yarr[i] == val)
         {
-            return 0;
+            return i;
         }    
-        else
-        {
-          return 1;
-        }
     }
+    
+    return -1;
 }
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
+    int yarr[] = {1, 2, 3, 4, 5};
+    int val = 3;
     linsearch(yarr, val);
+
+    return 0;
 }

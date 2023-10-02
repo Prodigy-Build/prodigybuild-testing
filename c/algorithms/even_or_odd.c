@@ -7,8 +7,13 @@ int main()
     scanf("%ld", &num);
     int rem = num % 2;
     
-    if(rem == 0)
-    printf("Even");
+    if (rem == 0)
+    {
+        printf("Even");
+    }
     else
-    printf("Odd");
+    {
+        printf("Odd");
+    }
+    return 0;
 }
