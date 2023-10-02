@@ -1,3 +1,4 @@
+```python
 #!/usr/bin/env python
 # -*- coding:utf-8 -*- 
 
@@ -37,9 +38,7 @@ def timed():
 	return(strftime("%H:%M:%S",localtime()))
 
 def formatResult(color="black",text=""):
-	return ('<font color="{0}">[{1}] * {2}</font>'.format(color,timed(),text
-		)
-	)
+	return ('<font color="{0}">[{1}] * {2}</font>'.format(color,timed(),text))
 
 def kill_proc_tree(pid, including_parent=True):
 	parent = psutil.Process(pid)
@@ -54,7 +53,6 @@ def send(channel, *msg):
 	channel.send(buf)
 
 def receive(channel):
-
 	size = struct.calcsize("L")
 	size = channel.recv(size)
 	try:
@@ -146,11 +144,7 @@ class ServerWindow(QMainWindow):
 			self.rooms[room_name].append(user_name)
 			self.room_map[room_name].append(UserMap(sock,user_name))
 
-			self.textEdit.append(formatResult
-					(
-						color="#f99a34",text="User %s@%s:%d joined the #%s room" % (user_name,host[0],host[1],room_name)
-					)
-			)
+			self.textEdit.append(formatResult(color="#f99a34",text="User %s@%s:%d joined the #%s room" % (user_name,host[0],host[1],room_name)))
 
 			for user in self.room_map[room_name]:
 				if user.sock != sock: send(user.sock,"User %s joined to the room" % user_name)
@@ -169,11 +163,7 @@ class ServerWindow(QMainWindow):
 			if user.name == user_name and user.sock == sock:
 				self.room_map[room].remove(user)
 
-		self.textEdit.append(formatResult
-			(
-				color="#f99a34",text="User %s@%s:%d left #%s room" % (user_name,host[0],host[1],room)
-			)
-		)
+		self.textEdit.append(formatResult(color="#f99a34",text="User %s@%s:%d left #%s room" % (user_name,host[0],host[1],room)))
 
 		for o in self.client_map.keys(): send(o,self.rooms)
 
@@ -194,11 +184,7 @@ class ServerWindow(QMainWindow):
 				if o != sock:
 					send(o,"New room #%s is avaiable now." % room_name)
 
-			self.textEdit.append(formatResult
-					(
-						color="#f99a34",text="User %s@%s:%d created #%s room" % (user,host[0],host[1],room_name)
-					)
-			)
+			self.textEdit.append(formatResult(color="#f99a34",text="User %s@%s:%d created #%s room" % (user,host[0],host[1],room_name)))
 
 	def setupServer(self):
 		self.pushButton.setEnabled(False)
@@ -236,11 +222,7 @@ class ServerWindow(QMainWindow):
 					pubkey = RSA.importKey(receive(client))
 					send(client, self.server_pubkey.exportKey())
 
-					self.textEdit.append(formatResult
-						(
-							color="green",text="Got a new connection %d from %s %s" % (client.fileno(),cname,address)
-						)
-					)
+					self.textEdit.append(formatResult(color="green",text="Got a new connection %d from %s %s" % (client.fileno(),cname,address)))
 
 					self.client_map[client] = (address, cname, pubkey)
 					self.updateTableWidget(True,cname,address[0],address[1])
@@ -320,11 +302,7 @@ class ServerWindow(QMainWindow):
 
 							for o in self.outputs: send(o,self.rooms)
 
-							self.textEdit.append(formatResult
-								(
-									color="red",text="Client %s %s disconnected" % (user_name,address)
-								)
-							)
+							self.textEdit.append(formatResult(color="red",text="Client %s %s disconnected" % (user_name,address)))
 							
 							self.updateTableWidget(False,user_name,address[0],address[1])
 					except:
@@ -349,3 +327,4 @@ if __name__ == '__main__':
 	app.exec_()
 	me = os.getpid()
 	sys.exit(kill_proc_tree(me))
+```
