@@ -1,6 +1,8 @@
+```
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <assert.h>
 
 int count(int num) 
 {
@@ -25,10 +27,23 @@ int count(int num)
     }
 }
 
+void test_count() {
+    // Test case 1
+    count(5); // Expected output: "[01234]"
+    
+    // Test case 2
+    count(25); // Expected output: "
+    printf("Count:~$ ");
+    for (int i = 0; i < 25; i++)
+        printf("\n%d, \n", i);
+    printf("]"
+    
+}
+
 int main()
 {
-    int num;
-    printf("Count:~$ ");
-    scanf("%d", &num);
-    count(num);
+    test_count();
+    
+    return 0;
 }
+```
