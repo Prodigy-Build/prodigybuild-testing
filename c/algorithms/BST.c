@@ -1,6 +1,6 @@
-// Implementation of Binary Search Tree 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct BST {
     int data;
@@ -8,6 +8,7 @@ struct BST {
     struct BST* right;
 };
 
+// Function to create a new node
 struct BST *CreateNode() {
     struct BST* new = (struct BST*) malloc(sizeof(struct BST));
     new->left = NULL;
@@ -15,6 +16,7 @@ struct BST *CreateNode() {
     return new; 
 };
 
+// Function to insert a value into the binary search tree
 void Insert(struct BST** RootPtr, int value) {
     struct BST* temp = *RootPtr;
     if (temp == NULL) { /*When list is empty*/
@@ -32,6 +34,7 @@ void Insert(struct BST** RootPtr, int value) {
     }
 }
 
+// Function to search for an item in the binary search tree
 int Search(struct BST* RootPtr, int item) { /*Implemented search using recursion*/
     if(RootPtr == NULL) {
         return 0; /*Returns 0 if list is empty*/
@@ -44,24 +47,27 @@ int Search(struct BST* RootPtr, int item) { /*Implemented search using recursion
     }
 }
 
-void main() {
+// Function to test the binary search tree
+void test_bst() {
     struct BST* RootPtr = NULL;
-    int item, cont, key;
-    do {
-        printf("Enter item: ");
-        scanf("%d",&item);
-        Insert(&RootPtr, item);
+    
+    Insert(&RootPtr, 10);
+    Insert(&RootPtr, 5);
+    Insert(&RootPtr, 15);
+    Insert(&RootPtr, 3);
+    Insert(&RootPtr, 7);
+    
+    assert(Search(RootPtr, 10) == 1);
+    assert(Search(RootPtr, 5) == 1);
+    assert(Search(RootPtr, 15) == 1);
+    assert(Search(RootPtr, 3) == 1);
+    assert(Search(RootPtr, 7) == 1);
+    assert(Search(RootPtr, 20) == 0);
+    assert(Search(RootPtr, 1) == 0);
+    assert(Search(RootPtr, 8) == 0);
+}
 
-        printf("\n1 to keep inserting/ 0 to Exit: ");
-        scanf("%d",&cont);
-    } while(cont == 1);
-
-    printf("\nEnter element to search: ");
-    scanf("%d",&key);
-
-    if(Search(RootPtr, key) == 0) {
-        printf("\nFound\n");
-    } else {
-        printf("\nNot Found\n");
-    }
+int main() {
+    test_bst();
+    return 0;
 }
