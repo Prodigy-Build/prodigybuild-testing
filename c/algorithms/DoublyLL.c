@@ -48,7 +48,13 @@ void ReverseDisplay() {
     printf("\n");
 }
 
-void main() {
+void Test_Insert() {
+    Insert(1);
+    Insert(2);
+    Insert(3);
+}
+
+int main() {
     int n, val;
     printf("Enter number of elements: ");
     scanf("%d",&n);
@@ -60,4 +66,7 @@ void main() {
     }
     Display();
     ReverseDisplay();
+    Test_Insert();
+
+    return 0;
 }
