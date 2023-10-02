@@ -1,6 +1,6 @@
-// Implementing Doubly linked list.
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct Node {
     int value;
@@ -48,16 +48,58 @@ void ReverseDisplay() {
     printf("\n");
 }
 
-void main() {
+void testInsert() {
+    head = NULL;
+    Insert(5);
+    assert(head->value == 5);
+    Insert(10);
+    assert(head->value == 10);
+    assert(head->next->value == 5);
+}
+
+void testDisplay() {
+    // Initialize head with test values
+    head = CreateNode();
+    head->value = 5;
+    head->next = CreateNode();
+    head->next->value = 10;
+
+    printf("\nExpected Output:\n5 10\n");
+    printf("Actual Output:\n");
+    Display();
+}
+
+void testReverseDisplay() {
+    // Initialize head with test values
+    head = CreateNode();
+    head->value = 5;
+    head->prev = NULL;
+    head->next = CreateNode();
+    head->next->value = 10;
+    head->next->prev = head;
+
+    printf("\nExpected Output:\n10 5\n");
+    printf("Actual Output:\n");
+    ReverseDisplay();
+}
+
+int main() {
     int n, val;
     printf("Enter number of elements: ");
-    scanf("%d",&n);
+    scanf("%d", &n);
 
-    for (int i=0; i<n; i++) {
+    for (int i = 0; i < n; i++) {
         printf("Enter element: ");
-        scanf("%d",&val);
+        scanf("%d", &val);
         Insert(val); /*Inserting value everytime loop executes*/
     }
     Display();
     ReverseDisplay();
+
+    // Run unit test cases
+    testInsert();
+    testDisplay();
+    testReverseDisplay();
+
+    return 0;
 }
