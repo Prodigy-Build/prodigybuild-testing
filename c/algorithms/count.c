@@ -1,3 +1,4 @@
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -23,6 +24,7 @@ int count(int num)
         if(i == num)
             printf("]");
     }
+    return 0;
 }
 
 int main()
@@ -32,3 +34,4 @@ int main()
     scanf("%d", &num);
     count(num);
 }
+```
