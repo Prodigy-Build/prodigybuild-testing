@@ -61,3 +61,24 @@ void main() {
     Display();
     ReverseDisplay();
 }
+
+// Unit test cases for the doubly linked list methods
+
+void test_insert() {
+    head = NULL;
+
+    Insert(5);
+    Insert(10);
+    Insert(15);
+
+    printf("\nExpected Forward Output: 15 10 5");
+    Display();
+
+    printf("\nExpected Backward Output: 5 10 15");
+    ReverseDisplay();
+}
+
+int main() {
+    test_insert();
+    return 0;
+}
