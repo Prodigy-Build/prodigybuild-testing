@@ -1,0 +1,22 @@
+import unittest
+
+def add_numbers(a, b):
+    return a + b
+
+def subtract_numbers(a, b):
+    return a - b
+
+class TestMathFunctions(unittest.TestCase):
+    
+    def test_add_numbers(self):
+        self.assertEqual(add_numbers(3, 5), 8)
+        self.assertEqual(add_numbers(-10, 10), 0)
+        self.assertEqual(add_numbers(0, 0), 0)
+    
+    def test_subtract_numbers(self):
+        self.assertEqual(subtract_numbers(10, 5), 5)
+        self.assertEqual(subtract_numbers(-5, 10), -15)
+        self.assertEqual(subtract_numbers(0, 0), 0)
+
+if __name__ == '__main__':
+    unittest.main()
