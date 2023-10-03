@@ -1,3 +1,4 @@
+#include <iostream>
 #include "../../lib/numericCppExamplesLib/dualNumbers.h"
 
 int main() {
@@ -6,3 +7,5 @@ int main() {
   std::cout << "Derivative of 5x^2+4x+1 at x = 2 is: " << f.dual << std::endl;
   return 0;
 }
+
+// Write unit tests here
