@@ -1,6 +1,6 @@
-// Implementation of Binary Search Tree 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct BST {
     int data;
@@ -38,30 +38,41 @@ int Search(struct BST* RootPtr, int item) { /*Implemented search using recursion
     } else if(item == RootPtr->data) {
         return 1; /*Returns 1 when element found*/
     } else if(item < RootPtr->data) {
-        Search(RootPtr->left, item); /*Otherwise search in left side of binary tree if searching value is less then the current node value*/
+        return Search(RootPtr->left, item); /*Otherwise search in left side of binary tree if searching value is less then the current node value*/
     } else {
-        Search(RootPtr->right, item); /*Otherwise search in right side of binary tree if searching value is greater then the current node value*/
+        return Search(RootPtr->right, item); /*Otherwise search in right side of binary tree if searching value is greater then the current node value*/
     }
 }
 
-void main() {
-    struct BST* RootPtr = NULL;
-    int item, cont, key;
-    do {
-        printf("Enter item: ");
-        scanf("%d",&item);
-        Insert(&RootPtr, item);
+void test_insert() {
+    struct BST* root = NULL;
+    Insert(&root, 1);
+    assert(root->data == 1);
 
-        printf("\n1 to keep inserting/ 0 to Exit: ");
-        scanf("%d",&cont);
-    } while(cont == 1);
+    Insert(&root, 0);
+    assert(root->left->data == 0);
 
-    printf("\nEnter element to search: ");
-    scanf("%d",&key);
+    Insert(&root, 2);
+    assert(root->right->data == 2);
+}
 
-    if(Search(RootPtr, key) == 0) {
-        printf("\nFound\n");
-    } else {
-        printf("\nNot Found\n");
-    }
+void test_search() {
+    struct BST* root = CreateNode();
+    root->data = 1;
+    root->left = CreateNode();
+    root->left->data = 0;
+    root->right = CreateNode();
+    root->right->data = 2;
+
+    assert(Search(root, 1) == 1);
+    assert(Search(root, 0) == 1);
+    assert(Search(root, 2) == 1);
+    assert(Search(root, -1) == 0);
+    assert(Search(root, 3) == 0);
+}
+
+int main() {
+    test_insert();
+    test_search();
+    return 0;
 }
