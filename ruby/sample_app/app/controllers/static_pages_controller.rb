@@ -9,10 +9,22 @@ class StaticPagesController < ApplicationController
 
   def help
   end
-  
+
   def about
   end
 
   def contact
+  end
+  
+  def test_home
+  end
+  
+  def test_help
+  end
+  
+  def test_about
+  end
+  
+  def test_contact
   end
 end

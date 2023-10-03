@@ -26,4 +26,10 @@ class SessionsController < ApplicationController
     log_out if logged_in?
     redirect_to root_url
   end
+  
+  # Unit Test: User should be redirected to root_url after logout
+  def test_destroy_redirect_to_root
+    delete :destroy
+    assert_redirected_to root_url
+  end
 end

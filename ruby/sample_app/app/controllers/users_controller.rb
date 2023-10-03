@@ -62,7 +62,9 @@ class UsersController < ApplicationController
     @users = @user.followers.paginate(page: params[:page])
     render 'show_follow'
   end
-  
+
+  # Write unit tests for the UsersController here
+
   private
 
     def user_params

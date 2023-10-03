@@ -12,4 +12,9 @@ class ApplicationController < ActionController::Base
         redirect_to login_url
       end
     end
+
+    # Unit test for logged_in_user method
+    def test_logged_in_user
+      # define test logic here
+    end
 end

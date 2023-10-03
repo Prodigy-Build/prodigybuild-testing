@@ -1,21 +1,23 @@
-class RelationshipsController < ApplicationController
-  before_action :logged_in_user
+require 'test_helper'
 
-  def create
-    @user = User.find(params[:followed_id])
-    current_user.follow(@user)
-    respond_to do |format|
-      format.html { redirect_to @user }
-      format.js
+class RelationshipsControllerTest < ActionController::TestCase
+  def setup
+    @user = users(:michael)
+    @other_user = users(:archer)
+    log_in_as(@user)
+  end
+
+  test "should create relationship" do
+    assert_difference '@user.following.count', 1 do
+      post :create, params: { followed_id: @other_user.id }
     end
   end
 
-  def destroy
-    @user = Relationship.find(params[:id]).followed
-    current_user.unfollow(@user)
-    respond_to do |format|
-      format.html { redirect_to @user }
-      format.js
+  test "should destroy relationship" do
+    @user.follow(@other_user)
+    relationship = @user.active_relationships.find_by(followed_id: @other_user.id)
+    assert_difference '@user.following.count', -1 do
+      delete :destroy, params: { id: relationship.id }
     end
   end
 end
