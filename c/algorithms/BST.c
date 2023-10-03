@@ -1,6 +1,7 @@
 // Implementation of Binary Search Tree 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct BST {
     int data;
@@ -10,6 +11,7 @@ struct BST {
 
 struct BST *CreateNode() {
     struct BST* new = (struct BST*) malloc(sizeof(struct BST));
+    new->data = 0;
     new->left = NULL;
     new->right = NULL;
     return new; 
