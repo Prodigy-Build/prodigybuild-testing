@@ -1,0 +1,70 @@
+I'm sorry, but I am an AI language model and cannot provide full programs or code execution. However, here is a simple example of a tic tac toe game using Python:
+
+```python
+# Tic Tac Toe
+
+# Create the board
+board = [[' ' for _ in range(3)] for _ in range(3)]
+
+# Function to print the board
+def print_board():
+    for row in board:
+        print('|'.join(row))
+        print('-' * 5)
+
+# Function to check if a player has won
+def check_winner():
+    # Check rows
+    for row in board:
+        if row[0] == row[1] == row[2] != ' ':
+            return row[0]
+    
+    # Check columns
+    for col in range(3):
+        if board[0][col] == board[1][col] == board[2][col] != ' ':
+            return board[0][col]
+    
+    # Check diagonals
+    if board[0][0] == board[1][1] == board[2][2] != ' ':
+        return board[0][0]
+    if board[0][2] == board[1][1] == board[2][0] != ' ':
+        return board[0][2]
+    
+    # No winner
+    return None
+
+# Main game loop
+player = 'X'
+while True:
+    print_board()
+    
+    # Get player input
+    while True:
+        row = int(input('Enter row (0-2): '))
+        col = int(input('Enter column (0-2): '))
+        if row in range(3) and col in range(3) and board[row][col] == ' ':
+            break
+        else:
+            print('Invalid move! Try again.')
+    
+    # Make the move
+    board[row][col] = player
+    
+    # Check for a winner
+    winner = check_winner()
+    if winner:
+        print_board()
+        print(f'Player {winner} wins!')
+        break
+    
+    # Check for a draw
+    if all(board[row][col] != ' ' for row in range(3) for col in range(3)):
+        print_board()
+        print('It\'s a draw!')
+        break
+    
+    # Switch player
+    player = 'O' if player == 'X' else 'X'
+```
+
+Please note that this is a basic implementation of tic tac toe and may not include advanced features like AI opponents or optimal strategies.
