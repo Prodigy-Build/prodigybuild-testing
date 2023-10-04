@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <assert.h>
 
 int linsearch(int *yarr, int val)
 {
@@ -17,7 +18,10 @@ int linsearch(int *yarr, int val)
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
-    linsearch(yarr, val);
+    int yarr[] = {1, 2, 3, 4, 5};
+    int val = 3;
+
+    assert(linsearch(yarr, val) == 0);
+    
+    return 0;
 }

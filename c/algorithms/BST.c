@@ -1,6 +1,7 @@
 // Implementation of Binary Search Tree 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct BST {
     int data;
@@ -44,24 +45,43 @@ int Search(struct BST* RootPtr, int item) { /*Implemented search using recursion
     }
 }
 
-void main() {
+void testInsert() {
     struct BST* RootPtr = NULL;
-    int item, cont, key;
-    do {
-        printf("Enter item: ");
-        scanf("%d",&item);
-        Insert(&RootPtr, item);
+    Insert(&RootPtr, 5);
+    assert(RootPtr->data == 5);
+    Insert(&RootPtr, 3);
+    assert(RootPtr->left->data == 3);
+    Insert(&RootPtr, 7);
+    assert(RootPtr->right->data == 7);
+    Insert(&RootPtr, 2);
+    assert(RootPtr->left->left->data == 2);
+    Insert(&RootPtr, 4);
+    assert(RootPtr->left->right->data == 4);
+    Insert(&RootPtr, 6);
+    assert(RootPtr->right->left->data == 6);
+    Insert(&RootPtr, 8);
+    assert(RootPtr->right->right->data == 8);
+}
 
-        printf("\n1 to keep inserting/ 0 to Exit: ");
-        scanf("%d",&cont);
-    } while(cont == 1);
+void testSearch() {
+    struct BST* RootPtr = NULL;
+    Insert(&RootPtr, 5);
+    Insert(&RootPtr, 3);
+    Insert(&RootPtr, 7);
+    Insert(&RootPtr, 4);
+    Insert(&RootPtr, 2);
+    assert(Search(RootPtr, 5) == 1);
+    assert(Search(RootPtr, 3) == 1);
+    assert(Search(RootPtr, 7) == 1);
+    assert(Search(RootPtr, 4) == 1);
+    assert(Search(RootPtr, 2) == 1);
+    assert(Search(RootPtr, 6) == 0);
+    assert(Search(RootPtr, 8) == 0);
+}
 
-    printf("\nEnter element to search: ");
-    scanf("%d",&key);
-
-    if(Search(RootPtr, key) == 0) {
-        printf("\nFound\n");
-    } else {
-        printf("\nNot Found\n");
-    }
+int main() {
+    testInsert();
+    testSearch();
+    printf("All test cases passed\n");
+    return 0;
 }
