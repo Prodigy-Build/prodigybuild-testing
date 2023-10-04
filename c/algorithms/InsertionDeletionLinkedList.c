@@ -1,14 +1,14 @@
-// A menu-driven C program which let's the user Insert , Delete , Display elements in list at different positions and situations. 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct node {
     int data;
     struct node *next;
 };
+
 struct node *head;
 
-// Structure used to create node again and again when required..
 struct node *CreateNode() {
     struct node *new = (struct node*) malloc(sizeof(struct node));
     return new;
@@ -27,7 +27,7 @@ void InsertAtBegin(int value) {
 
 void InsertAtnthNode(int pos , int value) {
     struct node* temp = head;
-    if(pos==1) {
+    if (pos==1) {
         printf("\n\t**Use Insert at begining**\n");
     } else { 
         struct node *NewNode = CreateNode();
@@ -109,7 +109,7 @@ void Display() {
     }
 }
 
-void main() {
+int main() {
     head = NULL;
     int ch;
     while (1) {
@@ -160,4 +160,96 @@ void main() {
                 printf("\n\t**Chose a valid option**\n"); 
         }       
     }
+    return 0;
+}
+
+void test_InsertAtBegin() {
+    head = NULL;
+    InsertAtBegin(10);
+    assert(head->data == 10 && head->next == NULL);
+    
+    InsertAtBegin(20);
+    assert(head->data == 20 && head->next->data == 10 && head->next->next == NULL);
+}
+
+void test_InsertAtnthNode() {
+    head = NULL;
+    InsertAtBegin(10);
+    InsertAtBegin(20);
+
+    InsertAtnthNode(2, 30);
+    assert(head->data == 20 && head->next->data == 30 && head->next->next->data == 10 && head->next->next->next == NULL);
+    
+    InsertAtnthNode(3, 40);
+    assert(head->data == 20 && head->next->data == 30 && head->next->next->data == 40 && head->next->next->next->data == 10 && head->next->next->next->next == NULL);
+}
+
+void test_InsertAtEnd() {
+    head = NULL;
+    InsertAtEnd(10);
+    assert(head->data == 10 && head->next == NULL);
+    
+    InsertAtEnd(20);
+    assert(head->data == 10 && head->next->data == 20 && head->next->next == NULL);
+}
+
+void test_DeleteAtBegin() {
+    head = NULL;
+    InsertAtEnd(10);
+    InsertAtEnd(20);
+
+    DeleteAtBegin();
+    assert(head->data == 20 && head->next == NULL);
+    
+    DeleteAtBegin();
+    assert(head == NULL);
+}
+
+void test_DeleteAtEnd() {
+    head = NULL;
+    InsertAtEnd(10);
+    InsertAtEnd(20);
+
+    DeleteAtEnd();
+    assert(head->data == 10 && head->next == NULL);
+    
+    DeleteAtEnd();
+    assert(head == NULL);
+}
+
+void test_DeletenthNode() {
+    head = NULL;
+    InsertAtEnd(10);
+    InsertAtEnd(20);
+    InsertAtEnd(30);
+
+    DeletenthNode(2);
+    assert(head->data == 10 && head->next->data == 30 && head->next->next == NULL);
+    
+    DeletenthNode(1);
+    assert(head->data == 30 && head->next == NULL);
+}
+
+void test_Display() {
+    head = NULL;
+    printf("\nTest Display 1:\nExpected Output: \n\t**No elements to display**\n\n");
+    Display();
+    
+    printf("\nTest Display 2:\nExpected Output: \nCurrent List:\n10 20 30\n");
+    InsertAtEnd(10);
+    InsertAtEnd(20);
+    InsertAtEnd(30);
+    Display();
+}
+
+int main() {
+    test_InsertAtBegin();
+    test_InsertAtnthNode();
+    test_InsertAtEnd();
+    test_DeleteAtBegin();
+    test_DeleteAtEnd();
+    test_DeletenthNode();
+    test_Display();
+    printf("\nAll test cases passed.\n");
+    return 0;
 }

@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
 
-int keylog()
+bool test_keylog()
 {
     FILE * fPtr;
-    fPtr = fopen("keylogger.txt", "w+");
+    fPtr = fopen("keylogger_test.txt", "w+");
 
-    fopen("keylogger.txt", "w");
-    const char *a = getchar();
+    fopen("keylogger_test.txt", "w");
+    const char *a = "test";
     
     if(a != NULL)
         fprintf(fPtr, a);
@@ -19,9 +20,11 @@ int keylog()
     
     if(hour == 24)
         fclose(fPtr);
+        
+    return true;
 }
 
 int main()
 {
-    keylog();
+    test_keylog();
 }

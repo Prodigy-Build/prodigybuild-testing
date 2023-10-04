@@ -1,11 +1,11 @@
 #include<stdio.h>
 #include<time.h>
 #include<stdlib.h>
+#include<assert.h>
 
-// function to merge the sub-arrays
 void merge(int a[],int low,int mid ,int high)
 {
-	int b[20]; //same size of a[]
+	int b[20]; 
 	int i, j, k;
 	i = low, j = mid + 1,k = low;
 	while(i <= mid && j <= high)
@@ -13,7 +13,7 @@ void merge(int a[],int low,int mid ,int high)
 		if(a[i]<=a[j])
 		    b[k++]=a[i++];
 		else
-		   b[k++]=a[j++]; //copying the elements 
+		   b[k++]=a[j++]; 
 	}
 	while (i<=mid)
 		b[k++]=a[i++];
@@ -23,7 +23,6 @@ void merge(int a[],int low,int mid ,int high)
 	        a[k]=b[k];
 }
 
-// merge sort function
 void mergesort(int a[],int low,int high)
 {
 	int mid;
@@ -35,19 +34,22 @@ void mergesort(int a[],int low,int high)
 	merge(a,low,mid,high);
 }
 
-// main fucntion
-int main()
-{
+void test(){
 	int a[7] = {83, 20, 9, 50, 115, 61, 17};
 	int n = 7;
 
 	mergesort(a, 0, n-1);
 	
-	printf("\n Sorted numbers are: ");
+	assert(a[0] == 9);
+	assert(a[1] == 17);
+	assert(a[2] == 20);
+	assert(a[3] == 50);
+	assert(a[4] == 61);
+	assert(a[5] == 83);
+	assert(a[6] == 115);
+}
 
-	// function to print the sorted array
-	int k;
-	for(k = 0; k < 7; k++)
-	    printf("%d, ",a[k]);
+int main(){
+	test();
 	return 0;
 }

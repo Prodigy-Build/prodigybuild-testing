@@ -6,10 +6,10 @@ int binsearch(int yarr[10], int element)
     int left = (int)yarr / 2 - mid;
     int right = yarr - left;
     extern int i;
-    
+
     if(element == mid)
     printf("%d", &mid);
-    
+
     if(element != yarr[right])
     {
         for(i = 0; i < left; i++)

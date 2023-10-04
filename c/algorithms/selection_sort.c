@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 void print_arr(int *ptr, int size)
 {
@@ -89,4 +90,35 @@ int main(int argc, char *argv[])
 
     free(arr);
     return EXIT_SUCCESS;
+}
+
+void test_swap()
+{
+    int a = 5;
+    int b = 10;
+    swap(&a, &b);
+    assert(a == 10 && b == 5);
+}
+
+void test_find_min()
+{
+    int arr[] = {5, 10, 2, 8};
+    int *min = find_min(arr, 4);
+    assert(*min == 2);
+}
+
+void test_selection_sort()
+{
+    int arr[] = {5, 2, 10, 8};
+    selection_sort(arr, 4);
+    assert(arr[0] == 2 && arr[1] == 5 && arr[2] == 8 && arr[3] == 10);
+}
+
+int main()
+{
+    test_swap();
+    test_find_min();
+    test_selection_sort();
+    puts("All test cases passed");
+    return 0;
 }
