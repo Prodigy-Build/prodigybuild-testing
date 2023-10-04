@@ -1,19 +1,30 @@
 #include <stdio.h>
+#include <stdbool.h>
+
+void insertionSort(int arr[], int n);
 
 int main()
 {
-    int *unsorted[] = {5, 6, 4, 3, 9};
-    int *sorted[5];
-    do
+    int unsorted[] = {5, 6, 4, 3, 9};
+    int n = sizeof(unsorted) / sizeof(unsorted[0]);
+    insertionSort(unsorted, n);
+    
+    return 0;
+}
+
+void insertionSort(int arr[], int n)
+{
+    int i, key, j;
+    for (i = 1; i < n; i++)
     {
-        int a = 0;
-        a++;
-        int b = 0;
-        b++;
+        key = arr[i];
+        j = i - 1;
         
-        if(unsorted[a] < unsorted[b])
+        while (j >= 0 && arr[j] > key)
         {
-            sorted[a] = unsorted[a];
+            arr[j + 1] = arr[j];
+            j = j - 1;
         }
-    } while(sizeof(sorted) != sizeof(unsorted));
+        arr[j + 1] = key;
+    }
 }

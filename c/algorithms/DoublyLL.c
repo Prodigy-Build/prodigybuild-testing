@@ -1,6 +1,8 @@
+```
 // Implementing Doubly linked list.
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct Node {
     int value;
@@ -48,6 +50,72 @@ void ReverseDisplay() {
     printf("\n");
 }
 
+void TestInsert() {
+    Insert(1);
+    Insert(2);
+    Insert(3);
+    assert(head->value == 3);
+    assert(head->next->value == 2);
+    assert(head->next->next->value == 1);
+    assert(head->next->next->next == NULL);
+}
+
+void TestDisplay() {
+    // Manually create a doubly linked list with values 1, 2, 3
+    struct Node *node1 = CreateNode();
+    node1->value = 1;
+    node1->next = NULL;
+    node1->prev = NULL;
+
+    struct Node *node2 = CreateNode();
+    node2->value = 2;
+    node2->next = NULL;
+    node2->prev = node1;
+    node1->next = node2;
+
+    struct Node *node3 = CreateNode();
+    node3->value = 3;
+    node3->next = NULL;
+    node3->prev = node2;
+    node2->next = node3;
+
+    head = node1;
+
+    printf("\nExpected Output:\n");
+    printf("1 2 3 \n");
+
+    printf("\nActual Output:\n");
+    Display();
+}
+
+void TestReverseDisplay() {
+    // Manually create a doubly linked list with values 1, 2, 3
+    struct Node *node1 = CreateNode();
+    node1->value = 1;
+    node1->next = NULL;
+    node1->prev = NULL;
+
+    struct Node *node2 = CreateNode();
+    node2->value = 2;
+    node2->next = NULL;
+    node2->prev = node1;
+    node1->next = node2;
+
+    struct Node *node3 = CreateNode();
+    node3->value = 3;
+    node3->next = NULL;
+    node3->prev = node2;
+    node2->next = node3;
+
+    head = node1;
+
+    printf("\nExpected Output:\n");
+    printf("3 2 1 \n");
+
+    printf("\nActual Output:\n");
+    ReverseDisplay();
+}
+
 void main() {
     int n, val;
     printf("Enter number of elements: ");
@@ -60,4 +128,10 @@ void main() {
     }
     Display();
     ReverseDisplay();
+
+    // Run unit tests
+    TestInsert();
+    TestDisplay();
+    TestReverseDisplay();
 }
+```
