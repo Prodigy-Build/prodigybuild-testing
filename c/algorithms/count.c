@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-int count(int num) 
+// Added return type 'void' to count function
+void count(int num) 
 {
     printf("[");
     
@@ -31,4 +32,6 @@ int main()
     printf("Count:~$ ");
     scanf("%d", &num);
     count(num);
+    // Added return statement to main function
+    return 0;
 }

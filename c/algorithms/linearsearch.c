@@ -1,3 +1,6 @@
+```c/algorithms/linearsearch.c```
+
+```c
 #include <stdio.h>
 
 int linsearch(int *yarr, int val)
@@ -17,7 +20,8 @@ int linsearch(int *yarr, int val)
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
+    const char *yarr[2] = {"Shluck much", "much Shluck"};
+    const char *val = "Shluck Much";
     linsearch(yarr, val);
 }
+```

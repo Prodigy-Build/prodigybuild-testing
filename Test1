@@ -1,0 +1,33 @@
+```python
+# This is a comment
+print("Hello, world!")  # This is also a comment
+
+# This is a multiline comment
+# that spans multiple lines
+print("This is a multiline comment")
+
+# This block of code
+if True:
+    print("This block of code will always run")
+
+# This block of code will never run
+if False:
+    print("This block of code will never run")
+```
+
+```python
+# This is a comment
+print("Hello, world!")  # This is also a comment
+
+# This is a multiline comment
+# that spans multiple lines
+print("This is a multiline comment")
+
+# This block of code
+if True:
+    print("This block of code will always run")
+
+# This block of code will never run
+if False:
+    print("This block of code will never run")
+```
