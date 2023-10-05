@@ -1,3 +1,4 @@
+```c
 // Implementing Doubly linked list.
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,6 +8,7 @@ struct Node {
     struct Node *next;
     struct Node *prev;
 };
+
 struct Node *head;
 
 struct Node *CreateNode() {
@@ -48,7 +50,7 @@ void ReverseDisplay() {
     printf("\n");
 }
 
-void main() {
+int main() {
     int n, val;
     printf("Enter number of elements: ");
     scanf("%d",&n);
@@ -60,4 +62,7 @@ void main() {
     }
     Display();
     ReverseDisplay();
+    
+    return 0;
 }
+```

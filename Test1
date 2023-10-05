@@ -1,0 +1,22 @@
+```python
+def add_numbers(x, y):
+    result = x + y
+    print(result)
+
+def subtract_numbers(x, y):
+    result = x - y
+    print(result)
+```
+
+```python
+def multiply_numbers(x, y):
+    result = x * y
+    print(result)
+
+def divide_numbers(x, y):
+    result = x / y
+    print(result)
+```
+Instructions:
+- Refactor the code to use return statements instead of print statements
+- Use meaningful variable names

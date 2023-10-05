@@ -17,7 +17,8 @@ int linsearch(int *yarr, int val)
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
+    char *yarr[] = {"Shluck much", "much Shluck"};
+    char *val = "Shluck Much";
     linsearch(yarr, val);
+    return 0;
 }
