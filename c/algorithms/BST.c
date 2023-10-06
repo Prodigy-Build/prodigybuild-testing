@@ -38,30 +38,37 @@ int Search(struct BST* RootPtr, int item) { /*Implemented search using recursion
     } else if(item == RootPtr->data) {
         return 1; /*Returns 1 when element found*/
     } else if(item < RootPtr->data) {
-        Search(RootPtr->left, item); /*Otherwise search in left side of binary tree if searching value is less then the current node value*/
+        return Search(RootPtr->left, item); /*Otherwise search in left side of binary tree if searching value is less then the current node value*/
     } else {
-        Search(RootPtr->right, item); /*Otherwise search in right side of binary tree if searching value is greater then the current node value*/
+        return Search(RootPtr->right, item); /*Otherwise search in right side of binary tree if searching value is greater then the current node value*/
     }
 }
 
-void main() {
+// Unit test cases
+void test() {
     struct BST* RootPtr = NULL;
-    int item, cont, key;
-    do {
-        printf("Enter item: ");
-        scanf("%d",&item);
-        Insert(&RootPtr, item);
+    
+    // Test case 1: Single element in the tree
+    Insert(&RootPtr, 10);
+    int result1 = Search(RootPtr, 10);
+    printf("Test case 1: %d\n", result1);
 
-        printf("\n1 to keep inserting/ 0 to Exit: ");
-        scanf("%d",&cont);
-    } while(cont == 1);
+    // Test case 2: Multiple elements in the tree
+    Insert(&RootPtr, 5);
+    Insert(&RootPtr, 15);
+    Insert(&RootPtr, 3);
+    Insert(&RootPtr, 7);
+    Insert(&RootPtr, 12);
+    Insert(&RootPtr, 17);
+    int result2 = Search(RootPtr, 7);
+    printf("Test case 2: %d\n", result2);
 
-    printf("\nEnter element to search: ");
-    scanf("%d",&key);
+    // Test case 3: Element not present in the tree
+    int result3 = Search(RootPtr, 20);
+    printf("Test case 3: %d\n", result3);
+}
 
-    if(Search(RootPtr, key) == 0) {
-        printf("\nFound\n");
-    } else {
-        printf("\nNot Found\n");
-    }
+int main() {
+    test();
+    return 0;
 }

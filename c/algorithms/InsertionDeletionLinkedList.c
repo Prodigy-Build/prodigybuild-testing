@@ -109,8 +109,62 @@ void Display() {
     }
 }
 
+void test_InsertAtBegin() {
+    InsertAtBegin(5);
+    assert(head->data == 5);
+    assert(head->next == NULL);
+}
+
+void test_InsertAtnthNode() {
+    InsertAtBegin(1);
+    InsertAtnthNode(2, 2);
+    InsertAtEnd(3);
+    assert(head->data == 1);
+    assert(head->next->data == 2);
+    assert(head->next->next->data == 3);
+}
+
+void test_InsertAtEnd() {
+    InsertAtEnd(6);
+    assert(head->data == 1);
+    assert(head->next->data == 2);
+    assert(head->next->next->data == 3);
+    assert(head->next->next->next->data == 6);
+    assert(head->next->next->next->next == NULL);
+}
+
+void test_DeleteAtBegin() {
+    DeleteAtBegin();
+    assert(head->data == 2);
+    assert(head->next->data == 3);
+}
+
+void test_DeleteAtEnd() {
+    DeleteAtEnd();
+    assert(head->data == 2);
+    assert(head->next->data == 3);
+    assert(head->next->next == NULL);
+}
+
+void test_DeletenthNode() {
+    DeletenthNode(2);
+    assert(head->data == 2);
+    assert(head->next == NULL);
+}
+
+void test_Display() {
+    Display();
+}
+
 void main() {
     head = NULL;
+    test_InsertAtBegin();
+    test_InsertAtnthNode();
+    test_InsertAtEnd();
+    test_DeleteAtBegin();
+    test_DeleteAtEnd();
+    test_DeletenthNode();
+    test_Display();
     int ch;
     while (1) {
         printf("\n\t\t**MENU**\n\t1. Insert at begining\n\t2. Insert at nth position\n\t3. Insert at end\n\t4. Delete at begining\n\t5. Delete at end\n\t6. Delete nth node\n\t7. Display\n\t8. Exit\n");
