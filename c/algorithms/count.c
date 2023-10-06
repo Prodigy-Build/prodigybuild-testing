@@ -4,25 +4,24 @@
 
 int count(int num) 
 {
-    printf("[");
-    
-    if(num > 20)
+    int result = 0;
+
+    if (num > 20)
     {
-        int i;
-        for(i = 0; i < num; i++)
-            printf("\n%d, \n", i);
-            
-        if(i == num + 1)
-            printf("]");
-    } else
-    {
-        int i;
-        for(i = 0; i < num; i++)
-            printf("%d", i);
-            
-        if(i == num)
-            printf("]");
+        for (int i = 0; i < num; i++)
+        {
+            result += i;
+        }
     }
+    else
+    {
+        for (int i = 0; i < num; i++)
+        {
+            result += i;
+        }
+    }
+
+    return result;
 }
 
 int main()
@@ -30,5 +29,9 @@ int main()
     int num;
     printf("Count:~$ ");
     scanf("%d", &num);
-    count(num);
+
+    int res = count(num);
+    printf("Result: %d\n", res);
+
+    return 0;
 }
