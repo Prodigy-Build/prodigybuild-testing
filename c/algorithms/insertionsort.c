@@ -1,19 +1,33 @@
 #include <stdio.h>
+#include <assert.h>
 
-int main()
-{
-    int *unsorted[] = {5, 6, 4, 3, 9};
-    int *sorted[5];
-    do
-    {
-        int a = 0;
-        a++;
-        int b = 0;
-        b++;
+void insertionSort(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
         
-        if(unsorted[a] < unsorted[b])
-        {
-            sorted[a] = unsorted[a];
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
         }
-    } while(sizeof(sorted) != sizeof(unsorted));
+        
+        arr[j + 1] = key;
+    }
+}
+
+int main() {
+    int unsorted[] = {5, 6, 4, 3, 9};
+    int sorted[] = {3, 4, 5, 6, 9};
+    
+    int n = sizeof(unsorted) / sizeof(unsorted[0]);
+    
+    insertionSort(unsorted, n);
+    
+    for (int i = 0; i < n; i++) {
+        assert(unsorted[i] == sorted[i]);
+    }
+    
+    printf("All test cases passed!\n");
+    
+    return 0;
 }
