@@ -1,9 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 void swap(int *a, int *b);
 int partition(int *a, int l, int h);
 void quick_sort(int *a, int l, int h);
+
+void test_quick_sort()
+{
+    int arr[] = {5, 7, 3, 2, 1};
+    int expected[] = {1, 2, 3, 5, 7};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    quick_sort(arr, 0, size - 1);
+
+    for (int i = 0; i < size; i++)
+    {
+        assert(arr[i] == expected[i]);
+    }
+}
 
 int main()
 {
@@ -28,6 +43,9 @@ int main()
     printf("\n");
 
     free(arr);
+
+    test_quick_sort();
+
     return 0;
 }
 

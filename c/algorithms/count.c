@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <assert.h>
 
-int count(int num) 
+int count(int num)
 {
     printf("[");
     
@@ -25,8 +26,20 @@ int count(int num)
     }
 }
 
+void test_count()
+{
+    count(0);
+    count(1);
+    count(5);
+    count(10);
+    count(15);
+    count(20);
+    count(25);
+}
+
 int main()
 {
+    test_count();
     int num;
     printf("Count:~$ ");
     scanf("%d", &num);
