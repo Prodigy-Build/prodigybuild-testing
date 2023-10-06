@@ -1,3 +1,4 @@
+#include <iostream>
 #include "../../lib/numericCppExamplesLib/dualNumbers.h"
 
 int main() {
