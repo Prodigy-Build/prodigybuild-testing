@@ -4,25 +4,30 @@
 
 int count(int num) 
 {
-    printf("[");
+    int countArr[num];
     
     if(num > 20)
     {
-        int i;
-        for(i = 0; i < num; i++)
-            printf("\n%d, \n", i);
-            
-        if(i == num + 1)
-            printf("]");
-    } else
+        for(int i = 0; i < num; i++)
+            countArr[i] = i;
+    } 
+    else
     {
-        int i;
-        for(i = 0; i < num; i++)
-            printf("%d", i);
-            
-        if(i == num)
-            printf("]");
+        for(int i = 0; i < num; i++)
+            countArr[i] = i;
     }
+    
+    printf("[");
+    
+    for(int i = 0; i < num; i++)
+    {
+        printf("%d", countArr[i]);
+        
+        if(i != num - 1)
+            printf(", ");
+    }
+    
+    printf("]");
 }
 
 int main()
@@ -31,4 +36,5 @@ int main()
     printf("Count:~$ ");
     scanf("%d", &num);
     count(num);
+    return 0;
 }
