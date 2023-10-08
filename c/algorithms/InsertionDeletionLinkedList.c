@@ -1,4 +1,5 @@
-// A menu-driven C program which let's the user Insert , Delete , Display elements in list at different positions and situations. 
+```c/algorithms/InsertionDeletionLinkedList.c
+// A menu-driven C program which let's the user Insert , Delete , Display elements in list at different positions and situations.
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -113,7 +114,7 @@ void main() {
     head = NULL;
     int ch;
     while (1) {
-        printf("\n\t\t**MENU**\n\t1. Insert at begining\n\t2. Insert at nth position\n\t3. Insert at end\n\t4. Delete at begining\n\t5. Delete at end\n\t6. Delete nth node\n\t7. Display\n\t8. Exit\n");
+        printf("\n\t\t**MENU**\n\t1. Insert at beginning\n\t2. Insert at nth position\n\t3. Insert at end\n\t4. Delete at beginning\n\t5. Delete at end\n\t6. Delete nth node\n\t7. Display\n\t8. Exit\n");
         printf("\n\tEnter your choice: ");
         scanf("%d",&ch);
 
@@ -161,3 +162,4 @@ void main() {
         }       
     }
 }
+```
