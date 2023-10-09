@@ -1,0 +1,8 @@
+def update_file_contents(file_contents):
+    updated_contents = []
+    for content in file_contents:
+        if content[0] == "test1":
+            updated_contents.append("New updated content for test1 file")
+        else:
+            updated_contents.append(content[1])
+    return updated_contents
