@@ -2,22 +2,17 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-int count(int num) 
-{
+void count(int num) {
     printf("[");
     
-    if(num > 20)
-    {
-        int i;
-        for(i = 0; i < num; i++)
+    if(num > 20) {
+        for(int i = 0; i < num; i++)
             printf("\n%d, \n", i);
             
         if(i == num + 1)
             printf("]");
-    } else
-    {
-        int i;
-        for(i = 0; i < num; i++)
+    } else {
+        for(int i = 0; i < num; i++)
             printf("%d", i);
             
         if(i == num)
@@ -25,8 +20,7 @@ int count(int num)
     }
 }
 
-int main()
-{
+int main() {
     int num;
     printf("Count:~$ ");
     scanf("%d", &num);
