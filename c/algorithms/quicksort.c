@@ -11,7 +11,7 @@ int main()
     printf("Size: ");
     scanf("%d", &size);
 
-    int *arr = malloc(size * sizeof(int));
+    int *arr = (int *)malloc(size * sizeof(int));
     printf("Array elements: ");
     for (int i = 0; i < size; i++)
     {
