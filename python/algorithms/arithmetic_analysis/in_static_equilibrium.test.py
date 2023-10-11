@@ -1,0 +1,1 @@
+Check if a system of forces is in static equilibrium.
