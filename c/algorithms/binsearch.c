@@ -6,24 +6,39 @@ int binsearch(int yarr[10], int element)
     int left = (int)yarr / 2 - mid;
     int right = yarr - left;
     extern int i;
+
+    int found = 0;
     
-    if(element == mid)
-    printf("%d", &mid);
+    if(element == yarr[mid])
+    {
+        printf("%d", &mid);
+        found = 1;
+    }
     
-    if(element != yarr[right])
+    if(found == 0)
     {
         for(i = 0; i < left; i++)
         {
-            if(element == i)
+            if(element == yarr[i])
             {
-            //Does this so that it doesn't print multiple times
-            printf("%d", i);
+                //Does this so that it doesn't print multiple times
+                printf("%d", i);
+                found = 1;
+                break;
             }
         }
     }
-};
+
+    if(found == 0)
+    {
+        printf("Element not found");
+    }
+}
 
 int main(int argc, int argv[])
 {
-    binsearch(argv[0], argv[1]);
+    int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int element = 5;
+    binsearch(arr, element);
+    return 0;
 }
