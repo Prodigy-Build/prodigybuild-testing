@@ -73,3 +73,60 @@ if __name__ == "__main__":
     # Save the output image
     pil_img = Image.fromarray(output).convert("RGB")
     pil_img.save("result_dilation.png")
+
+
+
+def test_rgb_to_gray():
+    assert np.allclose(
+        rgb_to_gray(np.array([[[127, 255, 0]]])),
+        np.array([[187.6453]])
+    )
+    assert np.allclose(
+        rgb_to_gray(np.array([[[0, 0, 0]]])),
+        np.array([[0.]])
+    )
+    assert np.allclose(
+        rgb_to_gray(np.array([[[2, 4, 1]]])),
+        np.array([[3.0598]])
+    )
+    assert np.allclose(
+        rgb_to_gray(np.array([[[26, 255, 14], [5, 147, 20], [1, 200, 0]]])),
+        np.array([[159.0524,  90.0635, 117.6989]])
+    )
+
+
+def test_gray_to_binary():
+    assert np.array_equal(
+        gray_to_binary(np.array([[127, 255, 0]])),
+        np.array([[False,  True, False]])
+    )
+    assert np.array_equal(
+        gray_to_binary(np.array([[0]])),
+        np.array([[False]])
+    )
+    assert np.array_equal(
+        gray_to_binary(np.array([[26.2409, 4.9315, 1.4729]])),
+        np.array([[False, False, False]])
+    )
+    assert np.array_equal(
+        gray_to_binary(np.array([[26, 255, 14], [5, 147, 20], [1, 200, 0]])),
+        np.array([[False,  True, False],
+           [False,  True, False],
+           [False,  True, False]])
+    )
+
+
+def test_dilation():
+    assert np.array_equal(
+        dilation(np.array([[True, False, True]]), np.array([[0, 1, 0]]))),
+        np.array([[False, False, False]])
+    )
+    assert np.array_equal(
+        dilation(np.array([[False, False, True]]), np.array([[1, 0, 1]]))),
+        np.array([[False, False, False]])
+    )
+
+
+test_rgb_to_gray()
+test_gray_to_binary()
+test_dilation()
