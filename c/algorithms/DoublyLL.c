@@ -1,3 +1,4 @@
+'''
 // Implementing Doubly linked list.
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,6 +49,15 @@ void ReverseDisplay() {
     printf("\n");
 }
 
+void Test_Insert() {
+    Insert(1);
+    Insert(2);
+    Insert(3);
+    Insert(4);
+    Display();
+    ReverseDisplay();
+}
+
 void main() {
     int n, val;
     printf("Enter number of elements: ");
@@ -60,4 +70,6 @@ void main() {
     }
     Display();
     ReverseDisplay();
+    Test_Insert();
 }
+'''

@@ -1,3 +1,6 @@
+#include <ctest.h>
+#include <stdlib.h>
+
 // Implementation of Binary Search Tree 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,6 +17,7 @@ struct BST *CreateNode() {
     new->right = NULL;
     return new; 
 };
+
 
 void Insert(struct BST** RootPtr, int value) {
     struct BST* temp = *RootPtr;
@@ -64,4 +68,37 @@ void main() {
     } else {
         printf("\nNot Found\n");
     }
+}
+
+CTEST(BST, InsertTest) {
+    struct BST* RootPtr = NULL;
+    Insert(&RootPtr, 5);
+    Insert(&RootPtr, 3);
+    Insert(&RootPtr, 7);
+    Insert(&RootPtr, 2);
+    Insert(&RootPtr, 4);
+    Insert(&RootPtr, 6);
+    Insert(&RootPtr, 8);
+    ASSERT_EQUAL(5, RootPtr->data);
+    ASSERT_EQUAL(3, RootPtr->left->data);
+    ASSERT_EQUAL(7, RootPtr->right->data);
+    ASSERT_EQUAL(2, RootPtr->left->left->data);
+    ASSERT_EQUAL(4, RootPtr->left->right->data);
+    ASSERT_EQUAL(6, RootPtr->right->left->data);
+    ASSERT_EQUAL(8, RootPtr->right->right->data);
+}
+
+CTEST(BST, SearchTest) {
+    struct BST* RootPtr = NULL;
+    Insert(&RootPtr, 5);
+    Insert(&RootPtr, 3);
+    Insert(&RootPtr, 7);
+    Insert(&RootPtr, 2);
+    Insert(&RootPtr, 4);
+    Insert(&RootPtr, 6);
+    Insert(&RootPtr, 8);
+    ASSERT_TRUE(Search(RootPtr, 5));
+    ASSERT_FALSE(Search(RootPtr, 1));
+    ASSERT_TRUE(Search(RootPtr, 4));
+    ASSERT_TRUE(Search(RootPtr, 6));
 }
