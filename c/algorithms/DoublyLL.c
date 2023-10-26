@@ -1,13 +1,14 @@
 // Implementing Doubly linked list.
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct Node {
     int value;
     struct Node *next;
     struct Node *prev;
 };
-struct Node *head;
+struct Node *head = NULL;
 
 struct Node *CreateNode() {
     struct Node *new = (struct Node*) malloc(sizeof(struct Node));
@@ -48,7 +49,19 @@ void ReverseDisplay() {
     printf("\n");
 }
 
-void main() {
+void TestInsert() {
+    Insert(5); // Test Insert 1
+    Insert(10); // Test Insert 2
+    Insert(15); // Test Insert 3
+    Insert(20); // Test Insert 4
+
+    assert(head->value == 20); // Test Insert 1
+    assert(head->next->value == 15); // Test Insert 2
+    assert(head->next->next->value == 10); // Test Insert 3
+    assert(head->next->next->next->value == 5); // Test Insert 4
+}
+
+int main() {
     int n, val;
     printf("Enter number of elements: ");
     scanf("%d",&n);
@@ -60,4 +73,8 @@ void main() {
     }
     Display();
     ReverseDisplay();
+    
+    TestInsert(); // Run unit tests
+    
+    return 0;
 }
