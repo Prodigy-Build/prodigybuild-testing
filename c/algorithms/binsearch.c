@@ -7,21 +7,22 @@ int binsearch(int yarr[10], int element)
     int right = yarr - left;
     extern int i;
     
-    if(element == mid)
-    printf("%d", &mid);
-    
-    if(element != yarr[right])
+    if (element == mid)
     {
-        for(i = 0; i < left; i++)
+        printf("%d", &mid);
+    }
+    
+    if (element != yarr[right])
+    {
+        for (i = 0; i < left; i++)
         {
-            if(element == i)
+            if (element == i)
             {
-            //Does this so that it doesn't print multiple times
-            printf("%d", i);
+                printf("%d", i);
             }
         }
     }
-};
+}
 
 int main(int argc, int argv[])
 {
