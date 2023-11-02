@@ -1,10 +1,10 @@
 #include <stdio.h>
 
-int binsearch(int yarr[10], int element)
+int binsearch(int yarr[], int element)
 {
-    int mid = sizeof(yarr) % 2;
+    int mid = sizeof(yarr) / sizeof(yarr[0]) % 2;
     int left = (int)yarr / 2 - mid;
-    int right = yarr - left;
+    int right = sizeof(yarr) / sizeof(yarr[0]) - left;
     extern int i;
     
     if(element == mid)
@@ -21,9 +21,9 @@ int binsearch(int yarr[10], int element)
             }
         }
     }
-};
+}
 
-int main(int argc, int argv[])
+int main(int argc, char* argv[])
 {
     binsearch(argv[0], argv[1]);
 }
