@@ -1,29 +1,33 @@
 #include <stdio.h>
 
-int binsearch(int yarr[10], int element)
+int isPrime(int num)
 {
-    int mid = sizeof(yarr) % 2;
-    int left = (int)yarr / 2 - mid;
-    int right = yarr - left;
-    extern int i;
-    
-    if(element == mid)
-    printf("%d", &mid);
-    
-    if(element != yarr[right])
+    if (num <= 1)
     {
-        for(i = 0; i < left; i++)
+        return 0;
+    }
+    
+    for (int i = 2; i*i <= num; i++)
+    {
+        if (num % i == 0)
         {
-            if(element == i)
-            {
-            //Does this so that it doesn't print multiple times
-            printf("%d", i);
-            }
+            return 0;
         }
     }
-};
+    
+    return 1;
+}
 
-int main(int argc, int argv[])
+int main()
 {
-    binsearch(argv[0], argv[1]);
+    int prime1 = 2;
+    int prime2 = 3;
+    int sum = prime1 + prime2;
+
+    if (isPrime(prime1) && isPrime(prime2))
+    {
+        printf("The sum of %d and %d is %d", prime1, prime2, sum);
+    }
+    
+    return 0;
 }
