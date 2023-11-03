@@ -8,7 +8,7 @@ int main()
     int rem = num % 2;
     
     if(rem == 0)
-    printf("Even");
+    printf("Number is even");
     else
-    printf("Odd");
+    printf("Number is odd");
 }
