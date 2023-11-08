@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <assert.h>
 
 int binsearch(int yarr[10], int element)
 {
@@ -23,7 +23,24 @@ int binsearch(int yarr[10], int element)
     }
 };
 
+void test_binsearch()
+{
+    int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    
+    // Test case 1: Element is present at the middle of the array
+    assert(binsearch(arr, 5) == 5);
+	
+    // Test case 2: Element is present at the beginning of the array
+    assert(binsearch(arr, 1) == 1);
+	
+    // Test case 3: Element is present at the end of the array
+    assert(binsearch(arr, 10) == 10);
+	
+    // Test case 4: Element is not present in the array
+    assert(binsearch(arr, 20) == -1);
+}
+
 int main(int argc, int argv[])
 {
-    binsearch(argv[0], argv[1]);
+    test_binsearch();
 }
