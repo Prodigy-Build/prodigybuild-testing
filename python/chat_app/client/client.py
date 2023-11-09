@@ -35,18 +35,6 @@ serverdb = os.path.join(ROOT,"servers.json")
 ChatRoomUI = os.path.join(ROOT,"chatroom.ui")
 AddServerWindowUI = os.path.join(ROOT,"add_server.ui")
 
-if os.path.isfile(serverdb):
-	pass
-else:
-	data = {
-	"server1" : {
-		"host" : "127.0.0.1",
-		"port" : 1100
-		}
-	}
-	with open(serverdb,"w+") as file:
-		json.dump(data,file,indent=4)
-
 def timed():
 	return(strftime("%H:%M:%S",localtime()))
 
@@ -68,7 +56,6 @@ def send(channel, *args):
 	channel.send(buf)
 
 def receive(channel):
-
 	size = struct.calcsize("L")
 	size = channel.recv(size)
 	try:
@@ -173,8 +160,7 @@ class ChatThread(Thread):
 					child = QTreeWidgetItem(root)
 					child.setText(0,u)
 					child.setFlags(child.flags())
-					
-			
+
 	def run(self):
 		element = self.host.split(":")
 		host = element[0]
