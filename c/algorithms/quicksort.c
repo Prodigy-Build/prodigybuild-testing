@@ -1,3 +1,4 @@
+```
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -33,8 +34,7 @@ int main()
 
 void swap(int *a, int *b)
 {
-    int tmp;
-    tmp = *a;
+    int tmp = *a;
     *a = *b;
     *b = tmp;
     return;
@@ -72,3 +72,4 @@ void quick_sort(int a[], int l, int h)
 
     return;
 }
+```

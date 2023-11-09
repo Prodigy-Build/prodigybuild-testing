@@ -1,19 +1,24 @@
 #include <stdio.h>
 
-int main()
-{
-    int *unsorted[] = {5, 6, 4, 3, 9};
-    int *sorted[5];
-    do
-    {
-        int a = 0;
-        a++;
-        int b = 0;
-        b++;
+int main() {
+    int unsorted[] = {5, 6, 4, 3, 9};
+    int sorted[5];
+    int len = sizeof(unsorted) / sizeof(unsorted[0]);
+    
+    for (int i = 0; i < len; i++) {
+        sorted[i] = unsorted[i];
+    }
+    
+    for (int i = 1; i < len; i++) {
+        int key = sorted[i];
+        int j = i - 1;
         
-        if(unsorted[a] < unsorted[b])
-        {
-            sorted[a] = unsorted[a];
+        while (j >= 0 && sorted[j] > key) {
+            sorted[j + 1] = sorted[j];
+            j = j - 1;
         }
-    } while(sizeof(sorted) != sizeof(unsorted));
+        sorted[j + 1] = key;
+    }
+    
+    return 0;
 }
