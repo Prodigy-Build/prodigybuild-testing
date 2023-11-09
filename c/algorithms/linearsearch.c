@@ -7,17 +7,14 @@ int linsearch(int *yarr, int val)
         if(yarr[i] == val)
         {
             return 0;
-        }    
-        else
-        {
-          return 1;
         }
     }
+    return 1;
 }
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
+    int yarr[] = {2, 4, 6, 8, 10};
+    int val = 6;
     linsearch(yarr, val);
 }

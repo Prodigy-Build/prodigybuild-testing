@@ -1,4 +1,5 @@
-// Implementing Doubly linked list.
+```c
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -7,19 +8,20 @@ struct Node {
     struct Node *next;
     struct Node *prev;
 };
-struct Node *head;
+
+struct Node *head = NULL;
 
 struct Node *CreateNode() {
     struct Node *new = (struct Node*) malloc(sizeof(struct Node));
     return new;
 }
 
-void Insert(int val) { /*Inserting element at head*/
-    struct Node *NewNode = CreateNode(); /*NewNode is created everytime function is called*/
-    NewNode->value = val; /*Value assigned to NewNode*/
-    NewNode->next = head; /*NewNode's next points to head*/
-    NewNode->prev = NULL; /*NewNode's previous points to NULL*/
-    if (head != NULL) { 
+void Insert(int val) {
+    struct Node *NewNode = CreateNode();
+    NewNode->value = val;
+    NewNode->next = head;
+    NewNode->prev = NULL;
+    if (head != NULL) {
         head->prev = NewNode;
     }
     head = NewNode;
@@ -27,20 +29,20 @@ void Insert(int val) { /*Inserting element at head*/
 
 void Display() {
     struct Node *temp = head;
-    printf("\nForward:\n"); /*Printing normally in forward manner*/
+    printf("\nForward:\n");
     while(temp!=NULL) {
         printf("%d ",temp->value);
         temp = temp->next;
     }
+    printf("\n");
 }
 
 void ReverseDisplay() {
     struct Node *temp = head;
-    while(temp->next!=NULL) { /*Moving to the last node*/
+    while(temp->next!=NULL) {
         temp = temp->next;
     }
-
-    printf("\nBackward:\n"); /*Printing in backward manner*/
+    printf("\nBackward:\n");
     while(temp!=NULL) {
         printf("%d ",temp->value);
         temp = temp->prev;
@@ -48,7 +50,7 @@ void ReverseDisplay() {
     printf("\n");
 }
 
-void main() {
+int main() {
     int n, val;
     printf("Enter number of elements: ");
     scanf("%d",&n);
@@ -56,8 +58,11 @@ void main() {
     for (int i=0; i<n; i++) {
         printf("Enter element: ");
         scanf("%d",&val);
-        Insert(val); /*Inserting value everytime loop executes*/
+        Insert(val);
     }
     Display();
     ReverseDisplay();
+
+    return 0;
 }
+```

@@ -1,3 +1,4 @@
+```c
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -40,7 +41,7 @@ void swap(int *a, int *b)
     return;
 }
 
-int partition(int a[], int l, int h)
+int partition(int *a, int l, int h)
 {
     int i = l, j = l, p = h;
 
@@ -59,7 +60,7 @@ int partition(int a[], int l, int h)
     return j;
 }
 
-void quick_sort(int a[], int l, int h)
+void quick_sort(int *a, int l, int h)
 {
     int p;
 
@@ -72,3 +73,4 @@ void quick_sort(int a[], int l, int h)
 
     return;
 }
+```
