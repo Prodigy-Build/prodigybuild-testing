@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <assert.h>
 
 int count(int num) 
 {
@@ -31,4 +32,5 @@ int main()
     printf("Count:~$ ");
     scanf("%d", &num);
     count(num);
+    assert(num >= 0);
 }

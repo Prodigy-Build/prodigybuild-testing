@@ -23,7 +23,7 @@ int binsearch(int yarr[10], int element)
     }
 };
 
-int main(int argc, int argv[])
+int main(int argc, int *argv[])
 {
     binsearch(argv[0], argv[1]);
 }
