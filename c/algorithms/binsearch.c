@@ -8,7 +8,7 @@ int binsearch(int yarr[10], int element)
     extern int i;
     
     if(element == mid)
-    printf("%d", &mid);
+        printf("%d", &mid);
     
     if(element != yarr[right])
     {
@@ -16,8 +16,7 @@ int binsearch(int yarr[10], int element)
         {
             if(element == i)
             {
-            //Does this so that it doesn't print multiple times
-            printf("%d", i);
+                printf("%d", i);
             }
         }
     }

