@@ -1,19 +1,35 @@
+```c
 #include <stdio.h>
 
+void insertionSort(int arr[], int n)
+{
+    int i, key, j;
+    for (i = 1; i < n; i++)
+    {
+        key = arr[i];
+        j = i - 1;
+ 
+        while (j >= 0 && arr[j] > key)
+        {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+    }
+}
+ 
 int main()
 {
-    int *unsorted[] = {5, 6, 4, 3, 9};
-    int *sorted[5];
-    do
+    int unsorted[] = {5, 6, 4, 3, 9};
+    int n = sizeof(unsorted)/sizeof(unsorted[0]);
+ 
+    insertionSort(unsorted, n);
+ 
+    for (int i = 0; i < n; i++)
     {
-        int a = 0;
-        a++;
-        int b = 0;
-        b++;
-        
-        if(unsorted[a] < unsorted[b])
-        {
-            sorted[a] = unsorted[a];
-        }
-    } while(sizeof(sorted) != sizeof(unsorted));
+        printf("%d ", unsorted[i]);
+    }
+ 
+    return 0;
 }
+```
