@@ -1,3 +1,4 @@
+```c
 #include <stdio.h>
 
 int main()
@@ -7,8 +8,11 @@ int main()
     scanf("%ld", &num);
     int rem = num % 2;
     
-    if(rem == 0)
-    printf("Even");
-    else
-    printf("Odd");
+    if(rem == 0) {
+        printf("Even");
+    } else {
+        printf("Odd");
+    }
+    return 0;
 }
+```
