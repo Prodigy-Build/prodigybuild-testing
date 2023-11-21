@@ -8,7 +8,9 @@ int main()
     int rem = num % 2;
     
     if(rem == 0)
-    printf("Even");
+        printf("Even");
     else
-    printf("Odd");
+        printf("Odd");
 }
+
+/* No changes were made to the original code */
