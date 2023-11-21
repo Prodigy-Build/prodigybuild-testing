@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <assert.h>
 
 int binsearch(int yarr[10], int element)
 {
@@ -23,7 +24,19 @@ int binsearch(int yarr[10], int element)
     }
 };
 
+void test_binsearch()
+{
+    int arr[10] = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19};
+
+    assert(binsearch(arr, 15) == 6);
+    assert(binsearch(arr, 3) == 1);
+    assert(binsearch(arr, 19) == 9);
+    assert(binsearch(arr, 20) == -1);
+    assert(binsearch(arr, -1) == -1);
+}
+
 int main(int argc, int argv[])
 {
-    binsearch(argv[0], argv[1]);
+    test_binsearch();
+    return 0;
 }

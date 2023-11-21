@@ -1,7 +1,9 @@
+```c
 #include <stdio.h>
+#include <stdbool.h>
+#include <assert.h>
 
-void bubble_sort(int *array, int len) 
-{
+void bubble_sort(int *array, int len) {
     for (int i = 0; i < len; i++) {
         for (int j = 0; j < len - i - 1; j++) {
             if (array[j] > array[j + 1]) {
@@ -13,15 +15,30 @@ void bubble_sort(int *array, int len)
     }
 }
 
-int main(void) 
-{
-    int yarr[] = {3, 9, 4, 8, 7, 6, 1, 2, 0, 10};
-    
-    bubble_sort(yarr, 10);
+void test_bubble_sort() {
+    int arr1[] = {3, 9, 4, 8, 7, 6, 1, 2, 0, 10};
+    int sorted_arr1[] = {0, 1, 2, 3, 4, 6, 7, 8, 9, 10};
+    int len1 = sizeof(arr1) / sizeof(arr1[0]);
 
-    printf("[");
-    for (int i = 0; i < 10; i++)
-        printf("%d, ", yarr[i]);	
-    printf("\b\b]\n");
+    bubble_sort(arr1, len1);
+
+    for (int i = 0; i < len1; i++) {
+        assert(arr1[i] == sorted_arr1[i]);
+    }
+
+    int arr2[] = {5, 4, 3, 2, 1};
+    int sorted_arr2[] = {1, 2, 3, 4, 5};
+    int len2 = sizeof(arr2) / sizeof(arr2[0]);
+
+    bubble_sort(arr2, len2);
+
+    for (int i = 0; i < len2; i++) {
+        assert(arr2[i] == sorted_arr2[i]);
+    }
+}
+
+int main(void) {
+    test_bubble_sort();
     return 0;
 }
+```
