@@ -6,9 +6,11 @@ int main()
     printf("Enter a number\n");
     scanf("%ld", &num);
     int rem = num % 2;
-    
-    if(rem == 0)
-    printf("Even");
+
+    if (rem == 0)
+        printf("Even\n");
     else
-    printf("Odd");
+        printf("Odd\n");
+
+    return 0;
 }
