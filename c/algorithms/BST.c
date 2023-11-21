@@ -1,6 +1,7 @@
 // Implementation of Binary Search Tree 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct BST {
     int data;
@@ -44,24 +45,35 @@ int Search(struct BST* RootPtr, int item) { /*Implemented search using recursion
     }
 }
 
-void main() {
+// Unit test cases for Insert and Search functions
+void test() {
     struct BST* RootPtr = NULL;
-    int item, cont, key;
-    do {
-        printf("Enter item: ");
-        scanf("%d",&item);
-        Insert(&RootPtr, item);
+    int key;
 
-        printf("\n1 to keep inserting/ 0 to Exit: ");
-        scanf("%d",&cont);
-    } while(cont == 1);
+    // Test case 1: Inserting a value and searching for it should return 1
+    Insert(&RootPtr, 5);
+    assert(Search(RootPtr, 5) == 1);
 
-    printf("\nEnter element to search: ");
-    scanf("%d",&key);
+    // Test case 2: Inserting multiple values and searching for them should return 1
+    Insert(&RootPtr, 3);
+    Insert(&RootPtr, 7);
+    Insert(&RootPtr, 1);
+    Insert(&RootPtr, 4);
+    Insert(&RootPtr, 6);
+    Insert(&RootPtr, 8);
+    assert(Search(RootPtr, 3) == 1);
+    assert(Search(RootPtr, 7) == 1);
+    assert(Search(RootPtr, 1) == 1);
+    assert(Search(RootPtr, 4) == 1);
+    assert(Search(RootPtr, 6) == 1);
+    assert(Search(RootPtr, 8) == 1);
 
-    if(Search(RootPtr, key) == 0) {
-        printf("\nFound\n");
-    } else {
-        printf("\nNot Found\n");
-    }
+    // Test case 3: Searching for a value not present in the binary search tree should return 0
+    assert(Search(RootPtr, 2) == 0);
+    assert(Search(RootPtr, 9) == 0);
+}
+
+int main() {
+    test();
+    return 0;
 }

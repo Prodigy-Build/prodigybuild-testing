@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <assert.h>
 
 void bubble_sort(int *array, int len) 
 {
@@ -13,15 +14,35 @@ void bubble_sort(int *array, int len)
     }
 }
 
+void test_bubble_sort() {
+    // Test case 1
+    int arr1[] = {9, 5, 2, 7, 1};
+    int len1 = sizeof(arr1) / sizeof(arr1[0]);
+    bubble_sort(arr1, len1);
+    for (int i = 0; i < len1 - 1; i++) {
+        assert(arr1[i] <= arr1[i + 1]);
+    }
+
+    // Test case 2
+    int arr2[] = {3, 1, 2};
+    int len2 = sizeof(arr2) / sizeof(arr2[0]);
+    bubble_sort(arr2, len2);
+    for (int i = 0; i < len2 - 1; i++) {
+        assert(arr2[i] <= arr2[i + 1]);
+    }
+
+    // Test case 3
+    int arr3[] = {6, 8, 4, 2, 7, 3};
+    int len3 = sizeof(arr3) / sizeof(arr3[0]);
+    bubble_sort(arr3, len3);
+    for (int i = 0; i < len3 - 1; i++) {
+        assert(arr3[i] <= arr3[i + 1]);
+    }
+}
+
 int main(void) 
 {
-    int yarr[] = {3, 9, 4, 8, 7, 6, 1, 2, 0, 10};
-    
-    bubble_sort(yarr, 10);
-
-    printf("[");
-    for (int i = 0; i < 10; i++)
-        printf("%d, ", yarr[i]);	
-    printf("\b\b]\n");
+    test_bubble_sort();
+    printf("All test cases passed.\n");
     return 0;
 }

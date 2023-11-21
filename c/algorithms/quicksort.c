@@ -1,33 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 void swap(int *a, int *b);
 int partition(int *a, int l, int h);
 void quick_sort(int *a, int l, int h);
 
+void test_quick_sort();
+
 int main()
 {
-    int size;
-    printf("Size: ");
-    scanf("%d", &size);
-
-    int *arr = malloc(size * sizeof(int));
-    printf("Array elements: ");
-    for (int i = 0; i < size; i++)
-    {
-        scanf("%d", &arr[i]);
-    }
-
-    quick_sort(arr, 0, size - 1);
-
-    printf("Sorted array:");
-    for (int i = 0; i < size; i++)
-    {
-        printf(" %d", arr[i]);
-    }
-    printf("\n");
-
-    free(arr);
+    test_quick_sort();
     return 0;
 }
 
@@ -71,4 +54,23 @@ void quick_sort(int a[], int l, int h)
     }
 
     return;
+}
+
+void test_quick_sort()
+{
+    int test_arr1[5] = {5, 4, 3, 2, 1};
+    int expected_arr1[5] = {1, 2, 3, 4, 5};
+    quick_sort(test_arr1, 0, 4);
+    for (int i = 0; i < 5; i++)
+    {
+        assert(test_arr1[i] == expected_arr1[i]);
+    }
+
+    int test_arr2[5] = {3, 1, 4, 2, 5};
+    int expected_arr2[5] = {1, 2, 3, 4, 5};
+    quick_sort(test_arr2, 0, 4);
+    for (int i = 0; i < 5; i++)
+    {
+        assert(test_arr2[i] == expected_arr2[i]);
+    }
 }

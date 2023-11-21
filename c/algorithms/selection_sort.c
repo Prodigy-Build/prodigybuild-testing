@@ -90,3 +90,36 @@ int main(int argc, char *argv[])
     free(arr);
     return EXIT_SUCCESS;
 }
+
+// Test Cases
+
+#include <assert.h>
+
+void test()
+{
+    int arr1[] = {4, 2, 9, 3, 7, 5, 8, 1, 6};
+    int sorted_arr1[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+    selection_sort(arr1, sizeof(arr1) / sizeof(arr1[0]));
+
+    for (int i = 0; i < sizeof(arr1) / sizeof(arr1[0]); i++)
+    {
+        assert(arr1[i] == sorted_arr1[i]);
+    }
+
+    int arr2[] = {5, 2, 0, -3, 9};
+    int sorted_arr2[] = {-3, 0, 2, 5, 9};
+
+    selection_sort(arr2, sizeof(arr2) / sizeof(arr2[0]));
+
+    for (int i = 0; i < sizeof(arr2) / sizeof(arr2[0]); i++)
+    {
+        assert(arr2[i] == sorted_arr2[i]);
+    }
+}
+
+int main()
+{
+    test();
+    return 0;
+}
