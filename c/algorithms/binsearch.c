@@ -21,7 +21,7 @@ int binsearch(int yarr[10], int element)
             }
         }
     }
-};
+}
 
 int main(int argc, int argv[])
 {
