@@ -37,10 +37,9 @@ void swap(int *a, int *b)
     tmp = *a;
     *a = *b;
     *b = tmp;
-    return;
 }
 
-int partition(int a[], int l, int h)
+int partition(int *a, int l, int h)
 {
     int i = l, j = l, p = h;
 
@@ -59,7 +58,7 @@ int partition(int a[], int l, int h)
     return j;
 }
 
-void quick_sort(int a[], int l, int h)
+void quick_sort(int *a, int l, int h)
 {
     int p;
 
@@ -69,6 +68,4 @@ void quick_sort(int a[], int l, int h)
         quick_sort(a, l, p - 1);
         quick_sort(a, p + 1, h);
     }
-
-    return;
 }
