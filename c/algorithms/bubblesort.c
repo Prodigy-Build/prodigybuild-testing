@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <assert.h>
 
 void bubble_sort(int *array, int len) 
 {
@@ -13,8 +14,22 @@ void bubble_sort(int *array, int len)
     }
 }
 
+void test_bubble_sort() {
+    int testArray[] = {5, 2, 3, 1, 4};
+    int expectedArray[] = {1, 2, 3, 4, 5};
+    int len = sizeof(testArray) / sizeof(testArray[0]);
+    
+    bubble_sort(testArray, len);
+    
+    for (int i = 0; i < len; i++) {
+        assert(testArray[i] == expectedArray[i]);
+    }
+}
+
 int main(void) 
 {
+    test_bubble_sort();
+    
     int yarr[] = {3, 9, 4, 8, 7, 6, 1, 2, 0, 10};
     
     bubble_sort(yarr, 10);
