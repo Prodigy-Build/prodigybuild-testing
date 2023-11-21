@@ -1,53 +1,51 @@
-#include<stdio.h>
-#include<time.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-// function to merge the sub-arrays
-void merge(int a[],int low,int mid ,int high)
-{
-	int b[20]; //same size of a[]
-	int i, j, k;
-	i = low, j = mid + 1,k = low;
-	while(i <= mid && j <= high)
-	{
-		if(a[i]<=a[j])
-		    b[k++]=a[i++];
-		else
-		   b[k++]=a[j++]; //copying the elements 
-	}
-	while (i<=mid)
-		b[k++]=a[i++];
-	while 
-		(j<=high) b[k++]=a[j++];
-		for (k=low;k<=high;k++)
-	        a[k]=b[k];
+void merge(int a[], int low, int mid, int high) {
+    int i, j, k;
+    int n1 = mid - low + 1;
+    int n2 = high - mid;
+    int L[n1], R[n2];
+
+    for (i = 0; i < n1; i++)
+        L[i] = a[low + i];
+    for (j = 0; j < n2; j++)
+        R[j] = a[mid + 1 + j];
+
+    i = 0;
+    j = 0;
+    k = low;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j])
+            a[k++] = L[i++];
+        else
+            a[k++] = R[j++];
+    }
+
+    while (i < n1)
+        a[k++] = L[i++];
+    while (j < n2)
+        a[k++] = R[j++];
 }
 
-// merge sort function
-void mergesort(int a[],int low,int high)
-{
-	int mid;
-	if(low>=high)
-	  return;
-	mid=(low+high)/2;
-	mergesort(a,low,mid);
-	mergesort(a,mid+1,high);
-	merge(a,low,mid,high);
+void mergeSort(int a[], int low, int high) {
+    if (low < high) {
+        int mid = low + (high - low) / 2;
+        mergeSort(a, low, mid);
+        mergeSort(a, mid + 1, high);
+        merge(a, low, mid, high);
+    }
 }
 
-// main fucntion
-int main()
-{
-	int a[7] = {83, 20, 9, 50, 115, 61, 17};
-	int n = 7;
+int main() {
+    int a[] = {83, 20, 9, 50, 115, 61, 17};
+    int n = sizeof(a) / sizeof(a[0]);
 
-	mergesort(a, 0, n-1);
-	
-	printf("\n Sorted numbers are: ");
+    mergeSort(a, 0, n - 1);
 
-	// function to print the sorted array
-	int k;
-	for(k = 0; k < 7; k++)
-	    printf("%d, ",a[k]);
-	return 0;
+    printf("Sorted numbers are: ");
+    for (int i = 0; i < n; i++)
+        printf("%d, ", a[i]);
+
+    return 0;
 }
