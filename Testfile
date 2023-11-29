@@ -1,0 +1,33 @@
+```python
+# Chess Game
+
+# Function to initialize chess board
+def initialize_board():
+    pass
+
+# Function to print the chess board
+def print_board():
+    pass
+
+# Function to perform a move
+def make_move(start_pos, end_pos):
+    pass
+
+# Function to check if the game is over
+def check_game_over():
+    pass
+
+# Main program
+def main():
+    initialize_board()
+    print_board()
+    while not check_game_over():
+        start_pos = input("Enter the start position: ")
+        end_pos = input("Enter the end position: ")
+        make_move(start_pos, end_pos)
+        print_board()
+
+# Execute main function
+if __name__ == "__main__":
+    main()
+```
