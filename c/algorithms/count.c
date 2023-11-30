@@ -1,34 +1,32 @@
+```c/algorithms/count.c``` updated:
+
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 
-int count(int num) 
-{
+void count(int num) {
     printf("[");
     
-    if(num > 20)
-    {
-        int i;
-        for(i = 0; i < num; i++)
+    for(int i = 0; i < num; i++) {
+        if(num > 20) {
             printf("\n%d, \n", i);
-            
-        if(i == num + 1)
-            printf("]");
-    } else
-    {
-        int i;
-        for(i = 0; i < num; i++)
+        } else {
             printf("%d", i);
-            
-        if(i == num)
-            printf("]");
+        }
+    }
+    
+    if(num > 20 && num == i) {
+        printf("]");
+    } else if(num <= 20 && num == i) {
+        printf("]");
     }
 }
 
-int main()
-{
+int main() {
     int num;
     printf("Count:~$ ");
     scanf("%d", &num);
     count(num);
 }
+```
