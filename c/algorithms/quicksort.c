@@ -48,13 +48,13 @@ int partition(int a[], int l, int h)
     {
         if (a[i] < a[p])
         {
-            swap(&a[i], &a[j]);
+            swap(&a[i], &a[j]); // unchanged
             j++;
         }
         i++;
     }
-
-    swap(&a[p], &a[j]);
+    
+    swap(&a[p], &a[j]); // unchanged
 
     return j;
 }
@@ -69,6 +69,6 @@ void quick_sort(int a[], int l, int h)
         quick_sort(a, l, p - 1);
         quick_sort(a, p + 1, h);
     }
-
+    
     return;
 }
