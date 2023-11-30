@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-int count(int num) 
+void count(int num) 
 {
     printf("[");
     
@@ -10,15 +10,26 @@ int count(int num)
     {
         int i;
         for(i = 0; i < num; i++)
-            printf("\n%d, \n", i);
+        {
+            if(i != num - 1)
+                printf("\n%d, ", i);
+            else
+                printf("\n%d", i);
+        }
             
         if(i == num + 1)
             printf("]");
-    } else
+    } 
+    else
     {
         int i;
         for(i = 0; i < num; i++)
-            printf("%d", i);
+        {
+            if(i != num - 1)
+                printf("%d, ", i);
+            else
+                printf("%d", i);
+        }
             
         if(i == num)
             printf("]");
@@ -32,3 +43,4 @@ int main()
     scanf("%d", &num);
     count(num);
 }
+

@@ -1,3 +1,4 @@
+```c
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -33,7 +34,7 @@ int *find_min(int *ptr, int size)
 	    min = ptr;
 	ptr++;
     }
-    return (min);
+    return min;
 }
 
 void selection_sort(int *ptr, int size)
@@ -42,11 +43,8 @@ void selection_sort(int *ptr, int size)
 
     while(--size)
     {
-	if((min = find_min(ptr + 1, size)))
-	{
-	    if(*ptr > *min)
-		swap(ptr, min);
-	}
+	if((min = find_min(ptr + 1, size)) && *ptr > *min)
+	    swap(ptr, min);
 	ptr++;
     }
 }
@@ -90,3 +88,4 @@ int main(int argc, char *argv[])
     free(arr);
     return EXIT_SUCCESS;
 }
+```
