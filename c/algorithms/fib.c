@@ -1,14 +1,16 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int main()
 {
-    long a;
-    long b;
+    long a = 0;
+    long b = 1;
     
-    for(a = 0, b = 1; b > a; b++)
+    while (b > a)
     {
-        a++;
-        printf("%ld \n %ld", &a, &b);
+        a += b;
+        b += a;
+        printf("%ld \n %ld", a, b);
     }
     
     if(b == sizeof(long))
