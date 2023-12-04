@@ -33,8 +33,7 @@ int main()
 
 void swap(int *a, int *b)
 {
-    int tmp;
-    tmp = *a;
+    int tmp = *a;
     *a = *b;
     *b = tmp;
     return;
