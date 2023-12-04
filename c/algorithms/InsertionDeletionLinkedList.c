@@ -1,4 +1,3 @@
-// A menu-driven C program which let's the user Insert , Delete , Display elements in list at different positions and situations. 
 #include <stdio.h>
 #include <stdlib.h>
 
