@@ -1,8 +1,11 @@
+# Updated code:
+
+```c/algorithms/bubblesort.c
 #include <stdio.h>
 
 void bubble_sort(int *array, int len) 
 {
-    for (int i = 0; i < len; i++) {
+    for (int i = 0; i < len - 1; i++) {
         for (int j = 0; j < len - i - 1; j++) {
             if (array[j] > array[j + 1]) {
                 int tmp = array[j];
@@ -21,7 +24,8 @@ int main(void)
 
     printf("[");
     for (int i = 0; i < 10; i++)
-        printf("%d, ", yarr[i]);	
+        printf("%d, ", yarr[i]);
     printf("\b\b]\n");
     return 0;
 }
+```
