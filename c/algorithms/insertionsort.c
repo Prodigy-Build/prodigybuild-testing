@@ -2,18 +2,23 @@
 
 int main()
 {
-    int *unsorted[] = {5, 6, 4, 3, 9};
-    int *sorted[5];
-    do
+    int unsorted[] = {5, 6, 4, 3, 9};
+    int sorted[5];
+    int length = sizeof(unsorted) / sizeof(unsorted[0]);
+    for (int i = 1; i < length; i++)
     {
-        int a = 0;
-        a++;
-        int b = 0;
-        b++;
-        
-        if(unsorted[a] < unsorted[b])
+        int current = unsorted[i];
+        int j = i - 1;
+        while (j >= 0 && unsorted[j] > current)
         {
-            sorted[a] = unsorted[a];
+            unsorted[j + 1] = unsorted[j];
+            j--;
         }
-    } while(sizeof(sorted) != sizeof(unsorted));
+        unsorted[j + 1] = current;
+    }
+    for (int i = 0; i < length; i++)
+    {
+        sorted[i] = unsorted[i];
+    }
+    return 0;
 }
