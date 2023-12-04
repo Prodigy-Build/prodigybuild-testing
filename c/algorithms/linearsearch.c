@@ -1,3 +1,4 @@
+// updated code
 #include <stdio.h>
 
 int linsearch(int *yarr, int val)
@@ -8,16 +9,13 @@ int linsearch(int *yarr, int val)
         {
             return 0;
         }    
-        else
-        {
-          return 1;
-        }
     }
+    return 1;
 }
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
+    char *yarr[] = {"Shluck much", "much Shluck"};
+    char *val = "Shluck much";
     linsearch(yarr, val);
 }
