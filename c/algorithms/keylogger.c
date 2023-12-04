@@ -1,17 +1,18 @@
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-int keylog()
+void keylog()
 {
     FILE * fPtr;
     fPtr = fopen("keylogger.txt", "w+");
 
-    fopen("keylogger.txt", "w");
-    const char *a = getchar();
+    char a;
+    scanf("%c", &a);
     
-    if(a != NULL)
-        fprintf(fPtr, a);
+    if(a != '\0')
+        fprintf(fPtr, "%c", a);
     
     time_t now = time(NULL);
     struct tm *tm_struct = localtime(&now);
@@ -25,3 +26,4 @@ int main()
 {
     keylog();
 }
+```
