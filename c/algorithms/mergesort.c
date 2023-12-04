@@ -1,53 +1,67 @@
-#include<stdio.h>
-#include<time.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-// function to merge the sub-arrays
-void merge(int a[],int low,int mid ,int high)
-{
-	int b[20]; //same size of a[]
-	int i, j, k;
-	i = low, j = mid + 1,k = low;
-	while(i <= mid && j <= high)
-	{
-		if(a[i]<=a[j])
-		    b[k++]=a[i++];
-		else
-		   b[k++]=a[j++]; //copying the elements 
-	}
-	while (i<=mid)
-		b[k++]=a[i++];
-	while 
-		(j<=high) b[k++]=a[j++];
-		for (k=low;k<=high;k++)
-	        a[k]=b[k];
+void merge(int arr[], int l, int m, int r) {
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 = r - m;
+
+    int L[n1], R[n2];
+
+    for (i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1 + j];
+
+    i = 0;
+    j = 0;
+    k = l;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        }
+        else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
 }
 
-// merge sort function
-void mergesort(int a[],int low,int high)
-{
-	int mid;
-	if(low>=high)
-	  return;
-	mid=(low+high)/2;
-	mergesort(a,low,mid);
-	mergesort(a,mid+1,high);
-	merge(a,low,mid,high);
+void mergeSort(int arr[], int l, int r) {
+    if (l < r) {
+        int m = l + (r - l) / 2;
+
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+
+        merge(arr, l, m, r);
+    }
 }
 
-// main fucntion
-int main()
-{
-	int a[7] = {83, 20, 9, 50, 115, 61, 17};
-	int n = 7;
+int main() {
+    int arr[] = {83, 20, 9, 50, 115, 61, 17};
+    int n = sizeof(arr) / sizeof(arr[0]);
 
-	mergesort(a, 0, n-1);
-	
-	printf("\n Sorted numbers are: ");
+    mergeSort(arr, 0, n - 1);
 
-	// function to print the sorted array
-	int k;
-	for(k = 0; k < 7; k++)
-	    printf("%d, ",a[k]);
-	return 0;
+    printf("\n Sorted numbers are: ");
+
+    for (int i = 0; i < n; i++)
+        printf("%d, ", arr[i]);
+
+    return 0;
 }

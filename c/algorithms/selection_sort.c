@@ -51,13 +51,14 @@ void selection_sort(int *ptr, int size)
     }
 }
 
-void fill(char **av, int *ptr, int size)
+bool fill(char **av, int *ptr, int size)
 {
     int i;
 
     i = 2;
     while(av[i] && size--)
 	*ptr++ = atoi(av[i++]); 
+    return true;
 }
 
 int main(int argc, char *argv[])
