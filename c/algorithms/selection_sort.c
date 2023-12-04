@@ -33,7 +33,7 @@ int *find_min(int *ptr, int size)
 	    min = ptr;
 	ptr++;
     }
-    return (min);
+    return min;
 }
 
 void selection_sort(int *ptr, int size)
