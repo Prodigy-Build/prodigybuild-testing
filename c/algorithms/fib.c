@@ -1,18 +1,24 @@
+```c
 #include <stdio.h>
+#include <stdlib.h>
 
 int main()
 {
-    long a;
-    long b;
+    long a = 0;
+    long b = 1;
     
-    for(a = 0, b = 1; b > a; b++)
-    {
-        a++;
-        printf("%ld \n %ld", &a, &b);
+    while (1) {
+        long temp = a + b;
+        a = b;
+        b = temp;
+        
+        printf("%ld \n", b);
+        
+        if (b == 0) {
+            break;
+        }
     }
     
-    if(b == sizeof(long))
-    {
-        exit(1);
-    }
+    return 0;
 }
+```

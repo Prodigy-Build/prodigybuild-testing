@@ -1,4 +1,3 @@
-// A menu-driven C program which let's the user Insert , Delete , Display elements in list at different positions and situations. 
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -6,9 +5,9 @@ struct node {
     int data;
     struct node *next;
 };
+
 struct node *head;
 
-// Structure used to create node again and again when required..
 struct node *CreateNode() {
     struct node *new = (struct node*) malloc(sizeof(struct node));
     return new;
@@ -25,7 +24,7 @@ void InsertAtBegin(int value) {
     }
 }
 
-void InsertAtnthNode(int pos , int value) {
+void InsertAtNthNode(int pos , int value) {
     struct node* temp = head;
     if(pos==1) {
         printf("\n\t**Use Insert at begining**\n");
@@ -81,7 +80,7 @@ void DeleteAtEnd() {
     }
 }
 
-void DeletenthNode(int pos) {
+void DeleteNthNode(int pos) {
     struct node *temp = head;
     if (pos == 1) {
         printf("\n\t**Use Delete at begining**\n");
@@ -130,7 +129,7 @@ void main() {
                 scanf("%d",&pos1);
                 printf("Enter value to be inserted: ");
                 scanf("%d",&v2);
-                InsertAtnthNode(pos1 , v2);
+                InsertAtNthNode(pos1 , v2);
                 break;
             case 3:
                 printf("\nEnter value to insert at end: ");
@@ -148,7 +147,7 @@ void main() {
                 printf("\nEnter position to delete element: ");
                 int pos2;
                 scanf("%d",&pos2);
-                DeletenthNode(pos2);
+                DeleteNthNode(pos2);
                 break;
             case 7:
                 Display();

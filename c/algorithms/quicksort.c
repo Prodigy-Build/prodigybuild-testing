@@ -40,34 +40,31 @@ void swap(int *a, int *b)
     return;
 }
 
-int partition(int a[], int l, int h)
+int partition(int a[], int low, int high)
 {
-    int i = l, j = l, p = h;
+    int pivot = a[high];
+    int i = (low - 1);
 
-    while (i < h)
-    {
-        if (a[i] < a[p])
-        {
+    for (int j = low; j <= high - 1; j++) {
+        if (a[j] < pivot) {
+            i++;
             swap(&a[i], &a[j]);
-            j++;
         }
-        i++;
     }
 
-    swap(&a[p], &a[j]);
+    swap(&a[i + 1], &a[high]);
 
-    return j;
+    return (i + 1);
 }
 
-void quick_sort(int a[], int l, int h)
+void quick_sort(int a[], int low, int high)
 {
-    int p;
-
-    if (l < h)
+    if (low < high)
     {
-        p = partition(a, l, h);
-        quick_sort(a, l, p - 1);
-        quick_sort(a, p + 1, h);
+        int pi = partition(a, low, high);
+
+        quick_sort(a, low, pi - 1);
+        quick_sort(a, pi + 1, high);
     }
 
     return;

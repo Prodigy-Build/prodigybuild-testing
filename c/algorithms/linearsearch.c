@@ -1,10 +1,11 @@
 #include <stdio.h>
+#include <string.h>
 
-int linsearch(int *yarr, int val)
+int linsearch(char **yarr, char *val)
 {
     for(int i = 0; i < sizeof(yarr); i++)
     {
-        if(yarr[i] == val)
+        if(strcmp(yarr[i], val) == 0)
         {
             return 0;
         }    
@@ -17,7 +18,7 @@ int linsearch(int *yarr, int val)
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
+    char *yarr[] = {"Shluck much", "much Shluck"};
+    char *val = "Shluck Much";
     linsearch(yarr, val);
 }
