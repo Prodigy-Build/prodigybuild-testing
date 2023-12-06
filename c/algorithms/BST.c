@@ -1,3 +1,6 @@
+The refactored code is:
+
+```c
 // Implementation of Binary Search Tree 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,60 +11,66 @@ struct BST {
     struct BST* right;
 };
 
-struct BST *CreateNode() {
-    struct BST* new = (struct BST*) malloc(sizeof(struct BST));
-    new->left = NULL;
-    new->right = NULL;
-    return new; 
-};
+struct BST *CreateNode(int value) {
+    struct BST* newNode = (struct BST*) malloc(sizeof(struct BST));
+    newNode->data = value;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode; 
+}
 
-void Insert(struct BST** RootPtr, int value) {
-    struct BST* temp = *RootPtr;
+void Insert(struct BST** rootPtr, int value) {
+    struct BST* temp = *rootPtr;
     if (temp == NULL) { /*When list is empty*/
-        struct BST* NewNode = CreateNode();
-        NewNode->data = value;
-        *RootPtr = NewNode;
-    } else if (value <= temp->data) { /*If user value is less then current node value insert in left of the node...*/
-        struct BST* NewNode = CreateNode();
-        NewNode->data = value;
-        temp->left = NewNode;
-    } else { /*If user value is greater then current node value insert at right of the node*/
-        struct BST* NewNode = CreateNode();
-        NewNode->data = value;
-        temp->right = NewNode;
+        *rootPtr = CreateNode(value);
+    } else if (value <= temp->data) { /*If user value is less than or equal to current node value insert in the left of the node...*/
+        if (temp->left == NULL) {
+            temp->left = CreateNode(value);
+        } else {
+            Insert(&(temp->left), value);
+        }
+    } else { /*If user value is greater than current node value insert at the right of the node*/
+        if (temp->right == NULL) {
+            temp->right = CreateNode(value);
+        } else {
+            Insert(&(temp->right), value);
+        }
     }
 }
 
-int Search(struct BST* RootPtr, int item) { /*Implemented search using recursion*/
-    if(RootPtr == NULL) {
-        return 0; /*Returns 0 if list is empty*/
-    } else if(item == RootPtr->data) {
+int Search(struct BST* rootPtr, int item) { /*Implemented search using recursion*/
+    if(rootPtr == NULL) {
+        return 0; /*Returns 0 if the tree is empty*/
+    } else if(item == rootPtr->data) {
         return 1; /*Returns 1 when element found*/
-    } else if(item < RootPtr->data) {
-        Search(RootPtr->left, item); /*Otherwise search in left side of binary tree if searching value is less then the current node value*/
+    } else if(item < rootPtr->data) {
+        return Search(rootPtr->left, item); /*Otherwise search in the left subtree if the searching value is less than the current node value*/
     } else {
-        Search(RootPtr->right, item); /*Otherwise search in right side of binary tree if searching value is greater then the current node value*/
+        return Search(rootPtr->right, item); /*Otherwise search in the right subtree if the searching value is greater than the current node value*/
     }
 }
 
-void main() {
-    struct BST* RootPtr = NULL;
+int main() {
+    struct BST* rootPtr = NULL;
     int item, cont, key;
     do {
         printf("Enter item: ");
-        scanf("%d",&item);
-        Insert(&RootPtr, item);
+        scanf("%d", &item);
+        Insert(&rootPtr, item);
 
         printf("\n1 to keep inserting/ 0 to Exit: ");
-        scanf("%d",&cont);
+        scanf("%d", &cont);
     } while(cont == 1);
 
     printf("\nEnter element to search: ");
-    scanf("%d",&key);
+    scanf("%d", &key);
 
-    if(Search(RootPtr, key) == 0) {
-        printf("\nFound\n");
-    } else {
+    if(Search(rootPtr, key) == 0) {
         printf("\nNot Found\n");
+    } else {
+        printf("\nFound\n");
     }
+    
+    return 0;
 }
+```
