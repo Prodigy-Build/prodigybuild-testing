@@ -1,4 +1,8 @@
+Update the code in the file path "python/algorithms/blockchain/modular_division.py" as follows:
+
+```python
 from __future__ import annotations
+from doctest import testmod
 
 
 def modular_division(a: int, b: int, n: int) -> int:
@@ -26,10 +30,9 @@ def modular_division(a: int, b: int, n: int) -> int:
 
     >>> modular_division(4, 11, 5)
     4
-
     """
     assert n > 1 and a > 0 and greatest_common_divisor(a, n) == 1
-    (d, t, s) = extended_gcd(n, a)  # Implemented below
+    (d, t, s) = extended_gcd(n, a)
     x = (b * s) % n
     return x
 
@@ -43,9 +46,8 @@ def invert_modulo(a: int, n: int) -> int:
 
     >>> invert_modulo(8,7)
     1
-
     """
-    (b, x) = extended_euclid(a, n)  # Implemented below
+    (b, x) = extended_euclid(a, n)
     if b < 0:
         b = (b % n + n) % n
     return b
@@ -66,7 +68,6 @@ def modular_division2(a: int, b: int, n: int) -> int:
 
     >>> modular_division2(4, 11, 5)
     4
-
     """
     s = invert_modulo(a, n)
     x = (b * s) % n
@@ -82,9 +83,6 @@ def extended_gcd(a: int, b: int) -> tuple[int, int, int]:
 
     >>> extended_gcd(7, 5)
     (1, -2, 3)
-
-    ** extended_gcd function is used when d = gcd(a,b) is required in output
-
     """
     assert a >= 0 and b >= 0
 
@@ -109,7 +107,6 @@ def extended_euclid(a: int, b: int) -> tuple[int, int]:
 
     >>> extended_euclid(7, 5)
     (-2, 3)
-
     """
     if b == 0:
         return (1, 0)
@@ -132,7 +129,6 @@ def greatest_common_divisor(a: int, b: int) -> int:
 
     >>> greatest_common_divisor(121, 11)
     11
-
     """
     if a < b:
         a, b = b, a
@@ -144,11 +140,10 @@ def greatest_common_divisor(a: int, b: int) -> int:
 
 
 if __name__ == "__main__":
-    from doctest import testmod
-
     testmod(name="modular_division", verbose=True)
     testmod(name="modular_division2", verbose=True)
     testmod(name="invert_modulo", verbose=True)
     testmod(name="extended_gcd", verbose=True)
     testmod(name="extended_euclid", verbose=True)
     testmod(name="greatest_common_divisor", verbose=True)
+```

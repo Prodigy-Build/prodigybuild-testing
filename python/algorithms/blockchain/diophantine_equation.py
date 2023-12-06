@@ -19,7 +19,6 @@ def diophantine(a: int, b: int, c: int) -> tuple[float, float]:
     That's why we need diophantine all solution function.
 
     """
-
     assert (
         c % greatest_common_divisor(a, b) == 0
     )  # greatest_common_divisor(a,b) function implemented below
