@@ -1,28 +1,14 @@
-"""
-        In this problem, we want to determine all possible permutations
-        of the given sequence. We use backtracking to solve this problem.
+from typing import List, Union
 
-        Time complexity: O(n! * n),
-        where n denotes the length of the given sequence.
-"""
-from __future__ import annotations
-
-
-def generate_all_permutations(sequence: list[int | str]) -> None:
+def generate_all_permutations(sequence: List[Union[int, str]]) -> None:
     create_state_space_tree(sequence, [], 0, [0 for i in range(len(sequence))])
 
-
 def create_state_space_tree(
-    sequence: list[int | str],
-    current_sequence: list[int | str],
+    sequence: List[Union[int, str]],
+    current_sequence: List[Union[int, str]],
     index: int,
-    index_used: list[int],
+    index_used: List[int]
 ) -> None:
-    """
-    Creates a state space tree to iterate through each branch using DFS.
-    We know that each state has exactly len(sequence) - index children.
-    It terminates when it reaches the end of the given sequence.
-    """
 
     if index == len(sequence):
         print(current_sequence)
@@ -36,16 +22,8 @@ def create_state_space_tree(
             current_sequence.pop()
             index_used[i] = False
 
-
-"""
-remove the comment to take an input from the user
-
-print("Enter the elements")
-sequence = list(map(int, input().split()))
-"""
-
-sequence: list[int | str] = [3, 1, 2, 4]
+sequence: List[Union[int, str]] = [3, 1, 2, 4]
 generate_all_permutations(sequence)
 
-sequence_2: list[int | str] = ["A", "B", "C"]
+sequence_2: List[Union[int, str]] = ["A", "B", "C"]
 generate_all_permutations(sequence_2)
