@@ -1,9 +1,10 @@
 """
-        In this problem, we want to determine all possible permutations
-        of the given sequence. We use backtracking to solve this problem.
 
-        Time complexity: O(n! * n),
-        where n denotes the length of the given sequence.
+In this problem, we want to determine all possible permutations
+of the given sequence. We use backtracking to solve this problem.
+
+Time complexity: O(n! * n),
+where n denotes the length of the given sequence.
 """
 from __future__ import annotations
 
@@ -49,3 +50,33 @@ generate_all_permutations(sequence)
 
 sequence_2: list[int | str] = ["A", "B", "C"]
 generate_all_permutations(sequence_2)
+
+
+# Unit tests
+
+import unittest
+
+
+class TestAllPermutations(unittest.TestCase):
+    def test_generate_all_permutations(self):
+        sequence = [1, 2, 3]
+        expected_output = [
+            [1, 2, 3],
+            [1, 3, 2],
+            [2, 1, 3],
+            [2, 3, 1],
+            [3, 1, 2],
+            [3, 2, 1]
+        ]
+        results = []
+        
+        def capture_permutations(permutation):
+            results.append(permutation.copy())
+        
+        generate_all_permutations(sequence, capture_permutations)
+        
+        self.assertEqual(results, expected_output)
+     
+
+if __name__ == '__main__':
+    unittest.main()
