@@ -2,26 +2,44 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-int count(int num) 
+void printArray(int* arr, int size) 
 {
     printf("[");
     
+    for(int i = 0; i < size; i++)
+    {
+        printf("%d", arr[i]);
+        
+        if(i != size - 1)
+            printf(", ");
+    }
+    
+    printf("]");
+}
+
+void count(int num) 
+{
     if(num > 20)
     {
-        int i;
-        for(i = 0; i < num; i++)
-            printf("\n%d, \n", i);
-            
-        if(i == num + 1)
-            printf("]");
-    } else
+        int* arr = (int*)malloc(num * sizeof(int));
+        
+        for(int i = 0; i < num; i++)
+            arr[i] = i;
+        
+        printArray(arr, num);
+        
+        free(arr);
+    } 
+    else
     {
-        int i;
-        for(i = 0; i < num; i++)
-            printf("%d", i);
-            
-        if(i == num)
-            printf("]");
+        int* arr = (int*)malloc(num * sizeof(int));
+        
+        for(int i = 0; i < num; i++)
+            arr[i] = i;
+        
+        printArray(arr, num);
+        
+        free(arr);
     }
 }
 
@@ -31,4 +49,6 @@ int main()
     printf("Count:~$ ");
     scanf("%d", &num);
     count(num);
+    
+    return 0;
 }

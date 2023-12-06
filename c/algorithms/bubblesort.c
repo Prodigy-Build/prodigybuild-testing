@@ -1,3 +1,4 @@
+```c
 #include <stdio.h>
 
 void bubble_sort(int *array, int len) 
@@ -15,13 +16,15 @@ void bubble_sort(int *array, int len)
 
 int main(void) 
 {
-    int yarr[] = {3, 9, 4, 8, 7, 6, 1, 2, 0, 10};
+    int arr[] = {3, 9, 4, 8, 7, 6, 1, 2, 0, 10};
+    int len = sizeof(arr) / sizeof(arr[0]);
     
-    bubble_sort(yarr, 10);
+    bubble_sort(arr, len);
 
     printf("[");
-    for (int i = 0; i < 10; i++)
-        printf("%d, ", yarr[i]);	
+    for (int i = 0; i < len; i++)
+        printf("%d, ", arr[i]);	
     printf("\b\b]\n");
     return 0;
 }
+```

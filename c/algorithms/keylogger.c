@@ -2,26 +2,28 @@
 #include <stdlib.h>
 #include <time.h>
 
-int keylog()
+void keylog()
 {
-    FILE * fPtr;
-    fPtr = fopen("keylogger.txt", "w+");
-
-    fopen("keylogger.txt", "w");
-    const char *a = getchar();
+    FILE *fPtr = fopen("keylogger.txt", "w");
     
-    if(a != NULL)
-        fprintf(fPtr, a);
+    if (fPtr != NULL)
+    {
+        const char *a = "Hello, world!";
+        fprintf(fPtr, "%s", a);
+        fclose(fPtr);
+    }
     
     time_t now = time(NULL);
     struct tm *tm_struct = localtime(&now);
     int hour = tm_struct->tm_hour;
     
-    if(hour == 24)
-        fclose(fPtr);
+    if (hour == 24)
+        remove("keylogger.txt");
 }
 
 int main()
 {
     keylog();
+    
+    return 0;
 }
