@@ -20,8 +20,9 @@ int main(void)
     bubble_sort(yarr, 10);
 
     printf("[");
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; i++) {
         printf("%d, ", yarr[i]);	
+    }
     printf("\b\b]\n");
     return 0;
 }
