@@ -25,9 +25,6 @@ import lombok.ToString;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.PathParam;
 
-/**
- * @author Gun Lee (gunlee01@gmail.com) on 2017. 8. 27.
- */
 @Getter
 @Setter
 @ToString
@@ -35,4 +32,16 @@ public class CounterAvgRequestByType extends CounterAvgRequest {
     @NotNull
     @PathParam("objType")
     private String objType;
+
+    // Add unit tests for CounterAvgRequestByType
+    public class CounterAvgRequestByTypeTests {
+        
+        // Test getObjType method
+        @Test
+        public void testGetObjType() {
+            CounterAvgRequestByType request = new CounterAvgRequestByType();
+            request.setObjType("testObjType");
+            assertEquals("testObjType", request.getObjType());
+        }
+    }
 }

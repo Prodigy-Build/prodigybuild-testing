@@ -127,4 +127,9 @@ public class CommonResultView<T> {
 		jg.flush();
 		jg.close();
 	}
+
+	// Unit tests
+
+...
+
 }

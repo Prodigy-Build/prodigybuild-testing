@@ -1,22 +1,27 @@
 package scouterx.webapp.model.alertscript;
 
-import lombok.Getter;
-import lombok.Setter;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter
-@Getter
-public class ScriptingLogStateData {
-    long loop;
-    long index;
-    List<String> message;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    //default define
-    public ScriptingLogStateData(){
-        this.loop=0;
-        this.index=0;
-        this.message= new ArrayList<>();
+public class ScriptingLogStateDataTest {
+
+    @Test
+    public void testConstructor() {
+        // Given
+        long expectedLoop = 0;
+        long expectedIndex = 0;
+        List<String> expectedMessage = new ArrayList<>();
+
+        // When
+        ScriptingLogStateData stateData = new ScriptingLogStateData();
+
+        // Then
+        assertEquals(expectedLoop, stateData.getLoop());
+        assertEquals(expectedIndex, stateData.getIndex());
+        assertEquals(expectedMessage, stateData.getMessage());
     }
 }

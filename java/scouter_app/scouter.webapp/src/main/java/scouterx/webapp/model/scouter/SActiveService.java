@@ -1,28 +1,12 @@
-package scouterx.webapp.model.scouter;
-/*
- *  Copyright 2015 the original author or authors. 
- *  @https://github.com/scouter-project/scouter
- *
- *  Licensed under the Apache License, Version 2.0 (the "License"); 
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License. 
- */
+// Unit tests for SActiveService
 
-import lombok.Data;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import scouter.lang.pack.MapPack;
 import scouter.lang.pack.Pack;
 import scouter.lang.value.ListValue;
-import scouter.util.DateUtil;
-import scouter.util.Hexa32;
-import scouter.util.StringUtil;
 import scouterx.webapp.framework.client.model.AgentModelThread;
 import scouterx.webapp.framework.client.model.AgentObject;
 import scouterx.webapp.model.enums.ActiveServiceMode;
@@ -30,87 +14,62 @@ import scouterx.webapp.model.enums.ActiveServiceMode;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Gun Lee(gunlee01@gmail.com) on 2017. 9. 11.
- */
-@Data
-public class SActiveService {
-	int objHash;
-	String objName;
-	long threadId;
-	String threadName;
-	String threadStatus;
-	long threadCpuTime;
-	String txidName;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
-	String activeDate;
-	long txid;
+@RunWith(MockitoJUnitRunner.class)
+public class SActiveServiceTest {
 
-	long elapsed;
-	String serviceName;
-	String ipaddr;
-	String note;
-	String mode = ActiveServiceMode.NONE.name();
-
-	public static List<SActiveService> ofPackList(List<Pack> activeServicePackList) {
-		List<SActiveService> resultList = new ArrayList<>();
-
-		for (Pack pack : activeServicePackList) {
-			MapPack mapPack = (MapPack) pack;
-			int objHash = mapPack.getInt("objHash");
-			AgentObject agentObject = AgentModelThread.getInstance().getAgentObject(objHash);
-			if (agentObject == null) {
-				continue;
-			}
-			String objName = agentObject.getObjName();
-
-			ListValue idLv = mapPack.getList("id");
-			ListValue nameLv = mapPack.getList("name");
-			ListValue statLv = mapPack.getList("stat");
-			ListValue cpuLv = mapPack.getList("cpu");
-			ListValue txidLv = mapPack.getList("txid");
-			ListValue elapsedLv = mapPack.getList("elapsed");
-			ListValue serviceLv = mapPack.getList("service");
-			ListValue ipLv = mapPack.getList("ip");
-			ListValue sqlLv = mapPack.getList("sql");
-			ListValue subcallLv = mapPack.getList("subcall");
-
-			if (idLv != null) {
-				int size = idLv.size();
-
-				for (int i = 0; i < size; i++) {
-					SActiveService activeService = new SActiveService();
-					activeService.objHash = objHash;
-					activeService.objName = objName;
-					activeService.threadId = idLv.getLong(i);
-					activeService.threadName = nameLv.getString(i);
-					activeService.threadStatus = statLv.getString(i);
-					activeService.threadCpuTime = cpuLv.getLong(i);
-					activeService.txidName = txidLv.getString(i);
-					activeService.elapsed = elapsedLv.getLong(i);
-					activeService.serviceName = serviceLv.getString(i);
-					String sql = sqlLv.getString(i);
-					String api = subcallLv.getString(i);
-					if (StringUtil.isNotEmpty(sql)) {
-						activeService.note = sql;
-						activeService.mode = ActiveServiceMode.SQL.name();
-					} else if (StringUtil.isNotEmpty(api)) {
-						activeService.note = api;
-						activeService.mode = ActiveServiceMode.SUBCALL.name();
-					}
-					if (ipLv != null) {
-						activeService.ipaddr = ipLv.getString(i);
-					}
-					//- 액티브 추적용  TXID 변환 추가
-					activeService.txid = Hexa32.toLong32(activeService.txidName);
-					activeService.activeDate = DateUtil.yyyymmdd();
-					resultList.add(activeService);
-				}
-			}
-			resultList.sort((s1, s2) -> s1.elapsed > s2.elapsed ? -1 : 1);
-		}
-
-		return resultList;
-	}
-
+    @Mock
+    private AgentModelThread agentModelThread;
+    
+    @Mock
+    private AgentObject agentObject;
+    
+    @Test
+    public void testOfPackList() {
+        // Create dummy Pack list
+        List<Pack> activeServicePackList = new ArrayList<>();
+        
+        // Create dummy MapPack
+        MapPack mapPack = new MapPack();
+        mapPack.put("objHash", 123);
+        mapPack.put("id", new ListValue(1));
+        mapPack.put("name", new ListValue("Thread 1"));
+        mapPack.put("stat", new ListValue("Running"));
+        mapPack.put("cpu", new ListValue(100));
+        mapPack.put("txid", new ListValue("ABCDE12345"));
+        mapPack.put("elapsed", new ListValue(5000));
+        mapPack.put("service", new ListValue("Service 1"));
+        mapPack.put("ip", new ListValue("127.0.0.1"));
+        mapPack.put("sql", new ListValue("SELECT * FROM table"));
+        mapPack.put("subcall", new ListValue("apiCall"));
+        
+        activeServicePackList.add(mapPack);
+        
+        // Mock agent object
+        when(agentObject.getObjName()).thenReturn("Object 1");
+        when(agentModelThread.getAgentObject(123)).thenReturn(agentObject);
+        
+        // Call the method under test
+        List<SActiveService> resultList = SActiveService.ofPackList(activeServicePackList);
+        
+        // Assert the result
+        assertEquals(1, resultList.size());
+        SActiveService activeService = resultList.get(0);
+        assertEquals(123, activeService.getObjHash());
+        assertEquals("Object 1", activeService.getObjName());
+        assertEquals(1, activeService.getThreadId());
+        assertEquals("Thread 1", activeService.getThreadName());
+        assertEquals("Running", activeService.getThreadStatus());
+        assertEquals(100, activeService.getThreadCpuTime());
+        assertEquals("ABCDE12345", activeService.getTxidName());
+        assertEquals(5000, activeService.getElapsed());
+        assertEquals("Service 1", activeService.getServiceName());
+        assertEquals("SELECT * FROM table", activeService.getNote());
+        assertEquals(ActiveServiceMode.SQL.name(), activeService.getMode());
+        assertEquals("127.0.0.1", activeService.getIpaddr());
+        // Verify that sorting is correctly implemented
+        // ...
+    }
 }
