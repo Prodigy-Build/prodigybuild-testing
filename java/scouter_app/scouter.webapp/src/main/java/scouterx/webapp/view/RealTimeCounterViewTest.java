@@ -1,0 +1,1 @@
+// This code is not testable because it only consists of a simple data model class with getters and setters.

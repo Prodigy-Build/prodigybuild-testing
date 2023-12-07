@@ -1,0 +1,1 @@
+// This code is not testable as it only consists of a data model class without any logic or functions to test.
