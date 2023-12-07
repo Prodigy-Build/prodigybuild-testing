@@ -2,26 +2,36 @@
 #include <stdlib.h>
 #include <time.h>
 
+// Add return data type 'int' for keylog function
 int keylog()
 {
     FILE * fPtr;
     fPtr = fopen("keylogger.txt", "w+");
 
-    fopen("keylogger.txt", "w");
-    const char *a = getchar();
+    // Remove redundant file open statement
+    const char a = getchar();
     
-    if(a != NULL)
-        fprintf(fPtr, a);
+    // Use single quotes for character literals
+    // Use fputc instead of fprintf for writing a single character
+    if(a != '\0')
+        fputc(a, fPtr);
     
     time_t now = time(NULL);
     struct tm *tm_struct = localtime(&now);
     int hour = tm_struct->tm_hour;
     
-    if(hour == 24)
+    // Change 24 to 0 to represent midnight
+    if(hour == 0)
         fclose(fPtr);
+
+    // Add return statement
+    return 0;
 }
 
 int main()
 {
     keylog();
+
+    // Add return statement
+    return 0;
 }

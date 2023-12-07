@@ -17,10 +17,10 @@ void merge(int a[],int low,int mid ,int high)
 	}
 	while (i<=mid)
 		b[k++]=a[i++];
-	while 
-		(j<=high) b[k++]=a[j++];
-		for (k=low;k<=high;k++)
-	        a[k]=b[k];
+	while (j<=high)
+		b[k++]=a[j++];
+	for (k=low;k<=high;k++)
+	    a[k]=b[k];
 }
 
 // merge sort function
