@@ -1,0 +1,1 @@
+/* Since this file contains only getter and setter methods, there is no logic to test. If there were any logic to test, I would write unit tests for that logic. */

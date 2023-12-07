@@ -1,0 +1,1 @@
+// This code is not testable as it contains only a constructor and a static factory method that relies on external dependencies.

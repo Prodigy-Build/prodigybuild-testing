@@ -1,0 +1,1 @@
+// This code is not testable as it just consists of a main method that calls the main method of another class.
