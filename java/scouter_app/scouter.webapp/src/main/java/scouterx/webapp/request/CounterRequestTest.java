@@ -1,0 +1,1 @@
+// This code is not testable as it is a simple data class with getters and setters.

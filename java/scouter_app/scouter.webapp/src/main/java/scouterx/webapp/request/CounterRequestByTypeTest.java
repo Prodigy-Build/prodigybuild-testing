@@ -1,0 +1,1 @@
+// This code is not testable as it only contains a data class with getter, setter, and toString methods.
