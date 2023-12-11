@@ -1,0 +1,1 @@
+// This code is not testable because it only contains a data model with constructors and getters.

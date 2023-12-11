@@ -1,0 +1,1 @@
+// This code is not testable because it only consists of getters, setters, and a validation method.
