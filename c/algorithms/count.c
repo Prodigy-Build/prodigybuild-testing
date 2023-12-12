@@ -14,7 +14,8 @@ int count(int num)
             
         if(i == num + 1)
             printf("]");
-    } else
+    }
+    else
     {
         int i;
         for(i = 0; i < num; i++)
@@ -32,3 +33,5 @@ int main()
     scanf("%d", &num);
     count(num);
 }
+
+// Code not testable
