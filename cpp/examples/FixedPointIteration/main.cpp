@@ -1,11 +1,17 @@
-//
-//  main.cpp
-//  FixedPointIteration
-//
-//
-
 #include <iostream>
-#include "../../lib/numericCppExamplesLib/fixedPointIteration.h"
+#include <functional>
+#include <cmath>
+
+void fixedPointIter(double p0, double tol, unsigned long N, std::function<double(double)> g) {
+  double p = p0;
+  for (unsigned long i = 0; i < N; i++) {
+    double pPrev = p;
+    p = g(pPrev);
+    if (std::abs(p - pPrev) < tol) {
+      break;
+    }
+  }
+}
 
 int main(int argc, const char* argv[]) {
   // Calculate g(x) = x - (x^2 - 2) / (2*x)
