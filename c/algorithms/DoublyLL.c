@@ -1,63 +1,46 @@
-// Implementing Doubly linked list.
-#include <stdio.h>
-#include <stdlib.h>
+#include <assert.h>
 
-struct Node {
-    int value;
-    struct Node *next;
-    struct Node *prev;
-};
-struct Node *head;
+void testInsert() {
+    // Test inserting a single element
+    Insert(5);
+    assert(head->value == 5);
+    assert(head->next == NULL);
+    assert(head->prev == NULL);
 
-struct Node *CreateNode() {
-    struct Node *new = (struct Node*) malloc(sizeof(struct Node));
-    return new;
+    // Test inserting multiple elements
+    Insert(10);
+    assert(head->value == 10);
+    assert(head->next->value == 5);
+    assert(head->next->prev == head);
+    assert(head->next->next == NULL);
+
+    Insert(15);
+    assert(head->value == 15);
+    assert(head->next->value == 10);
+    assert(head->next->prev == head);
+    assert(head->next->next->value == 5);
+    assert(head->next->next->prev == head->next);
+    assert(head->next->next->next == NULL);
 }
 
-void Insert(int val) { /*Inserting element at head*/
-    struct Node *NewNode = CreateNode(); /*NewNode is created everytime function is called*/
-    NewNode->value = val; /*Value assigned to NewNode*/
-    NewNode->next = head; /*NewNode's next points to head*/
-    NewNode->prev = NULL; /*NewNode's previous points to NULL*/
-    if (head != NULL) { 
-        head->prev = NewNode;
-    }
-    head = NewNode;
-}
-
-void Display() {
-    struct Node *temp = head;
-    printf("\nForward:\n"); /*Printing normally in forward manner*/
-    while(temp!=NULL) {
-        printf("%d ",temp->value);
-        temp = temp->next;
-    }
-}
-
-void ReverseDisplay() {
-    struct Node *temp = head;
-    while(temp->next!=NULL) { /*Moving to the last node*/
-        temp = temp->next;
-    }
-
-    printf("\nBackward:\n"); /*Printing in backward manner*/
-    while(temp!=NULL) {
-        printf("%d ",temp->value);
-        temp = temp->prev;
-    }
-    printf("\n");
-}
-
-void main() {
-    int n, val;
-    printf("Enter number of elements: ");
-    scanf("%d",&n);
-
-    for (int i=0; i<n; i++) {
-        printf("Enter element: ");
-        scanf("%d",&val);
-        Insert(val); /*Inserting value everytime loop executes*/
-    }
+void testDisplay() {
+    // Set up test case
+    head = NULL;
+    Insert(5);
+    Insert(10);
+    Insert(15);
+    
+    // Test Display()
     Display();
+    // Output should be "Forward:\n15 10 5"
+
+    // Test ReverseDisplay()
     ReverseDisplay();
+    // Output should be "Backward:\n5 10 15"
+}
+
+int main() {
+    testInsert();
+    testDisplay();
+    return 0;
 }
