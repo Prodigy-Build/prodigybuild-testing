@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdbool.h>
+#include <assert.h>
 
 int count(int num) 
 {
@@ -14,7 +16,8 @@ int count(int num)
             
         if(i == num + 1)
             printf("]");
-    } else
+    } 
+    else
     {
         int i;
         for(i = 0; i < num; i++)
@@ -25,10 +28,18 @@ int count(int num)
     }
 }
 
+void count_test(int num, bool expected_result) {
+    printf("Testing count(%d)\n", num);
+    count(num);
+    printf("\n");
+}
+
 int main()
 {
     int num;
     printf("Count:~$ ");
     scanf("%d", &num);
+    count_test(num, true);
     count(num);
+    printf("\n");
 }

@@ -1,6 +1,6 @@
-// Implementation of Binary Search Tree 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct BST {
     int data;
@@ -44,24 +44,73 @@ int Search(struct BST* RootPtr, int item) { /*Implemented search using recursion
     }
 }
 
-void main() {
+void testInsert() {
     struct BST* RootPtr = NULL;
-    int item, cont, key;
-    do {
-        printf("Enter item: ");
-        scanf("%d",&item);
-        Insert(&RootPtr, item);
+    
+    Insert(&RootPtr, 5);
+    assert(RootPtr->data == 5);
+    assert(RootPtr->left == NULL);
+    assert(RootPtr->right == NULL);
+    
+    Insert(&RootPtr, 3);
+    assert(RootPtr->left->data == 3);
+    assert(RootPtr->left->left == NULL);
+    assert(RootPtr->left->right == NULL);
+    
+    Insert(&RootPtr, 7);
+    assert(RootPtr->right->data == 7);
+    assert(RootPtr->right->left == NULL);
+    assert(RootPtr->right->right == NULL);
+    
+    Insert(&RootPtr, 2);
+    assert(RootPtr->left->left->data == 2);
+    assert(RootPtr->left->left->left == NULL);
+    assert(RootPtr->left->left->right == NULL);
+    
+    Insert(&RootPtr, 4);
+    assert(RootPtr->left->right->data == 4);
+    assert(RootPtr->left->right->left == NULL);
+    assert(RootPtr->left->right->right == NULL);
+    
+    Insert(&RootPtr, 6);
+    assert(RootPtr->right->left->data == 6);
+    assert(RootPtr->right->left->left == NULL);
+    assert(RootPtr->right->left->right == NULL);
+    
+    Insert(&RootPtr, 8);
+    assert(RootPtr->right->right->data == 8);
+    assert(RootPtr->right->right->left == NULL);
+    assert(RootPtr->right->right->right == NULL);
+}
 
-        printf("\n1 to keep inserting/ 0 to Exit: ");
-        scanf("%d",&cont);
-    } while(cont == 1);
+void testSearch() {
+    struct BST* RootPtr = NULL;
+    
+    Insert(&RootPtr, 5);
+    Insert(&RootPtr, 3);
+    Insert(&RootPtr, 7);
+    Insert(&RootPtr, 2);
+    Insert(&RootPtr, 4);
+    Insert(&RootPtr, 6);
+    Insert(&RootPtr, 8);
+    
+    assert(Search(RootPtr, 5) == 1);
+    assert(Search(RootPtr, 3) == 1);
+    assert(Search(RootPtr, 7) == 1);
+    assert(Search(RootPtr, 2) == 1);
+    assert(Search(RootPtr, 4) == 1);
+    assert(Search(RootPtr, 6) == 1);
+    assert(Search(RootPtr, 8) == 1);
+    
+    assert(Search(RootPtr, 1) == 0);
+    assert(Search(RootPtr, 9) == 0);
+    assert(Search(RootPtr, 0) == 0);
+    assert(Search(RootPtr, 10) == 0);
+}
 
-    printf("\nEnter element to search: ");
-    scanf("%d",&key);
-
-    if(Search(RootPtr, key) == 0) {
-        printf("\nFound\n");
-    } else {
-        printf("\nNot Found\n");
-    }
+int main() {
+    testInsert();
+    testSearch();
+    
+    return 0;
 }
