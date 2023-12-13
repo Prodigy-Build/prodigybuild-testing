@@ -5,10 +5,11 @@ int main()
     long num;
     printf("Enter a number\n");
     scanf("%ld", &num);
-    int rem = num % 2;
-    
-    if(rem == 0)
-    printf("Even");
-    else
-    printf("Odd");
+
+    if (num % 2 == 0) {
+        printf("Even");
+    } else {
+        printf("Odd");
+    }
+    return 0;
 }
