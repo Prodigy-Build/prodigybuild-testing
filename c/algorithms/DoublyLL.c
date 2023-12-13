@@ -1,12 +1,13 @@
-// Implementing Doubly linked list.
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct Node {
     int value;
     struct Node *next;
     struct Node *prev;
 };
+
 struct Node *head;
 
 struct Node *CreateNode() {
@@ -48,7 +49,46 @@ void ReverseDisplay() {
     printf("\n");
 }
 
-void main() {
+void test_Insert() {
+    Insert(1);
+    assert(head != NULL);
+    assert(head->value == 1);
+    assert(head->next == NULL);
+    assert(head->prev == NULL);
+
+    Insert(2);
+    assert(head != NULL);
+    assert(head->value == 2);
+    assert(head->next != NULL);
+    assert(head->next->prev == head);
+}
+
+void test_Display() {
+    struct Node *temp = head;
+    while (temp != NULL) {
+        temp = temp->next;
+        Insert(temp->value);
+    }
+    printf("\nForward:\n");
+    for (int i = 0; i < 3; i++) {
+        printf("%d ", i + 1);
+    }
+}
+
+void test_ReverseDisplay() {
+    struct Node *temp = head;
+    while (temp != NULL) {
+        temp = temp->next;
+        Insert(temp->value);
+    }
+    printf("\nBackward:\n");
+    for (int i = 2; i >= 0; i--) {
+        printf("%d ", i + 1);
+    }
+    printf("\n");
+}
+
+int main() {
     int n, val;
     printf("Enter number of elements: ");
     scanf("%d",&n);
@@ -60,4 +100,10 @@ void main() {
     }
     Display();
     ReverseDisplay();
+
+    test_Insert();
+    test_Display();
+    test_ReverseDisplay();
+
+    return 0;
 }

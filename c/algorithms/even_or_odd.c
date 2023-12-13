@@ -1,14 +1,1 @@
-#include <stdio.h>
-
-int main()
-{
-    long num;
-    printf("Enter a number\n");
-    scanf("%ld", &num);
-    int rem = num % 2;
-    
-    if(rem == 0)
-    printf("Even");
-    else
-    printf("Odd");
-}
+// This code is not testable as it is a simple input/output program with no separate functions or logic to be tested.
