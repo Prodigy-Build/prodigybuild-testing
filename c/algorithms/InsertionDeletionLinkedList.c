@@ -1,14 +1,14 @@
-// A menu-driven C program which let's the user Insert , Delete , Display elements in list at different positions and situations. 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct node {
     int data;
     struct node *next;
 };
+
 struct node *head;
 
-// Structure used to create node again and again when required..
 struct node *CreateNode() {
     struct node *new = (struct node*) malloc(sizeof(struct node));
     return new;
@@ -16,7 +16,7 @@ struct node *CreateNode() {
 
 void InsertAtBegin(int value) {
     struct node *NewNode = CreateNode();
-    if (head == NULL) { /*Only works when list is empty*/
+    if (head == NULL) {
         NewNode->data = value;
         head = NewNode;
         NewNode->next = NULL;
@@ -34,15 +34,15 @@ void InsertAtnthNode(int pos , int value) {
         NewNode->data = value;
         NewNode->next = NULL;
         for (int i=0; i<pos-2; i++) {
-            temp = temp->next; /*Accessing (n-1)th node*/
+            temp = temp->next;
         }
-        NewNode->next = temp->next; /*Linking nth node to (n+1)th node*/
-        temp->next = NewNode; /*Linking (n-1)th node to nth node*/
+        NewNode->next = temp->next;
+        temp->next = NewNode;
     }
 }
 
 void InsertAtEnd(int value) {
-    if (head == NULL) { /*Does not work when list is empty. Underflow situation...*/
+    if (head == NULL) {
         printf("\n\t**Use Insert at begining**\n");
     } else {
         struct node *temp = head;
@@ -52,30 +52,30 @@ void InsertAtEnd(int value) {
         struct node *NewNode = CreateNode();
         NewNode->data = value;
         NewNode->next = temp->next;
-        temp->next = NewNode; /*Links new node n to (n-1)th node*/
+        temp->next = NewNode;
     }
 }
 
 void DeleteAtBegin() {
-    if (head == NULL) { /*Does not work when list is empty. Underflow situation...*/
+    if (head == NULL) {
         printf("\n\t**No element exists**\n");
     } else {
-        head = head->next; /*2nd node is now declared as head*/
+        head = head->next;
         printf("\n\t**Element deleted successfully**\n");
     }
 }
 
 void DeleteAtEnd() {
-    if (head == NULL) { /*Does not work when list is empty. Underflow situation...*/
+    if (head == NULL) {
         printf("\n\t**No element exists**\n");
     } else if (head->next == NULL) {
         printf("\n\t**Use Delete at begining**\n");
     } else {
         struct node *temp = head;
-        while(temp->next->next!=NULL) { /*Accessing (n-1)th node*/
+        while(temp->next->next!=NULL) {
             temp = temp->next;
         }
-        temp->next = NULL; /*(n-1)th node will now point to null instead of nth node*/
+        temp->next = NULL;
         free(temp->next);
         printf("\n\t**Element deleted successfully**\n");
     }
@@ -89,8 +89,8 @@ void DeletenthNode(int pos) {
         for (int i=0; i<pos-2; i++) {
             temp = temp->next;
         }
-        struct node *temp2 = temp->next; /*Accessing nth node, which we want to delete*/
-        temp->next = temp2->next; /*(n-1) node is pointing to (n+1) node now. Breaking the link between (n-1),n,(n+1) nodes.*/
+        struct node *temp2 = temp->next;
+        temp->next = temp2->next;
         free(temp2);
         printf("\n\t**Element deleted successfully**\n");
     }
@@ -109,7 +109,7 @@ void Display() {
     }
 }
 
-void main() {
+int main() {
     head = NULL;
     int ch;
     while (1) {
@@ -160,4 +160,127 @@ void main() {
                 printf("\n\t**Chose a valid option**\n"); 
         }       
     }
+    return 0;
+}
+
+// Test Cases
+
+void testInsertAtBegin() {
+    head = NULL;
+    InsertAtBegin(5);
+    assert(head->data == 5);
+    assert(head->next == NULL);
+
+    InsertAtBegin(10);
+    assert(head->data == 10);
+    assert(head->next->data == 5);
+}
+
+void testInsertAtnthNode() {
+    head = NULL;
+    InsertAtBegin(5);
+    InsertAtBegin(10);
+    InsertAtBegin(15);
+    InsertAtBegin(20);
+
+    InsertAtnthNode(3, 25);
+    assert(head->data == 20);
+    assert(head->next->next->data == 25);
+    assert(head->next->next->next->data == 15);
+    assert(head->next->next->next->next->data == 10);
+    assert(head->next->next->next->next->next->data == 5);
+    assert(head->next->next->next->next->next->next == NULL);
+}
+
+void testInsertAtEnd() {
+    head = NULL;
+    InsertAtEnd(5);
+    assert(head->data == 5);
+    assert(head->next == NULL);
+
+    InsertAtEnd(10);
+    assert(head->data == 5);
+    assert(head->next->data == 10);
+    assert(head->next->next == NULL);
+}
+
+void testDeleteAtBegin() {
+    head = NULL;
+    InsertAtBegin(5);
+    InsertAtBegin(10);
+    InsertAtBegin(15);
+    InsertAtBegin(20);
+
+    DeleteAtBegin();
+    assert(head->data == 15);
+    assert(head->next->data == 10);
+    assert(head->next->next->data == 5);
+    assert(head->next->next->next == NULL);
+
+    DeleteAtBegin();
+    assert(head->data == 10);
+    assert(head->next->data == 5);
+    assert(head->next->next == NULL);
+}
+
+void testDeleteAtEnd() {
+    head = NULL;
+    InsertAtBegin(5);
+    InsertAtBegin(10);
+    InsertAtBegin(15);
+    InsertAtBegin(20);
+
+    DeleteAtEnd();
+    assert(head->data == 20);
+    assert(head->next->data == 15);
+    assert(head->next->next->data == 10);
+    assert(head->next->next->next == NULL);
+
+    DeleteAtEnd();
+    assert(head->data == 20);
+    assert(head->next->data == 15);
+    assert(head->next->next == NULL);
+}
+
+void testDeletenthNode() {
+    head = NULL;
+    InsertAtBegin(5);
+    InsertAtBegin(10);
+    InsertAtBegin(15);
+    InsertAtBegin(20);
+
+    DeletenthNode(2);
+    assert(head->data == 20);
+    assert(head->next->data == 10);
+    assert(head->next->next->data == 5);
+    assert(head->next->next->next == NULL);
+
+    DeletenthNode(1);
+    assert(head->data == 10);
+    assert(head->next->data == 5);
+    assert(head->next->next == NULL);
+}
+
+void testDisplay() {
+    head = NULL;
+    Display(); // No elements to display
+
+    InsertAtBegin(10);
+    InsertAtBegin(20);
+    InsertAtBegin(30);
+
+    Display(); // 30 20 10
+}
+
+int main() {
+    testInsertAtBegin();
+    testInsertAtnthNode();
+    testInsertAtEnd();
+    testDeleteAtBegin();
+    testDeleteAtEnd();
+    testDeletenthNode();
+    testDisplay();
+
+    printf("All test cases pass\n");
+    return 0;
 }

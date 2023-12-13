@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-int count(int num) 
+void printCount(int num) 
 {
     printf("[");
     
@@ -30,5 +30,8 @@ int main()
     int num;
     printf("Count:~$ ");
     scanf("%d", &num);
-    count(num);
+    printCount(num);
+    return 0;
 }
+
+// This code is not testable.
