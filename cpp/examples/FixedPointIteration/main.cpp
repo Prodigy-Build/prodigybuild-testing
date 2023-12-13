@@ -5,6 +5,8 @@
 //
 
 #include <iostream>
+#include <functional>
+#include <cmath>
 #include "../../lib/numericCppExamplesLib/fixedPointIteration.h"
 
 int main(int argc, const char* argv[]) {
