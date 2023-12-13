@@ -1,6 +1,6 @@
-// Implementation of Binary Search Tree 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct BST {
     int data;
@@ -38,30 +38,41 @@ int Search(struct BST* RootPtr, int item) { /*Implemented search using recursion
     } else if(item == RootPtr->data) {
         return 1; /*Returns 1 when element found*/
     } else if(item < RootPtr->data) {
-        Search(RootPtr->left, item); /*Otherwise search in left side of binary tree if searching value is less then the current node value*/
+        return Search(RootPtr->left, item); /*Otherwise search in left side of binary tree if searching value is less then the current node value*/
     } else {
-        Search(RootPtr->right, item); /*Otherwise search in right side of binary tree if searching value is greater then the current node value*/
+        return Search(RootPtr->right, item); /*Otherwise search in right side of binary tree if searching value is greater then the current node value*/
     }
 }
 
-void main() {
-    struct BST* RootPtr = NULL;
-    int item, cont, key;
-    do {
-        printf("Enter item: ");
-        scanf("%d",&item);
-        Insert(&RootPtr, item);
+void test_Insert() {
+    struct BST* root = NULL;
+    Insert(&root, 10);
+    assert(root->data == 10);
+    Insert(&root, 20);
+    assert(root->right->data == 20);
+    Insert(&root, 5);
+    assert(root->left->data == 5);
+    Insert(&root, 8);
+    assert(root->left->right->data == 8);
+}
 
-        printf("\n1 to keep inserting/ 0 to Exit: ");
-        scanf("%d",&cont);
-    } while(cont == 1);
+void test_Search() {
+    struct BST* root = CreateNode();
+    root->data = 10;
+    struct BST* left = CreateNode();
+    left->data = 5;
+    struct BST* right = CreateNode();
+    right->data = 20;
+    root->left = left;
+    root->right = right;
+    assert(Search(root, 10) == 1);
+    assert(Search(root, 5) == 1);
+    assert(Search(root, 20) == 1);
+    assert(Search(root, 8) == 0);
+}
 
-    printf("\nEnter element to search: ");
-    scanf("%d",&key);
-
-    if(Search(RootPtr, key) == 0) {
-        printf("\nFound\n");
-    } else {
-        printf("\nNot Found\n");
-    }
+int main() {
+    test_Insert();
+    test_Search();
+    return 0;
 }

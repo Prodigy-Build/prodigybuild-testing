@@ -1,14 +1,19 @@
 #include <stdio.h>
+#include <stdbool.h>
 
-int main()
-{
+bool is_even(long num) {
+    return num % 2 == 0;
+}
+
+int main() {
     long num;
     printf("Enter a number\n");
     scanf("%ld", &num);
-    int rem = num % 2;
-    
-    if(rem == 0)
-    printf("Even");
-    else
-    printf("Odd");
+
+    if (is_even(num)) {
+        printf("Even");
+    } else {
+        printf("Odd");
+    }
+    return 0;
 }

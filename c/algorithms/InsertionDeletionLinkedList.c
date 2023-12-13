@@ -1,6 +1,7 @@
 // A menu-driven C program which let's the user Insert , Delete , Display elements in list at different positions and situations. 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 struct node {
     int data;
@@ -25,6 +26,17 @@ void InsertAtBegin(int value) {
     }
 }
 
+void UnitTest_InsertAtBegin() {
+    struct node *temp = CreateNode();
+    head = temp;
+    InsertAtBegin(3);
+    if (head->data == 3 && head->next == NULL) {
+        printf("Test case InsertAtBegin Passed\n");
+    } else {
+        printf("Test case InsertAtBegin Failed\n");
+    }
+}
+
 void InsertAtnthNode(int pos , int value) {
     struct node* temp = head;
     if(pos==1) {
@@ -38,6 +50,19 @@ void InsertAtnthNode(int pos , int value) {
         }
         NewNode->next = temp->next; /*Linking nth node to (n+1)th node*/
         temp->next = NewNode; /*Linking (n-1)th node to nth node*/
+    }
+}
+
+void UnitTest_InsertAtnthNode() {
+    struct node *temp = CreateNode();
+    head = temp;
+    temp->data = 1;
+    temp->next = NULL;
+    InsertAtnthNode(2, 2);
+    if (head->next != NULL && head->next->data == 2 && head->next->next == NULL) {
+        printf("Test case InsertAtnthNode Passed\n");
+    } else {
+        printf("Test case InsertAtnthNode Failed\n");
     }
 }
 
@@ -56,12 +81,38 @@ void InsertAtEnd(int value) {
     }
 }
 
+void UnitTest_InsertAtEnd() {
+    struct node *temp = CreateNode();
+    head = temp;
+    temp->data = 1;
+    temp->next = NULL;
+    InsertAtEnd(2);
+    if (head->next != NULL && head->next->data == 2 && head->next->next == NULL) {
+        printf("Test case InsertAtEnd Passed\n");
+    } else {
+        printf("Test case InsertAtEnd Failed\n");
+    }
+}
+
 void DeleteAtBegin() {
     if (head == NULL) { /*Does not work when list is empty. Underflow situation...*/
         printf("\n\t**No element exists**\n");
     } else {
         head = head->next; /*2nd node is now declared as head*/
         printf("\n\t**Element deleted successfully**\n");
+    }
+}
+
+void UnitTest_DeleteAtBegin() {
+    struct node *temp = CreateNode();
+    head = temp;
+    temp->data = 1;
+    temp->next = NULL;
+    DeleteAtBegin();
+    if (head == NULL) {
+        printf("Test case DeleteAtBegin Passed\n");
+    } else {
+        printf("Test case DeleteAtBegin Failed\n");
     }
 }
 
@@ -81,6 +132,19 @@ void DeleteAtEnd() {
     }
 }
 
+void UnitTest_DeleteAtEnd() {
+    struct node *temp = CreateNode();
+    head = temp;
+    temp->data = 1;
+    temp->next = NULL;
+    DeleteAtEnd();
+    if (head == NULL) {
+        printf("Test case DeleteAtEnd Passed\n");
+    } else {
+        printf("Test case DeleteAtEnd Failed\n");
+    }
+}
+
 void DeletenthNode(int pos) {
     struct node *temp = head;
     if (pos == 1) {
@@ -93,6 +157,22 @@ void DeletenthNode(int pos) {
         temp->next = temp2->next; /*(n-1) node is pointing to (n+1) node now. Breaking the link between (n-1),n,(n+1) nodes.*/
         free(temp2);
         printf("\n\t**Element deleted successfully**\n");
+    }
+}
+
+void UnitTest_DeletenthNode() {
+    struct node *temp1 = CreateNode();
+    struct node *temp2 = CreateNode();
+    head = temp1;
+    temp1->data = 1;
+    temp1->next = temp2;
+    temp2->data = 2;
+    temp2->next = NULL;
+    DeletenthNode(2);
+    if (head->next == NULL) {
+        printf("Test case DeletenthNode Passed\n");
+    } else {
+        printf("Test case DeletenthNode Failed\n");
     }
 }
 
@@ -161,3 +241,17 @@ void main() {
         }       
     }
 }
+
+
+// Unit test cases
+
+void RunAllUnitTests() {
+    UnitTest_InsertAtBegin();
+    UnitTest_InsertAtnthNode();
+    UnitTest_InsertAtEnd();
+    UnitTest_DeleteAtBegin();
+    UnitTest_DeleteAtEnd();
+    UnitTest_DeletenthNode();
+}
+
+// This code is not testable.
