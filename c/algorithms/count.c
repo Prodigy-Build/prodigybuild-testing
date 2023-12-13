@@ -4,25 +4,36 @@
 
 int count(int num) 
 {
-    printf("[");
+    // Initialize count to 0
+    int i = 0;
     
+    // Initialize flag to check if num > 20
+    int flag = 0;
+    
+    // Check if num > 20
     if(num > 20)
     {
-        int i;
-        for(i = 0; i < num; i++)
-            printf("\n%d, \n", i);
-            
-        if(i == num + 1)
-            printf("]");
-    } else
-    {
-        int i;
-        for(i = 0; i < num; i++)
-            printf("%d", i);
-            
-        if(i == num)
-            printf("]");
+        flag = 1;
     }
+    
+    // Print opening square bracket
+    printf("[");
+    
+    // Iterate 'num' times
+    for(i = 0; i < num; i++)
+    {
+        // Print line break if flag is set
+        if (flag)
+        {
+            printf("\n");
+        }
+        
+        // Print count number
+        printf("%d, ", i);
+    }
+    
+    // Print closing square bracket
+    printf("]");
 }
 
 int main()
@@ -31,4 +42,5 @@ int main()
     printf("Count:~$ ");
     scanf("%d", &num);
     count(num);
+    return 0;
 }

@@ -11,14 +11,21 @@ int fak(int n) {
     return n * fak(n-1);
 }
 
-int main() {
+void test_fak() {
+    // Test cases for positive numbers
     printf("fak(1): %d\n", fak(1));
     printf("fak(2): %d\n", fak(2));
     printf("fak(3): %d\n", fak(3));
     printf("fak(4): %d\n", fak(4));
     printf("fak(5): %d\n", fak(5));
     
+    // Test case for negative number
     printf("fak(-1): %d\n", fak(-1));
+}
+
+int main() {
+    // Run unit tests
+    test_fak();
 
     return 1;
 }
