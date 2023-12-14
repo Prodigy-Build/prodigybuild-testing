@@ -2,22 +2,20 @@
 
 int linsearch(int *yarr, int val)
 {
-    for(int i = 0; i < sizeof(yarr); i++)
+    for(int i = 0; i < sizeof(yarr) / sizeof(yarr[0]); i++)
     {
         if(yarr[i] == val)
         {
-            return 0;
+            return 1;
         }    
-        else
-        {
-          return 1;
-        }
     }
+    
+    return 0;
 }
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
+    int yarr[] = {4, 8, 15, 16, 23, 42};
+    int val = 42;
     linsearch(yarr, val);
 }
