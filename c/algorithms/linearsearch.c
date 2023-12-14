@@ -2,22 +2,34 @@
 
 int linsearch(int *yarr, int val)
 {
-    for(int i = 0; i < sizeof(yarr); i++)
+    int n = sizeof(yarr) / sizeof(yarr[0]);  // find the length of the array
+
+    for(int i = 0; i < n; i++)
     {
         if(yarr[i] == val)
         {
-            return 0;
+            return i;          // return the index of the element if found
         }    
-        else
-        {
-          return 1;
-        }
     }
+    
+    return -1;              // return -1 if the element is not found
 }
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
-    linsearch(yarr, val);
+    char *yarr[] = {"Shluck much", "much Shluck"};  // change int* to char*
+    char *val = "Shluck much";                      // change int to char*
+
+    int result = linsearch(yarr, val);
+    
+    if(result != -1)
+    {
+        printf("Element found at index %d\n", result);
+    }
+    else
+    {
+        printf("Element not found\n");
+    }
+
+    return 0;
 }
