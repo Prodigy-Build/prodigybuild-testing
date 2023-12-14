@@ -2,22 +2,22 @@
 
 int linsearch(int *yarr, int val)
 {
-    for(int i = 0; i < sizeof(yarr); i++)
+    int size = sizeof(yarr)/sizeof(yarr[0]); // get the size of the array
+
+    for(int i = 0; i < size; i++)
     {
         if(yarr[i] == val)
         {
-            return 0;
+            return 0; // value found
         }    
-        else
-        {
-          return 1;
-        }
     }
+    
+    return 1; // value not found
 }
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
+    char *yarr[] = {"Shluck much", "much Shluck"}; // change int pointer to char pointer
+    char *val = "Shluck Much"; // change int to char pointer
     linsearch(yarr, val);
 }
