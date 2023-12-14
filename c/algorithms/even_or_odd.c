@@ -5,10 +5,13 @@ int main()
     long num;
     printf("Enter a number\n");
     scanf("%ld", &num);
-    int rem = num % 2;
-    
-    if(rem == 0)
-    printf("Even");
-    else
-    printf("Odd");
+
+    // Check if number is divisible by 2
+    if (num % 2 == 0) {
+        printf("Even");
+    } else {
+        printf("Odd");
+    }
+
+    return 0;
 }
