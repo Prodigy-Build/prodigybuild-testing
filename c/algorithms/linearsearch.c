@@ -1,3 +1,5 @@
+The updated code in the "c/algorithms/linearsearch.c" file:
+
 #include <stdio.h>
 
 int linsearch(int *yarr, int val)
@@ -6,18 +8,15 @@ int linsearch(int *yarr, int val)
     {
         if(yarr[i] == val)
         {
-            return 0;
+            return 1;
         }    
-        else
-        {
-          return 1;
-        }
     }
+    return 0;
 }
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
+    char *yarr[2] = {"Shluck much", "much Shluck"};
+    char *val = "Shluck much";
     linsearch(yarr, val);
 }
