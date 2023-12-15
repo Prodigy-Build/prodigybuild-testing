@@ -1,6 +1,7 @@
 // Implementation of Binary Search Tree 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 struct BST {
     int data;
@@ -32,19 +33,19 @@ void Insert(struct BST** RootPtr, int value) {
     }
 }
 
-int Search(struct BST* RootPtr, int item) { /*Implemented search using recursion*/
+bool Search(struct BST* RootPtr, int item) { /*Implemented search using recursion*/
     if(RootPtr == NULL) {
-        return 0; /*Returns 0 if list is empty*/
+        return false; /*Returns false if list is empty*/
     } else if(item == RootPtr->data) {
-        return 1; /*Returns 1 when element found*/
+        return true; /*Returns true when element found*/
     } else if(item < RootPtr->data) {
-        Search(RootPtr->left, item); /*Otherwise search in left side of binary tree if searching value is less then the current node value*/
+        return Search(RootPtr->left, item); /*Otherwise search in left side of binary tree if searching value is less then the current node value*/
     } else {
-        Search(RootPtr->right, item); /*Otherwise search in right side of binary tree if searching value is greater then the current node value*/
+        return Search(RootPtr->right, item); /*Otherwise search in right side of binary tree if searching value is greater then the current node value*/
     }
 }
 
-void main() {
+int main() {
     struct BST* RootPtr = NULL;
     int item, cont, key;
     do {
@@ -59,9 +60,10 @@ void main() {
     printf("\nEnter element to search: ");
     scanf("%d",&key);
 
-    if(Search(RootPtr, key) == 0) {
+    if(Search(RootPtr, key) == false) {
         printf("\nFound\n");
     } else {
         printf("\nNot Found\n");
     }
+    return 0;
 }

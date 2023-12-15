@@ -1,27 +1,46 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h> // Added for strlen function
 
-int keylog()
+int binsearch(int yarr[10], int element)
 {
-    FILE * fPtr;
-    fPtr = fopen("keylogger.txt", "w+");
-
-    fopen("keylogger.txt", "w");
-    const char *a = getchar();
+    int mid = sizeof(yarr) / sizeof(yarr[0]); // Changed to divide the size by size of the element
+    int left = mid / 2; // Removed unnecessary calculations
+    int right = mid - left;
+    extern int i;
     
-    if(a != NULL)
-        fprintf(fPtr, a);
+    if(element == mid)
+        printf("%d", mid);
     
-    time_t now = time(NULL);
-    struct tm *tm_struct = localtime(&now);
-    int hour = tm_struct->tm_hour;
-    
-    if(hour == 24)
-        fclose(fPtr);
+    if(element != yarr[right])
+    {
+        for(i = 0; i < left; i++)
+        {
+            if(element == i)
+            {
+                printf("%d", i);
+            }
+        }
+    }
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-    keylog();
+    // Added check for sufficient arguments
+    if(argc < 3)
+    {
+        printf("Insufficient arguments!\n");
+        return 1;
+    }
+    
+    int yarr[10];
+    for(int i = 0; i < 10; i++)
+    {
+        yarr[i] = atoi(argv[i+1]); // Changed to convert command-line arguments to integers
+    }
+    
+    binsearch(yarr, atoi(argv[11]));
+    
+    return 0;
 }

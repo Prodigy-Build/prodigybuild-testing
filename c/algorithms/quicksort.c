@@ -1,33 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 void swap(int *a, int *b);
 int partition(int *a, int l, int h);
 void quick_sort(int *a, int l, int h);
 
+void test_swap();
+void test_partition();
+void test_quick_sort();
+
 int main()
 {
-    int size;
-    printf("Size: ");
-    scanf("%d", &size);
+    test_swap();
+    test_partition();
+    test_quick_sort();
 
-    int *arr = malloc(size * sizeof(int));
-    printf("Array elements: ");
-    for (int i = 0; i < size; i++)
-    {
-        scanf("%d", &arr[i]);
-    }
-
-    quick_sort(arr, 0, size - 1);
-
-    printf("Sorted array:");
-    for (int i = 0; i < size; i++)
-    {
-        printf(" %d", arr[i]);
-    }
-    printf("\n");
-
-    free(arr);
     return 0;
 }
 
@@ -37,7 +25,15 @@ void swap(int *a, int *b)
     tmp = *a;
     *a = *b;
     *b = tmp;
-    return;
+}
+
+void test_swap()
+{
+    int a = 5;
+    int b = 10;
+
+    swap(&a, &b);
+    assert(a == 10 && b == 5);
 }
 
 int partition(int a[], int l, int h)
@@ -59,6 +55,14 @@ int partition(int a[], int l, int h)
     return j;
 }
 
+void test_partition()
+{
+    int arr[] = {7, 2, 8, 1, 3, 6, 5, 4};
+    int pivot = partition(arr, 0, 7);
+
+    assert(arr[pivot] == 4);
+}
+
 void quick_sort(int a[], int l, int h)
 {
     int p;
@@ -69,6 +73,17 @@ void quick_sort(int a[], int l, int h)
         quick_sort(a, l, p - 1);
         quick_sort(a, p + 1, h);
     }
+}
 
-    return;
+void test_quick_sort()
+{
+    int arr[] = {7, 2, 8, 1, 3, 6, 5, 4};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    quick_sort(arr, 0, size - 1);
+
+    for (int i = 1; i < size; i++)
+    {
+        assert(arr[i] >= arr[i - 1]);
+    }
 }
