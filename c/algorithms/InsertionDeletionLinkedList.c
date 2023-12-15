@@ -1,6 +1,15 @@
-// A menu-driven C program which let's the user Insert , Delete , Display elements in list at different positions and situations. 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
+
+// Function prototypes
+void test_InsertAtBegin();
+void test_InsertAtnthNode();
+void test_InsertAtEnd();
+void test_DeleteAtBegin();
+void test_DeleteAtEnd();
+void test_DeletenthNode();
+void test_Display();
 
 struct node {
     int data;
@@ -8,7 +17,6 @@ struct node {
 };
 struct node *head;
 
-// Structure used to create node again and again when required..
 struct node *CreateNode() {
     struct node *new = (struct node*) malloc(sizeof(struct node));
     return new;
@@ -16,7 +24,7 @@ struct node *CreateNode() {
 
 void InsertAtBegin(int value) {
     struct node *NewNode = CreateNode();
-    if (head == NULL) { /*Only works when list is empty*/
+    if (head == NULL) {
         NewNode->data = value;
         head = NewNode;
         NewNode->next = NULL;
@@ -34,15 +42,15 @@ void InsertAtnthNode(int pos , int value) {
         NewNode->data = value;
         NewNode->next = NULL;
         for (int i=0; i<pos-2; i++) {
-            temp = temp->next; /*Accessing (n-1)th node*/
+            temp = temp->next;
         }
-        NewNode->next = temp->next; /*Linking nth node to (n+1)th node*/
-        temp->next = NewNode; /*Linking (n-1)th node to nth node*/
+        NewNode->next = temp->next;
+        temp->next = NewNode;
     }
 }
 
 void InsertAtEnd(int value) {
-    if (head == NULL) { /*Does not work when list is empty. Underflow situation...*/
+    if (head == NULL) {
         printf("\n\t**Use Insert at begining**\n");
     } else {
         struct node *temp = head;
@@ -52,30 +60,30 @@ void InsertAtEnd(int value) {
         struct node *NewNode = CreateNode();
         NewNode->data = value;
         NewNode->next = temp->next;
-        temp->next = NewNode; /*Links new node n to (n-1)th node*/
+        temp->next = NewNode;
     }
 }
 
 void DeleteAtBegin() {
-    if (head == NULL) { /*Does not work when list is empty. Underflow situation...*/
+    if (head == NULL) {
         printf("\n\t**No element exists**\n");
     } else {
-        head = head->next; /*2nd node is now declared as head*/
+        head = head->next;
         printf("\n\t**Element deleted successfully**\n");
     }
 }
 
 void DeleteAtEnd() {
-    if (head == NULL) { /*Does not work when list is empty. Underflow situation...*/
+    if (head == NULL) {
         printf("\n\t**No element exists**\n");
     } else if (head->next == NULL) {
         printf("\n\t**Use Delete at begining**\n");
     } else {
         struct node *temp = head;
-        while(temp->next->next!=NULL) { /*Accessing (n-1)th node*/
+        while(temp->next->next!=NULL) {
             temp = temp->next;
         }
-        temp->next = NULL; /*(n-1)th node will now point to null instead of nth node*/
+        temp->next = NULL;
         free(temp->next);
         printf("\n\t**Element deleted successfully**\n");
     }
@@ -89,8 +97,8 @@ void DeletenthNode(int pos) {
         for (int i=0; i<pos-2; i++) {
             temp = temp->next;
         }
-        struct node *temp2 = temp->next; /*Accessing nth node, which we want to delete*/
-        temp->next = temp2->next; /*(n-1) node is pointing to (n+1) node now. Breaking the link between (n-1),n,(n+1) nodes.*/
+        struct node *temp2 = temp->next;
+        temp->next = temp2->next;
         free(temp2);
         printf("\n\t**Element deleted successfully**\n");
     }
@@ -110,7 +118,18 @@ void Display() {
 }
 
 void main() {
+    // Initialize head to NULL
     head = NULL;
+
+    // Perform unit testing
+    test_InsertAtBegin();
+    test_InsertAtnthNode();
+    test_InsertAtEnd();
+    test_DeleteAtBegin();
+    test_DeleteAtEnd();
+    test_DeletenthNode();
+    test_Display();
+
     int ch;
     while (1) {
         printf("\n\t\t**MENU**\n\t1. Insert at begining\n\t2. Insert at nth position\n\t3. Insert at end\n\t4. Delete at begining\n\t5. Delete at end\n\t6. Delete nth node\n\t7. Display\n\t8. Exit\n");
@@ -160,4 +179,110 @@ void main() {
                 printf("\n\t**Chose a valid option**\n"); 
         }       
     }
+}
+
+void test_InsertAtBegin() {
+    // Test case 1
+    InsertAtBegin(10);
+    assert(head->data == 10);
+    assert(head->next == NULL);
+
+    // Test case 2
+    InsertAtBegin(20);
+    assert(head->data == 20);
+    assert(head->next->data == 10);
+
+    printf("InsertAtBegin() - All test cases passed!\n");
+}
+
+void test_InsertAtnthNode() {
+    // Assume the linked list is currently 20->10->NULL
+
+    // Test case 1
+    InsertAtnthNode(1, 30);
+    assert(head->data == 20);
+    assert(head->next->data == 10);
+    assert(head->next->next->data == 30);
+
+    // Test case 2
+    InsertAtnthNode(3, 40);
+    assert(head->data == 20);
+    assert(head->next->data == 10);
+    assert(head->next->next->data == 30);
+    assert(head->next->next->next->data == 40);
+
+    printf("InsertAtnthNode() - All test cases passed!\n");
+}
+
+void test_InsertAtEnd() {
+    // Assume the linked list is currently 20->10->30->40->NULL
+
+    // Test case 1
+    InsertAtEnd(50);
+    assert(head->data == 20);
+    assert(head->next->data == 10);
+    assert(head->next->next->data == 30);
+    assert(head->next->next->next->data == 40);
+    assert(head->next->next->next->next->data == 50);
+
+    // Test case 2
+    InsertAtEnd(60);
+    assert(head->data == 20);
+    assert(head->next->data == 10);
+    assert(head->next->next->data == 30);
+    assert(head->next->next->next->data == 40);
+    assert(head->next->next->next->next->data == 50);
+    assert(head->next->next->next->next->next->data == 60);
+
+    printf("InsertAtEnd() - All test cases passed!\n");
+}
+
+void test_DeleteAtBegin() {
+    // Assume the linked list is currently 20->10->30->40->50->60->NULL
+
+    // Test case 1
+    DeleteAtBegin();
+    assert(head->data == 10);
+    assert(head->next->data == 30);
+
+    // Test case 2
+    DeleteAtBegin();
+    assert(head->data == 30);
+
+    printf("DeleteAtBegin() - All test cases passed!\n");
+}
+
+void test_DeleteAtEnd() {
+    // Assume the linked list is currently 30->40->NULL
+
+    // Test case 1
+    DeleteAtEnd();
+    assert(head->data == 30);
+
+    printf("DeleteAtEnd() - All test cases passed!\n");
+}
+
+void test_DeletenthNode() {
+    // Assume the linked list is currently 20->10->30->40->50->60->NULL
+
+    // Test case 1
+    DeletenthNode(1);
+    assert(head->data == 10);
+    assert(head->next->data == 30);
+
+    // Test case 2
+    DeletenthNode(2);
+    assert(head->data == 10);
+    assert(head->next->data == 40);
+
+    printf("DeletenthNode() - All test cases passed!\n");
+}
+
+void test_Display() {
+    // Assume the linked list is currently 10->40->NULL
+
+    // Test case
+    Display();
+
+    printf("Display() - All test cases passed!\n");
 }

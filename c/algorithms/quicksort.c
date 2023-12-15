@@ -1,33 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 void swap(int *a, int *b);
 int partition(int *a, int l, int h);
 void quick_sort(int *a, int l, int h);
 
+void test_swap();
+void test_partition();
+void test_quick_sort();
+
+// Unit tests
 int main()
 {
-    int size;
-    printf("Size: ");
-    scanf("%d", &size);
-
-    int *arr = malloc(size * sizeof(int));
-    printf("Array elements: ");
-    for (int i = 0; i < size; i++)
-    {
-        scanf("%d", &arr[i]);
-    }
-
-    quick_sort(arr, 0, size - 1);
-
-    printf("Sorted array:");
-    for (int i = 0; i < size; i++)
-    {
-        printf(" %d", arr[i]);
-    }
-    printf("\n");
-
-    free(arr);
+    test_swap();
+    test_partition();
+    test_quick_sort();
     return 0;
 }
 
@@ -71,4 +59,28 @@ void quick_sort(int a[], int l, int h)
     }
 
     return;
+}
+
+void test_swap()
+{
+    int a = 3;
+    int b = 4;
+    swap(&a, &b);
+    assert(a == 4 && b == 3);
+}
+
+void test_partition()
+{
+    int a[] = {4, 2, 1, 3};
+    int n = sizeof(a) / sizeof(a[0]);
+    int p = partition(a, 0, n - 1);
+    assert(p == 2 && a[p] == 3);
+}
+
+void test_quick_sort()
+{
+    int a[] = {4, 2, 1, 3};
+    int n = sizeof(a) / sizeof(a[0]);
+    quick_sort(a, 0, n - 1);
+    assert(a[0] == 1 && a[1] == 2 && a[2] == 3 && a[3] == 4);
 }

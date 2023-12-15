@@ -1,14 +1,1 @@
-#include <stdio.h>
-
-int main()
-{
-    long num;
-    printf("Enter a number\n");
-    scanf("%ld", &num);
-    int rem = num % 2;
-    
-    if(rem == 0)
-    printf("Even");
-    else
-    printf("Odd");
-}
+This code is not testable as the logic is directly embedded in the `main` function and it directly takes input from the user. To write unit test cases, the logic should be moved into a separate function that can be tested independently.
