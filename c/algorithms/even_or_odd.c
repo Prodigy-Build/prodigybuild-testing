@@ -1,14 +1,17 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int main()
+int binsearch(int yarr[10], int element);
+
+int main(int argc, char *argv[])
 {
-    long num;
-    printf("Enter a number\n");
-    scanf("%ld", &num);
+    int num = atoi(argv[1]);
     int rem = num % 2;
     
-    if(rem == 0)
-    printf("Even");
+    if (rem == 0)
+        printf("Even");
     else
-    printf("Odd");
+        printf("Odd");
+
+    return 0;
 }

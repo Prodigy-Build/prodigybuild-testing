@@ -1,5 +1,18 @@
 #include <stdio.h>
 
+void test_linsearch()
+{
+    int yarr[2] = {17, 25};
+    int val1 = 17;
+    int val2 = 25;
+
+    int result1 = linsearch(yarr, val1);
+    int result2 = linsearch(yarr, val2);
+
+    // Write test assertions here
+    
+}
+
 int linsearch(int *yarr, int val)
 {
     for(int i = 0; i < sizeof(yarr); i++)
@@ -17,7 +30,6 @@ int linsearch(int *yarr, int val)
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
-    linsearch(yarr, val);
+    test_linsearch();
+    return 0;
 }

@@ -1,33 +1,59 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 void swap(int *a, int *b);
 int partition(int *a, int l, int h);
 void quick_sort(int *a, int l, int h);
 
+void test_swap()
+{
+    int a = 5;
+    int b = 10;
+
+    swap(&a, &b);
+
+    assert(a == 10);
+    assert(b == 5);
+}
+
+void test_partition()
+{
+    int a[5] = {3, 1, 5, 4, 2};
+    int l = 0;
+    int h = 4;
+
+    int p = partition(a, l, h);
+
+    assert(p == 2);
+    assert(a[0] == 1);
+    assert(a[1] == 2);
+    assert(a[2] == 3);
+    assert(a[3] == 5);
+    assert(a[4] == 4);
+}
+
+void test_quick_sort()
+{
+    int a[5] = {3, 1, 5, 4, 2};
+    int l = 0;
+    int h = 4;
+
+    quick_sort(a, l, h);
+
+    assert(a[0] == 1);
+    assert(a[1] == 2);
+    assert(a[2] == 3);
+    assert(a[3] == 4);
+    assert(a[4] == 5);
+}
+
 int main()
 {
-    int size;
-    printf("Size: ");
-    scanf("%d", &size);
+    test_swap();
+    test_partition();
+    test_quick_sort();
 
-    int *arr = malloc(size * sizeof(int));
-    printf("Array elements: ");
-    for (int i = 0; i < size; i++)
-    {
-        scanf("%d", &arr[i]);
-    }
-
-    quick_sort(arr, 0, size - 1);
-
-    printf("Sorted array:");
-    for (int i = 0; i < size; i++)
-    {
-        printf(" %d", arr[i]);
-    }
-    printf("\n");
-
-    free(arr);
     return 0;
 }
 

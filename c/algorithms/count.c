@@ -1,22 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <stddef.h>
+#include <string.h>
 
 int count(int num) 
 {
+    int i;
+    
     printf("[");
     
     if(num > 20)
     {
-        int i;
         for(i = 0; i < num; i++)
             printf("\n%d, \n", i);
             
         if(i == num + 1)
             printf("]");
-    } else
+    } 
+    else
     {
-        int i;
         for(i = 0; i < num; i++)
             printf("%d", i);
             

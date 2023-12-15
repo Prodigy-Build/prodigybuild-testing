@@ -1,6 +1,7 @@
 // Implementing Doubly linked list.
 #include <stdio.h>
 #include <stdlib.h>
+#include "gtest/gtest.h"
 
 struct Node {
     int value;
@@ -60,4 +61,32 @@ void main() {
     }
     Display();
     ReverseDisplay();
+}
+
+// Unit test cases
+TEST(TestCaseName, TestName) {
+    // Test case 1
+    struct Node *n = CreateNode();
+    ASSERT_TRUE(n != NULL);
+    
+    // Test case 2
+    head = NULL;
+    Insert(10);
+    Insert(20);
+    Insert(30);
+    ASSERT_EQ(head->value, 30);
+    ASSERT_EQ(head->next->value, 20);
+    ASSERT_EQ(head->next->prev->value, 30);
+    
+    // Test case 3
+    testing::internal::CaptureStdout();
+    Display();
+    std::string output = testing::internal::GetCapturedStdout();
+    ASSERT_EQ(output, "\nForward:\n30 20 10 ");
+    
+    // Test case 4
+    testing::internal::CaptureStdout();
+    ReverseDisplay();
+    output = testing::internal::GetCapturedStdout();
+    ASSERT_EQ(output, "\nBackward:\n10 20 30 \n");
 }
