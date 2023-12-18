@@ -1,23 +1,35 @@
 #include <stdio.h>
+#include <stdbool.h>
 
-int linsearch(int *yarr, int val)
+int linsearch(int *yarr, int size, int val)
 {
-    for(int i = 0; i < sizeof(yarr); i++)
+    for(int i = 0; i < size; i++)
     {
         if(yarr[i] == val)
         {
-            return 0;
-        }    
-        else
-        {
-          return 1;
+            return i;
         }
     }
+  
+    return -1; // indicates that the element was not found
+}
+
+void test_linsearch()
+{
+    int arr[] = {1, 2, 3, 4, 5};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    // Test case 1: element found
+    int result = linsearch(arr, size, 3);
+    printf("Element found at index: %d\n", result); // Expected output: 2
+
+    // Test case 2: element not found
+    result = linsearch(arr, size, 6);
+    printf("Element not found: %d\n", result); // Expected output: -1
 }
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
-    linsearch(yarr, val);
+    test_linsearch();
+    return 0;
 }

@@ -1,19 +1,40 @@
 #include <stdio.h>
+#include <assert.h>
 
-int main()
+int binsearch(int yarr[10], int element)
 {
-    int *unsorted[] = {5, 6, 4, 3, 9};
-    int *sorted[5];
-    do
+    int mid = sizeof(yarr) / sizeof(yarr[0]) / 2;
+    int left = mid;
+    int right = sizeof(yarr) / sizeof(yarr[0]);
+    
+    if(element == yarr[mid])
     {
-        int a = 0;
-        a++;
-        int b = 0;
-        b++;
-        
-        if(unsorted[a] < unsorted[b])
+        printf("%d\n", element);
+    }
+    
+    for(int i = 0; i < left; i++)
+    {
+        if(element == yarr[i])
         {
-            sorted[a] = unsorted[a];
+            //Does this so that it doesn't print multiple times
+            printf("%d\n", element);
         }
-    } while(sizeof(sorted) != sizeof(unsorted));
+    }
+}
+
+void test_binsearch()
+{
+    int arr[] = {1, 2, 3, 4, 5};
+    
+    assert(binsearch(arr, 1) == 1);
+    assert(binsearch(arr, 5) == 5);
+    assert(binsearch(arr, 3) == 3);
+    assert(binsearch(arr, 6) == 0);
+}
+
+int main(int argc, char *argv[])
+{
+    test_binsearch();
+    
+    return 0;
 }
