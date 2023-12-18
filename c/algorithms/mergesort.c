@@ -1,53 +1,52 @@
-#include<stdio.h>
-#include<time.h>
-#include<stdlib.h>
-
-// function to merge the sub-arrays
-void merge(int a[],int low,int mid ,int high)
+// Unit test for merge() function
+void test_merge()
 {
-	int b[20]; //same size of a[]
-	int i, j, k;
-	i = low, j = mid + 1,k = low;
-	while(i <= mid && j <= high)
+	int a[] = {2, 5, 7, 1, 3, 6};
+	int low = 0;
+	int mid = 2;
+	int high = 5;
+	int expected[] = {1, 2, 3, 5, 6, 7};
+	
+	merge(a, low, mid, high);
+
+	for(int i = 0; i <= high; i++)
 	{
-		if(a[i]<=a[j])
-		    b[k++]=a[i++];
-		else
-		   b[k++]=a[j++]; //copying the elements 
+		if(a[i] != expected[i])
+		{
+			printf("merge() test failed.\n");
+			return;
+		}
 	}
-	while (i<=mid)
-		b[k++]=a[i++];
-	while 
-		(j<=high) b[k++]=a[j++];
-		for (k=low;k<=high;k++)
-	        a[k]=b[k];
+
+	printf("merge() test passed.\n");
 }
 
-// merge sort function
-void mergesort(int a[],int low,int high)
+// Unit test for mergesort() function
+void test_mergesort()
 {
-	int mid;
-	if(low>=high)
-	  return;
-	mid=(low+high)/2;
-	mergesort(a,low,mid);
-	mergesort(a,mid+1,high);
-	merge(a,low,mid,high);
-}
-
-// main fucntion
-int main()
-{
-	int a[7] = {83, 20, 9, 50, 115, 61, 17};
-	int n = 7;
+	int a[] = {5, 3, 9, 1, 7, 4};
+	int n = 6;
+	int expected[] = {1, 3, 4, 5, 7, 9};
 
 	mergesort(a, 0, n-1);
-	
-	printf("\n Sorted numbers are: ");
 
-	// function to print the sorted array
-	int k;
-	for(k = 0; k < 7; k++)
-	    printf("%d, ",a[k]);
+	for(int i = 0; i < n; i++)
+	{
+		if(a[i] != expected[i])
+		{
+			printf("mergesort() test failed.\n");
+			return;
+		}
+	}
+
+	printf("mergesort() test passed.\n");
+}
+
+// Mock main function for testing
+int main()
+{
+	test_merge();
+	test_mergesort();
+
 	return 0;
 }
