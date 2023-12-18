@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 
 int count(int num) 
 {
@@ -32,3 +33,5 @@ int main()
     scanf("%d", &num);
     count(num);
 }
+
+// This code does not contain any testable logic.
