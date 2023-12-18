@@ -48,7 +48,21 @@ void ReverseDisplay() {
     printf("\n");
 }
 
-void main() {
+void test_Insert() {
+    // Test case 1: Inserting a single element
+    Insert(5);
+    Display(); // Expected output: 5
+    ReverseDisplay(); // Expected output: 5
+
+    // Test case 2: Inserting multiple elements
+    Insert(10);
+    Insert(15);
+    Insert(20);
+    Display(); // Expected output: 20 15 10 5
+    ReverseDisplay(); // Expected output: 5 10 15 20
+}
+
+int main() {
     int n, val;
     printf("Enter number of elements: ");
     scanf("%d",&n);
@@ -60,4 +74,6 @@ void main() {
     }
     Display();
     ReverseDisplay();
+
+    return 0;
 }
