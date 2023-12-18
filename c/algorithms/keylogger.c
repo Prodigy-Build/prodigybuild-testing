@@ -1,27 +1,46 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
-int keylog()
+void test_binsearch(); // Function declaration for test case
+
+int binsearch(int yarr[], int element)
 {
-    FILE * fPtr;
-    fPtr = fopen("keylogger.txt", "w+");
+    int mid = sizeof(yarr) / sizeof(yarr[0]) / 2;
+    int left = mid;
+    int right = sizeof(yarr) / sizeof(yarr[0]);
+  
+    if(element == yarr[mid])
+        printf("%d", mid);
 
-    fopen("keylogger.txt", "w");
-    const char *a = getchar();
-    
-    if(a != NULL)
-        fprintf(fPtr, a);
-    
-    time_t now = time(NULL);
-    struct tm *tm_struct = localtime(&now);
-    int hour = tm_struct->tm_hour;
-    
-    if(hour == 24)
-        fclose(fPtr);
+    for(int i = 0; i < left; i++)
+    {
+        if(element == yarr[i])
+        {
+            // Does this so that it doesn't print multiple times
+            printf("%d", i);
+        }
+    }
 }
 
 int main()
 {
-    keylog();
+    // Test case for binsearch function
+    test_binsearch();
+    
+    return 0;
+}
+
+void test_binsearch()
+{
+    // Test case 1
+    int arr1[] = {1, 2, 3, 4, 5};
+    int element1 = 3;
+    binsearch(arr1, element1); // Expected output: 2
+    
+    // Test case 2
+    int arr2[] = {10, 20, 30, 40, 50};
+    int element2 = 20;
+    binsearch(arr2, element2); // Expected output: 1
 }

@@ -1,23 +1,46 @@
 #include <stdio.h>
+#include <stdbool.h>
 
-int linsearch(int *yarr, int val)
+int linsearch(int *yarr, int val, int size)
 {
-    for(int i = 0; i < sizeof(yarr); i++)
+    for(int i = 0; i < size; i++)
     {
         if(yarr[i] == val)
         {
-            return 0;
-        }    
-        else
-        {
-          return 1;
+            return i;
         }
+    }
+    return -1;
+}
+
+void test_linsearch()
+{
+    int yarr[] = {10, 20, 30, 40, 50};
+    int size = sizeof(yarr) / sizeof(yarr[0]);
+    
+    int result = linsearch(yarr, 30, size);
+    if(result == 2)
+    {
+        printf("Test case 1 Passed\n");
+    }
+    else
+    {
+        printf("Test case 1 Failed\n");
+    }
+
+    result = linsearch(yarr, 100, size);
+    if(result == -1)
+    {
+        printf("Test case 2 Passed\n");
+    }
+    else
+    {
+        printf("Test case 2 Failed\n");
     }
 }
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
-    linsearch(yarr, val);
+    test_linsearch();
+    return 0;
 }

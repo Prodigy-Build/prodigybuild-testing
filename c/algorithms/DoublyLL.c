@@ -1,6 +1,6 @@
-// Implementing Doubly linked list.
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct Node {
     int value;
@@ -48,7 +48,81 @@ void ReverseDisplay() {
     printf("\n");
 }
 
-void main() {
+void testInsert()
+{
+    // Test case 1
+    Insert(1);
+    assert(head != NULL);
+    assert(head->value == 1);
+    assert(head->next == NULL);
+    assert(head->prev == NULL);
+
+    // Test case 2
+    Insert(2);
+    assert(head != NULL);
+    assert(head->value == 2);
+    assert(head->next != NULL);
+    assert(head->prev == NULL);
+    assert(head->next->value == 1);
+    assert(head->next->next == NULL);
+    assert(head->next->prev == head);
+
+    printf("Insert() passed all test cases.\n");
+}
+
+void testDisplay()
+{
+    // Test case 1
+    head = NULL;
+    printf("Forward:\n");
+    Display();
+    printf("\nExpected: \n");
+
+    // Test case 2
+    Insert(1);
+    head = NULL;
+    printf("Forward:\n");
+    Display();
+    printf("\nExpected: 1 \n");
+
+    // Test case 3
+    Insert(1);
+    Insert(2);
+    head = NULL;
+    printf("Forward:\n");
+    Display();
+    printf("\nExpected: 2 1 \n");
+
+    printf("Display() passed all test cases.\n");
+}
+
+void testReverseDisplay()
+{
+    // Test case 1
+    head = NULL;
+    printf("Backward:\n");
+    ReverseDisplay();
+    printf("\nExpected: \n");
+
+    // Test case 2
+    Insert(1);
+    head = NULL;
+    printf("Backward:\n");
+    ReverseDisplay();
+    printf("\nExpected: 1 \n");
+
+    // Test case 3
+    Insert(1);
+    Insert(2);
+    head = NULL;
+    printf("Backward:\n");
+    ReverseDisplay();
+    printf("\nExpected: 1 2 \n");
+
+    printf("ReverseDisplay() passed all test cases.\n");
+}
+
+int main() {
     int n, val;
     printf("Enter number of elements: ");
     scanf("%d",&n);
@@ -60,4 +134,11 @@ void main() {
     }
     Display();
     ReverseDisplay();
+
+    // Run tests
+    testInsert();
+    testDisplay();
+    testReverseDisplay();
+
+    return 0;
 }

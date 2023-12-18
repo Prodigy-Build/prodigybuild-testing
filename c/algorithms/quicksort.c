@@ -1,74 +1,64 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
-void swap(int *a, int *b);
-int partition(int *a, int l, int h);
-void quick_sort(int *a, int l, int h);
+int binsearch(int arr[], int size, int element);
+
+void test_binsearch()
+{
+    // Test case 1
+    int arr1[] = {1, 2, 3, 4, 5};
+    int size1 = sizeof(arr1) / sizeof(arr1[0]);
+    int element1 = 3;
+    int expected1 = 2;
+    int result1 = binsearch(arr1, size1, element1);
+    printf("Test case 1: %s\n", result1 == expected1 ? "Pass" : "Fail");
+
+    // Test case 2
+    int arr2[] = {1, 2, 3, 4, 5};
+    int size2 = sizeof(arr2) / sizeof(arr2[0]);
+    int element2 = 6;
+    int expected2 = -1;
+    int result2 = binsearch(arr2, size2, element2);
+    printf("Test case 2: %s\n", result2 == expected2 ? "Pass" : "Fail");
+
+    // Test case 3
+    int arr3[] = {1, 2, 3, 3, 4, 5};
+    int size3 = sizeof(arr3) / sizeof(arr3[0]);
+    int element3 = 3;
+    int expected3 = 2;
+    int result3 = binsearch(arr3, size3, element3);
+    printf("Test case 3: %s\n", result3 == expected3 ? "Pass" : "Fail");
+}
 
 int main()
 {
-    int size;
-    printf("Size: ");
-    scanf("%d", &size);
-
-    int *arr = malloc(size * sizeof(int));
-    printf("Array elements: ");
-    for (int i = 0; i < size; i++)
-    {
-        scanf("%d", &arr[i]);
-    }
-
-    quick_sort(arr, 0, size - 1);
-
-    printf("Sorted array:");
-    for (int i = 0; i < size; i++)
-    {
-        printf(" %d", arr[i]);
-    }
-    printf("\n");
-
-    free(arr);
+    test_binsearch();
     return 0;
 }
 
-void swap(int *a, int *b)
+int binsearch(int arr[], int size, int element)
 {
-    int tmp;
-    tmp = *a;
-    *a = *b;
-    *b = tmp;
-    return;
-}
+    int left = 0;
+    int right = size - 1;
 
-int partition(int a[], int l, int h)
-{
-    int i = l, j = l, p = h;
-
-    while (i < h)
+    while (left <= right)
     {
-        if (a[i] < a[p])
+        int mid = left + (right - left) / 2;
+
+        if (arr[mid] == element)
         {
-            swap(&a[i], &a[j]);
-            j++;
+            return mid;
         }
-        i++;
+        else if (arr[mid] < element)
+        {
+            left = mid + 1;
+        }
+        else
+        {
+            right = mid - 1;
+        }
     }
 
-    swap(&a[p], &a[j]);
-
-    return j;
-}
-
-void quick_sort(int a[], int l, int h)
-{
-    int p;
-
-    if (l < h)
-    {
-        p = partition(a, l, h);
-        quick_sort(a, l, p - 1);
-        quick_sort(a, p + 1, h);
-    }
-
-    return;
+    return -1;
 }

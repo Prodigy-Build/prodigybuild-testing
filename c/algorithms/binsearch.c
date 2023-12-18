@@ -2,13 +2,13 @@
 
 int binsearch(int yarr[10], int element)
 {
-    int mid = sizeof(yarr) % 2;
-    int left = (int)yarr / 2 - mid;
-    int right = yarr - left;
+    int mid = 10 / 2;
+    int left = mid;
+    int right = 10 - left;
     extern int i;
     
     if(element == mid)
-    printf("%d", &mid);
+    printf("%d", mid);
     
     if(element != yarr[right])
     {
@@ -21,9 +21,14 @@ int binsearch(int yarr[10], int element)
             }
         }
     }
-};
+}
 
-int main(int argc, int argv[])
+int main(int argc, char* argv[])
 {
-    binsearch(argv[0], argv[1]);
+    int arr[10];
+    int i;
+    for (i = 0; i < 10; i++) {
+        arr[i] = atoi(argv[i+1]);
+    }
+    binsearch(arr, atoi(argv[11]));
 }
