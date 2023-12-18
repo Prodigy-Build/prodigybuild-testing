@@ -2,22 +2,22 @@
 
 int linsearch(int *yarr, int val)
 {
-    for(int i = 0; i < sizeof(yarr); i++)
+    int n = sizeof(yarr)/sizeof(yarr[0]); // calculate the length of the array
+
+    for(int i = 0; i < n; i++)
     {
         if(yarr[i] == val)
         {
             return 0;
         }    
-        else
-        {
-          return 1;
-        }
     }
+
+    return 1;
 }
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
+    char *yarr[] = {"Shluck much", "much Shluck"}; // declare yarr as an array of strings
+    char *val = "Shluck much"; // declare val as a string
     linsearch(yarr, val);
 }
