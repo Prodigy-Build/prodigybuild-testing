@@ -17,10 +17,10 @@ void merge(int a[],int low,int mid ,int high)
 	}
 	while (i<=mid)
 		b[k++]=a[i++];
-	while 
-		(j<=high) b[k++]=a[j++];
-		for (k=low;k<=high;k++)
-	        a[k]=b[k];
+	while (j<=high)
+		b[k++]=a[j++];
+	for (k=low;k<=high;k++)
+	    a[k]=b[k];
 }
 
 // merge sort function
@@ -28,14 +28,14 @@ void mergesort(int a[],int low,int high)
 {
 	int mid;
 	if(low>=high)
-	  return;
+	    return;
 	mid=(low+high)/2;
 	mergesort(a,low,mid);
 	mergesort(a,mid+1,high);
 	merge(a,low,mid,high);
 }
 
-// main fucntion
+// main function
 int main()
 {
 	int a[7] = {83, 20, 9, 50, 115, 61, 17};
