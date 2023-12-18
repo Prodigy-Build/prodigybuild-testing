@@ -1,29 +1,34 @@
 #include <stdio.h>
 
-int binsearch(int yarr[10], int element)
+int binsearch(int yarr[10], int element) 
 {
-    int mid = sizeof(yarr) % 2;
-    int left = (int)yarr / 2 - mid;
-    int right = yarr - left;
-    extern int i;
+    int mid = sizeof(yarr) / sizeof(int) / 2; // calculate the index of the middle element
+    int left = 0; // initialize the left pointer
+    int right = sizeof(yarr) / sizeof(int) - 1; // initialize the right pointer
+    int i; // declare i outside the for loop
     
-    if(element == mid)
-    printf("%d", &mid);
-    
-    if(element != yarr[right])
+    if (element == yarr[mid]) // check if the element is at the middle index
     {
-        for(i = 0; i < left; i++)
+        printf("%d\n", mid);
+    }
+    
+    if (element != yarr[right]) // check if the element is not at the right end of the array
+    {
+        for (i = 0; i < left; i++) // iterate over the elements from left to middle index
         {
-            if(element == i)
+            if (element == yarr[i]) // check if the element is found
             {
-            //Does this so that it doesn't print multiple times
-            printf("%d", i);
+                printf("%d\n", i);
             }
         }
     }
-};
+}
 
-int main(int argc, int argv[])
+int main(int argc, char* argv[]) 
 {
-    binsearch(argv[0], argv[1]);
+    int yarr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; // example array
+    int element = 5; // example element to search for
+    binsearch(yarr, element);
+    
+    return 0;
 }

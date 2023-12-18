@@ -1,98 +1,118 @@
-// A menu-driven C program which let's the user Insert , Delete , Display elements in list at different positions and situations. 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct node {
     int data;
     struct node *next;
 };
+
 struct node *head;
 
-// Structure used to create node again and again when required..
-struct node *CreateNode() {
+struct node *CreateNode(int value) {
     struct node *new = (struct node*) malloc(sizeof(struct node));
+    assert(new != NULL);
+    new->data = value;
+    new->next = NULL;
     return new;
 }
 
 void InsertAtBegin(int value) {
-    struct node *NewNode = CreateNode();
-    if (head == NULL) { /*Only works when list is empty*/
-        NewNode->data = value;
+    struct node *NewNode = CreateNode(value);
+    if (head == NULL) {
         head = NewNode;
-        NewNode->next = NULL;
     } else {
         printf("\n\t**Element already exists at this position**\n");
     }
 }
 
+int ListLength() {
+    int length = 0;
+    struct node *temp = head;
+    while (temp != NULL) {
+        length++;
+        temp = temp->next;
+    }
+    return length;
+}
+
 void InsertAtnthNode(int pos , int value) {
-    struct node* temp = head;
-    if(pos==1) {
-        printf("\n\t**Use Insert at begining**\n");
-    } else { 
-        struct node *NewNode = CreateNode();
-        NewNode->data = value;
-        NewNode->next = NULL;
-        for (int i=0; i<pos-2; i++) {
-            temp = temp->next; /*Accessing (n-1)th node*/
+    int length = ListLength();
+    if (pos == 1) {
+        InsertAtBegin(value);
+    } else if (pos <= length + 1) {
+        struct node *temp = head;
+        struct node *NewNode = CreateNode(value);
+        for (int i=1; i<pos-1; i++) {
+            temp = temp->next;
         }
-        NewNode->next = temp->next; /*Linking nth node to (n+1)th node*/
-        temp->next = NewNode; /*Linking (n-1)th node to nth node*/
+        NewNode->next = temp->next;
+        temp->next = NewNode;
+    } else {
+        printf("\n\t**Invalid position to insert at**\n");
     }
 }
 
 void InsertAtEnd(int value) {
-    if (head == NULL) { /*Does not work when list is empty. Underflow situation...*/
-        printf("\n\t**Use Insert at begining**\n");
+    struct node *NewNode = CreateNode(value);
+    if (head == NULL) {
+        head = NewNode;
     } else {
         struct node *temp = head;
-        while(temp->next!=NULL) {
+        while (temp->next != NULL) {
             temp = temp->next;
         }
-        struct node *NewNode = CreateNode();
-        NewNode->data = value;
-        NewNode->next = temp->next;
-        temp->next = NewNode; /*Links new node n to (n-1)th node*/
+        temp->next = NewNode;
     }
 }
 
 void DeleteAtBegin() {
-    if (head == NULL) { /*Does not work when list is empty. Underflow situation...*/
+    if (head == NULL) {
         printf("\n\t**No element exists**\n");
     } else {
-        head = head->next; /*2nd node is now declared as head*/
+        struct node *temp = head;
+        head = head->next;
+        free(temp);
         printf("\n\t**Element deleted successfully**\n");
     }
 }
 
 void DeleteAtEnd() {
-    if (head == NULL) { /*Does not work when list is empty. Underflow situation...*/
+    if (head == NULL) {
         printf("\n\t**No element exists**\n");
     } else if (head->next == NULL) {
-        printf("\n\t**Use Delete at begining**\n");
+        free(head);
+        head = NULL;
+        printf("\n\t**Element deleted successfully**\n");
     } else {
         struct node *temp = head;
-        while(temp->next->next!=NULL) { /*Accessing (n-1)th node*/
+        struct node *prev = NULL;
+        while (temp->next != NULL) {
+            prev = temp;
             temp = temp->next;
         }
-        temp->next = NULL; /*(n-1)th node will now point to null instead of nth node*/
-        free(temp->next);
+        prev->next = NULL;
+        free(temp);
         printf("\n\t**Element deleted successfully**\n");
     }
 }
 
 void DeletenthNode(int pos) {
-    struct node *temp = head;
+    int length = ListLength();
     if (pos == 1) {
-        printf("\n\t**Use Delete at begining**\n");
-    } else {
-        for (int i=0; i<pos-2; i++) {
+        DeleteAtBegin();
+    } else if (pos <= length) {
+        struct node *temp = head;
+        struct node *prev = NULL;
+        for (int i=1; i<pos; i++) {
+            prev = temp;
             temp = temp->next;
         }
-        struct node *temp2 = temp->next; /*Accessing nth node, which we want to delete*/
-        temp->next = temp2->next; /*(n-1) node is pointing to (n+1) node now. Breaking the link between (n-1),n,(n+1) nodes.*/
-        free(temp2);
+        prev->next = temp->next;
+        free(temp);
         printf("\n\t**Element deleted successfully**\n");
+    } else {
+        printf("\n\t**Invalid position to delete at**\n");
     }
 }
 
@@ -102,62 +122,30 @@ void Display() {
     } else {
         struct node *temp = head;
         printf("\nCurrent List:\n");
-        while(temp!=NULL) {
+        while (temp != NULL) {
             printf("%d ",temp->data);
             temp = temp->next;
         }
     }
 }
 
-void main() {
+void test() {
     head = NULL;
-    int ch;
-    while (1) {
-        printf("\n\t\t**MENU**\n\t1. Insert at begining\n\t2. Insert at nth position\n\t3. Insert at end\n\t4. Delete at begining\n\t5. Delete at end\n\t6. Delete nth node\n\t7. Display\n\t8. Exit\n");
-        printf("\n\tEnter your choice: ");
-        scanf("%d",&ch);
+    InsertAtBegin(1);
+    InsertAtBegin(2);
+    InsertAtBegin(3);
+    InsertAtnthNode(2, 4);
+    InsertAtnthNode(5, 5);
+    InsertAtEnd(6);
+    InsertAtEnd(7);
+    DeleteAtBegin();
+    DeleteAtEnd();
+    DeletenthNode(2);
+    DeletenthNode(4);
+    Display();
+}
 
-        switch (ch) {
-            case 1:
-                printf("\nEnter value to be inserted: ");
-                int v1;
-                scanf("%d",&v1);
-                InsertAtBegin(v1);
-                break;
-            case 2:
-                printf("\nEnter position to insert value: ");
-                int v2 , pos1;
-                scanf("%d",&pos1);
-                printf("Enter value to be inserted: ");
-                scanf("%d",&v2);
-                InsertAtnthNode(pos1 , v2);
-                break;
-            case 3:
-                printf("\nEnter value to insert at end: ");
-                int v3;
-                scanf("%d",&v3);
-                InsertAtEnd(v3);
-                break;
-            case 4:
-                DeleteAtBegin();
-                break;
-            case 5:
-                DeleteAtEnd();
-                break;
-            case 6:
-                printf("\nEnter position to delete element: ");
-                int pos2;
-                scanf("%d",&pos2);
-                DeletenthNode(pos2);
-                break;
-            case 7:
-                Display();
-                break;
-            case 8:
-                printf("\n\t**THANK YOU!**\n");
-                exit(0);
-            default: 
-                printf("\n\t**Chose a valid option**\n"); 
-        }       
-    }
+int main() {
+    test();
+    return 0;
 }
