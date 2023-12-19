@@ -37,9 +37,7 @@ def timed():
 	return(strftime("%H:%M:%S",localtime()))
 
 def formatResult(color="black",text=""):
-	return ('<font color="{0}">[{1}] * {2}</font>'.format(color,timed(),text
-		)
-	)
+	return ('<font color="{0}">[{1}] * {2}</font>'.format(color,timed(),text))
 
 def kill_proc_tree(pid, including_parent=True):
 	parent = psutil.Process(pid)
@@ -341,11 +339,36 @@ class ServerWindow(QMainWindow):
 			self.server.close()
 		except : pass
 		self.close()
- 
+		
+class ServerWindowTest(unittest.TestCase):
+    def test_timed(self):
+        expected = str(strftime("%H:%M:%S",localtime()))
+        actual = timed()
+        self.assertEqual(expected, actual)
+        
+    def test_formatResult(self):
+        color = 'black'
+        text = 'test'
+        expected = ('<font color="{0}">[{1}] * {2}</font>'.format(color,timed(),text))
+        actual = formatResult(color, text)
+        self.assertEqual(expected, actual)
+    
+    def test_get_just_name(self):
+        client_map = {1: [('127.0.0.1', 'test', '1234')]}
+        expected = "test"
+        actual = get_just_name(1)
+        self.assertEqual(expected, actual)
+        
+    def test_get_address(self):
+        client_map = {1: [('127.0.0.1', 'test', '1234')]}
+        expected = ('127.0.0.1', 'test')
+        actual = get_address(1)
+        self.assertEqual(expected, actual)
+    
 if __name__ == '__main__':
-	app = QApplication(sys.argv)
-	window = ServerWindow()
-	window.show()
-	app.exec_()
-	me = os.getpid()
-	sys.exit(kill_proc_tree(me))
+    app = QApplication(sys.argv)
+    window = ServerWindow()
+    window.show()
+    app.exec_()
+    me = os.getpid()
+    sys.exit(kill_proc_tree(me))
