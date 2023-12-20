@@ -1,23 +1,21 @@
 #include <stdio.h>
+#include <stdbool.h> // added to use bool data type
 
-int linsearch(int *yarr, int val)
+bool linsearch(int *yarr, int val) // changed return type from int to bool
 {
     for(int i = 0; i < sizeof(yarr); i++)
     {
         if(yarr[i] == val)
         {
-            return 0;
+            return true; // changed return value from 0 to true
         }    
-        else
-        {
-          return 1;
-        }
     }
+    return false; // added return statement outside the loop to return false if value is not found
 }
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
+    int yarr[] = {1, 2, 3, 4, 5}; // changed array to contain integer values
+    int val = 3; // changed val to match the type of array elements
     linsearch(yarr, val);
 }
