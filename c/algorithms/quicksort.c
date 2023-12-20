@@ -46,15 +46,15 @@ int partition(int a[], int l, int h)
 
     while (i < h)
     {
-        if (a[i] < a[p])
+        if (*(a+i) < *(a+p))
         {
-            swap(&a[i], &a[j]);
+            swap((a+i), (a+j));
             j++;
         }
         i++;
     }
 
-    swap(&a[p], &a[j]);
+    swap((a+p), (a+j));
 
     return j;
 }
