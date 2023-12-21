@@ -33,16 +33,16 @@ int main()
 
 void swap(int *a, int *b)
 {
-    int tmp;
-    tmp = *a;
+    int tmp = *a;
     *a = *b;
     *b = tmp;
-    return;
 }
 
 int partition(int a[], int l, int h)
 {
-    int i = l, j = l, p = h;
+    int i = l;
+    int j = l;
+    int p = h;
 
     while (i < h)
     {
@@ -69,6 +69,4 @@ void quick_sort(int a[], int l, int h)
         quick_sort(a, l, p - 1);
         quick_sort(a, p + 1, h);
     }
-
-    return;
 }
