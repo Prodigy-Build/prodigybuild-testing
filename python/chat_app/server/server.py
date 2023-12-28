@@ -11,6 +11,7 @@ import psutil
 import select
 import pickle
 import struct
+import unittest
 
 from threading import *
 from PyQt5 import uic
@@ -349,3 +350,22 @@ if __name__ == '__main__':
 	app.exec_()
 	me = os.getpid()
 	sys.exit(kill_proc_tree(me))
+
+class ServerWindow_TestCases(unittest.TestCase):
+
+    def test_get_just_name(self):
+        s = ServerWindow()
+        client = 'client_name'
+        s.client_map = {client: ("client_address", "client_name", "public_key")}
+        result = s.get_just_name(client)
+        self.assertEqual(result, "client_name")
+
+    def test_get_address(self):
+        s = ServerWindow()
+        client = 'client_name'
+        s.client_map = {client: ("client_address", "client_name", "public_key")}
+        result = s.get_address(client)
+        self.assertEqual(result, "client_address")
+
+if __name__ == '__main__':
+    unittest.main()
