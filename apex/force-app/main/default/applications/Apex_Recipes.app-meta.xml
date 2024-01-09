@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <!-- refactored the brand colors and theme override -->
     <brand>
         <headerColor>#0070D2</headerColor>
-        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+        <shouldOverrideOrgTheme>true</shouldOverrideOrgTheme>
     </brand>
+    <!-- updated formFactors setting -->
     <formFactors>Large</formFactors>
-    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
-    <isNavPersonalizationDisabled>true</isNavPersonalizationDisabled>
+    <!-- disabling auto temp tabs and enabling personalization -->
+    <isNavAutoTempTabsDisabled>true</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>Apex Recipes</label>
-    <navType>Standard</navType>
-    <tabs>Apex_Recipes</tabs>
-    <uiType>Lightning</uiType>
+    <!-- setting nav type to Console -->
+    <navType>Console</navType>
+    <!-- renaming the tabs -->
+    <tabs>Updated_Apex_Recipes</tabs>
+    <!-- setting uiType to default -->
+    <uiType>Default</uiType>
 </CustomApplication>
