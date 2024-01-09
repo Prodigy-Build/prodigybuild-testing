@@ -11,4 +11,7 @@
     <navType>Standard</navType>
     <tabs>Apex_Recipes</tabs>
     <uiType>Lightning</uiType>
+    <startUrl>apex/Apex_AhhRecipes</startUrl>
+    <!--<dependsOn>nameofapexclass</dependsOn>-->
+    <!--<configuration>includedependencies</configuration>-->
 </CustomApplication>
