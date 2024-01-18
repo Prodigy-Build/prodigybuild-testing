@@ -1,14 +1,22 @@
 #include <stdio.h>
 
+// Function to check if a number is even or odd
+int isEvenOrOdd(long num)
+{
+    return num % 2 == 0;
+}
+
 int main()
 {
     long num;
     printf("Enter a number\n");
     scanf("%ld", &num);
-    int rem = num % 2;
     
-    if(rem == 0)
-    printf("Even");
+    // Using the isEvenOrOdd function to print if the number is even or odd
+    if(isEvenOrOdd(num))
+        printf("Even");
     else
-    printf("Odd");
+        printf("Odd");
+
+    return 0;
 }

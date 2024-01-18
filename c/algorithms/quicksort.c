@@ -2,73 +2,58 @@
 #include <stdlib.h>
 
 void swap(int *a, int *b);
-int partition(int *a, int l, int h);
-void quick_sort(int *a, int l, int h);
+int partition(int arr[], int low, int high);
+void quicksort(int arr[], int low, int high);
 
-int main()
-{
+int main() {
     int size;
-    printf("Size: ");
+    printf("Enter the number of elements you want to sort: ");
     scanf("%d", &size);
 
-    int *arr = malloc(size * sizeof(int));
-    printf("Array elements: ");
-    for (int i = 0; i < size; i++)
-    {
+    int *arr = (int*)malloc(size * sizeof(int));
+    printf("Enter elements: ");
+    for (int i = 0; i < size; i++) {
         scanf("%d", &arr[i]);
     }
 
-    quick_sort(arr, 0, size - 1);
+    quicksort(arr, 0, size - 1);
 
-    printf("Sorted array:");
-    for (int i = 0; i < size; i++)
-    {
-        printf(" %d", arr[i]);
+    printf("Sorted elements: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
     }
-    printf("\n");
 
     free(arr);
     return 0;
 }
 
-void swap(int *a, int *b)
-{
-    int tmp;
-    tmp = *a;
+void swap(int *a, int *b) {
+    int temp = *a;
     *a = *b;
-    *b = tmp;
-    return;
+    *b = temp;
 }
 
-int partition(int a[], int l, int h)
-{
-    int i = l, j = l, p = h;
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
 
-    while (i < h)
-    {
-        if (a[i] < a[p])
-        {
-            swap(&a[i], &a[j]);
-            j++;
+    for (int j = low; j <= high-1; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
         }
-        i++;
     }
 
-    swap(&a[p], &a[j]);
+    swap(&arr[i+1], &arr[high]);
 
-    return j;
+    return (i + 1);
 }
 
-void quick_sort(int a[], int l, int h)
-{
-    int p;
+void quicksort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
 
-    if (l < h)
-    {
-        p = partition(a, l, h);
-        quick_sort(a, l, p - 1);
-        quick_sort(a, p + 1, h);
+        quicksort(arr, low, pi - 1);
+        quicksort(arr, pi + 1, high);
     }
-
-    return;
 }

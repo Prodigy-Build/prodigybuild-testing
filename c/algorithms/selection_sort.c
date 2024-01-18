@@ -3,75 +3,62 @@
 
 void print_arr(int *ptr, int size)
 {
-    putchar('[');
-    while(size--)
+    printf("[");
+    for (int i = 0; i < size; ++i)
     {
-	printf("%d", *ptr++);
-	if(size)
-	    putchar(',');
+	printf("%d", ptr[i]);
+	if(i != size - 1)
+	    printf(",");
     }
     printf("]\n");
 }
 
 void swap(int *a, int *b)
 {
-    int tmp;
-
-    tmp = *a;
+    int tmp = *a;
     *a = *b;
     *b = tmp;
 }
 
 int *find_min(int *ptr, int size)
 {
-    int *min;
-
-    min = ptr;
-    while(size--)
+    int *min_ptr = ptr;
+    for (int i = 0; i < size; ++i)
     {
-	if(*ptr < *min)
-	    min = ptr;
-	ptr++;
+	if(ptr[i] < *min_ptr)
+	    min_ptr = ptr+i;
     }
-    return (min);
+    return min_ptr;
 }
 
 void selection_sort(int *ptr, int size)
 {
-    int *min;
-
-    while(--size)
+    for (int i = 0; i < size - 1; ++i)
     {
-	if((min = find_min(ptr + 1, size)))
-	{
-	    if(*ptr > *min)
-		swap(ptr, min);
-	}
-	ptr++;
+	int *min_ptr = find_min(ptr + i + 1, size - i - 1);
+	if(ptr[i] > *min_ptr)
+	    swap(ptr + i, min_ptr);
     }
 }
 
 void fill(char **av, int *ptr, int size)
 {
-    int i;
-
-    i = 2;
-    while(av[i] && size--)
-	*ptr++ = atoi(av[i++]); 
+    for (int i = 0; i < size; ++i)
+	ptr[i] = atoi(av[i+2]); 
 }
 
 int main(int argc, char *argv[])
 {
     if(argc < 3)
     {
-	puts("Usage: ./your-executable-name [array size] [array]");
-	puts("Example: ./your-executable-name 3 2 1 0");
+	printf("Usage: ./your-executable-name [array size] [array]\n");
+	printf("Example: ./your-executable-name 3 2 1 0\n");
 	return EXIT_FAILURE;
     }
     int size = atoi(argv[1]);
     if(!size)
     {
-	puts("Error: size of array can't be 0");
+	printf("Error: size of array can't be 0\n");
 	return EXIT_FAILURE;
     }
     int *arr = (int *)malloc(size * sizeof(int));

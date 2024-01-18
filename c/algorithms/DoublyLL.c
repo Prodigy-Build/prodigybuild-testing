@@ -1,63 +1,76 @@
-// Implementing Doubly linked list.
+// Refactored code
+
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node {
+typedef struct Node {
     int value;
     struct Node *next;
     struct Node *prev;
-};
-struct Node *head;
+} Node;
 
-struct Node *CreateNode() {
-    struct Node *new = (struct Node*) malloc(sizeof(struct Node));
-    return new;
+Node *head = NULL;
+
+Node *CreateNode(int val) {
+    Node *newNode = (Node*) malloc(sizeof(Node));
+    newNode->value = val;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+    
+    return newNode;
 }
 
-void Insert(int val) { /*Inserting element at head*/
-    struct Node *NewNode = CreateNode(); /*NewNode is created everytime function is called*/
-    NewNode->value = val; /*Value assigned to NewNode*/
-    NewNode->next = head; /*NewNode's next points to head*/
-    NewNode->prev = NULL; /*NewNode's previous points to NULL*/
-    if (head != NULL) { 
-        head->prev = NewNode;
+void Insert(int val) { 
+    Node *newNode = CreateNode(val); 
+
+    if (head == NULL) { 
+        head = newNode;
+        return;
     }
-    head = NewNode;
+
+    newNode->next = head; 
+    head->prev = newNode; 
+    head = newNode;
 }
 
 void Display() {
-    struct Node *temp = head;
-    printf("\nForward:\n"); /*Printing normally in forward manner*/
-    while(temp!=NULL) {
-        printf("%d ",temp->value);
+    Node *temp = head;
+    printf("\nForward:\n"); 
+
+    while(temp != NULL) {
+        printf("%d ", temp->value);
         temp = temp->next;
     }
 }
 
 void ReverseDisplay() {
-    struct Node *temp = head;
-    while(temp->next!=NULL) { /*Moving to the last node*/
+    Node *temp = head;
+
+    while(temp->next != NULL) { 
         temp = temp->next;
     }
 
-    printf("\nBackward:\n"); /*Printing in backward manner*/
-    while(temp!=NULL) {
-        printf("%d ",temp->value);
+    printf("\nBackward:\n");
+
+    while(temp != NULL) {
+        printf("%d ", temp->value);
         temp = temp->prev;
     }
     printf("\n");
 }
 
-void main() {
+int main() {
     int n, val;
     printf("Enter number of elements: ");
-    scanf("%d",&n);
+    scanf("%d", &n);
 
-    for (int i=0; i<n; i++) {
+    for (int i=0; i<n; ++i) {
         printf("Enter element: ");
         scanf("%d",&val);
-        Insert(val); /*Inserting value everytime loop executes*/
+        Insert(val); 
     }
     Display();
     ReverseDisplay();
+
+    return 0;
 }

@@ -1,29 +1,38 @@
 #include <stdio.h>
 
-int binsearch(int yarr[10], int element)
+//Define Binary Search Function
+int binsearch(int yarr[], int n, int element) 
 {
-    int mid = sizeof(yarr) % 2;
-    int left = (int)yarr / 2 - mid;
-    int right = yarr - left;
-    extern int i;
+    int left = 0, right = n - 1;
     
-    if(element == mid)
-    printf("%d", &mid);
-    
-    if(element != yarr[right])
+    while (left <= right) 
     {
-        for(i = 0; i < left; i++)
+        int mid = left + (right - left) / 2;
+  
+        if (yarr[mid] == element) 
         {
-            if(element == i)
-            {
-            //Does this so that it doesn't print multiple times
-            printf("%d", i);
-            }
+            printf("%d", yarr[mid]);
+            return mid;
         }
-    }
-};
 
-int main(int argc, int argv[])
-{
-    binsearch(argv[0], argv[1]);
+        if (yarr[mid] < element) 
+            left = mid + 1; 
+        else
+            right = mid - 1; 
+    } 
+  
+    return -1; 
+} 
+
+int main(int argc, char *argv[]) {
+    int yarr[] = {2, 3, 4, 10, 40};
+    int n = sizeof(yarr) / sizeof(yarr[0]);
+    int result = binsearch(yarr, n, atoi(argv[1]));
+
+    if(result == -1) 
+        printf("Element is not present in array");
+    else
+        printf("Element is present at index %d", result);
+  
+    return 0; 
 }

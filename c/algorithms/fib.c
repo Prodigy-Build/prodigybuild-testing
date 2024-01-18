@@ -1,18 +1,25 @@
 #include <stdio.h>
 
+long fibonacciSeries(long limit){
+    long a = 0;
+    long b = 1;
+    long c;
+
+    printf("%ld \n", a);
+    printf("%ld \n", b);
+
+    for(int i = 2; i <= limit; i++){
+        c = a + b;
+        printf("%ld \n", c);
+        a = b;
+        b = c;
+    }
+    return c;
+}
+
 int main()
 {
-    long a;
-    long b;
-    
-    for(a = 0, b = 1; b > a; b++)
-    {
-        a++;
-        printf("%ld \n %ld", &a, &b);
-    }
-    
-    if(b == sizeof(long))
-    {
-        exit(1);
-    }
+    long limit = sizeof(long);
+    fibonacciSeries(limit);
+    return 0;
 }
