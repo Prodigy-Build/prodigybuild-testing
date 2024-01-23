@@ -1,23 +1,22 @@
 #include <stdio.h>
+#include <string.h>
 
-int linsearch(int *yarr, int val)
+int linsearch(char *yarr[], int arrSize, char *val)
 {
-    for(int i = 0; i < sizeof(yarr); i++)
+    for(int i = 0; i < arrSize; i++)
     {
-        if(yarr[i] == val)
+        if(strcmp(yarr[i], val) == 0)
         {
-            return 0;
+            return 0;  
         }    
-        else
-        {
-          return 1;
-        }
     }
+    return 1;
 }
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
-    linsearch(yarr, val);
+    char *yarr[] = {"Shluck much", "much Shluck"};
+    int arrSize = sizeof(yarr) / sizeof(yarr[0]);
+    char *val = "Shluck Much";
+    linsearch(yarr, arrSize, val);
 }

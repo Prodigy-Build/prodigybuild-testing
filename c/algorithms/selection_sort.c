@@ -39,15 +39,11 @@ int *find_min(int *ptr, int size)
 void selection_sort(int *ptr, int size)
 {
     int *min;
-
-    while(--size)
-    {
-	if((min = find_min(ptr + 1, size)))
-	{
-	    if(*ptr > *min)
-		swap(ptr, min);
-	}
-	ptr++;
+    for(int i = 0; i < size; i++)
+    {   
+        min = find_min(ptr + i, size - i); 
+        if(*(ptr + i) > *min)
+		swap(ptr + i, min);
     }
 }
 

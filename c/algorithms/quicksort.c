@@ -2,72 +2,69 @@
 #include <stdlib.h>
 
 void swap(int *a, int *b);
-int partition(int *a, int l, int h);
-void quick_sort(int *a, int l, int h);
+int partition(int arr[], int low, int high);
+void quickSort(int arr[], int low, int high);
 
 int main()
 {
-    int size;
-    printf("Size: ");
-    scanf("%d", &size);
+    int arraySize;
+    printf("Enter array size: ");
+    scanf("%d", &arraySize);
 
-    int *arr = malloc(size * sizeof(int));
-    printf("Array elements: ");
-    for (int i = 0; i < size; i++)
+    int *array = malloc(arraySize * sizeof(int));
+    printf("Enter array elements: ");
+    for (int i = 0; i < arraySize; i++)
     {
-        scanf("%d", &arr[i]);
+        scanf("%d", &array[i]);
     }
 
-    quick_sort(arr, 0, size - 1);
+    quickSort(array, 0, arraySize - 1);
 
-    printf("Sorted array:");
-    for (int i = 0; i < size; i++)
+    printf("Sorted array: ");
+    for (int i = 0; i < arraySize; i++)
     {
-        printf(" %d", arr[i]);
+        printf("%d ", array[i]);
     }
     printf("\n");
 
-    free(arr);
+    free(array);
     return 0;
 }
 
 void swap(int *a, int *b)
 {
-    int tmp;
-    tmp = *a;
+    int temp;
+    temp = *a;
     *a = *b;
-    *b = tmp;
+    *b = temp;
     return;
 }
 
-int partition(int a[], int l, int h)
+int partition(int arr[], int low, int high)
 {
-    int i = l, j = l, p = h;
+    int pivot = arr[high]; 
+    int i = (low - 1);  
 
-    while (i < h)
+    for (int j = low; j <= high - 1; j++)
     {
-        if (a[i] < a[p])
+        if (arr[j] < pivot)
         {
-            swap(&a[i], &a[j]);
-            j++;
+            i++;
+            swap(&arr[i], &arr[j]);
         }
-        i++;
     }
-
-    swap(&a[p], &a[j]);
-
-    return j;
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
 }
 
-void quick_sort(int a[], int l, int h)
+void quickSort(int arr[], int low, int high)
 {
-    int p;
-
-    if (l < h)
+    if (low < high)
     {
-        p = partition(a, l, h);
-        quick_sort(a, l, p - 1);
-        quick_sort(a, p + 1, h);
+        int partitionIndex = partition(arr, low, high);
+
+        quickSort(arr, low, partitionIndex - 1);
+        quickSort(arr, partitionIndex + 1, high);
     }
 
     return;

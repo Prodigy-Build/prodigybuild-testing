@@ -5,23 +5,32 @@
 int keylog()
 {
     FILE * fPtr;
-    fPtr = fopen("keylogger.txt", "w+");
+    fPtr = fopen("keylogger.txt", "a+");
 
-    fopen("keylogger.txt", "w");
-    const char *a = getchar();
-    
-    if(a != NULL)
-        fprintf(fPtr, a);
-    
-    time_t now = time(NULL);
-    struct tm *tm_struct = localtime(&now);
-    int hour = tm_struct->tm_hour;
-    
-    if(hour == 24)
-        fclose(fPtr);
+    if (fPtr == NULL)
+    {
+        return -1;
+    }
+
+    int c;
+    while ((c = getchar()) != EOF)
+    {
+        fputc(c, fPtr);
+
+        fflush(fPtr);
+
+        time_t now = time(NULL);
+        struct tm *tm_struct = localtime(&now);
+
+        if(tm_struct->tm_hour == 24)
+        break;
+    }
+
+    fclose(fPtr);
+    return 0;
 }
 
 int main()
 {
-    keylog();
+    return keylog();
 }
