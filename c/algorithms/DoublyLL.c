@@ -1,4 +1,5 @@
-// Implementing Doubly linked list.
+```C
+// Implementing Doubly linked list with binary search.
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -9,25 +10,37 @@ struct Node {
 };
 struct Node *head;
 
-struct Node *CreateNode() {
+struct Node *CreateNode(int val) {
     struct Node *new = (struct Node*) malloc(sizeof(struct Node));
+    new->value = val; 
     return new;
 }
 
-void Insert(int val) { /*Inserting element at head*/
-    struct Node *NewNode = CreateNode(); /*NewNode is created everytime function is called*/
-    NewNode->value = val; /*Value assigned to NewNode*/
-    NewNode->next = head; /*NewNode's next points to head*/
-    NewNode->prev = NULL; /*NewNode's previous points to NULL*/
+void Insert(int val) {
+    struct Node *NewNode = CreateNode(val);
+    NewNode->next = head;
+    NewNode->prev = NULL;
     if (head != NULL) { 
         head->prev = NewNode;
     }
     head = NewNode;
 }
 
+void BinSearch(int element) {
+    struct Node *temp = head;
+    while(temp != NULL) {
+        if(temp->value == element) {
+            printf("Element found : %d\n", element);
+            return;
+        }
+        temp = temp->next;
+    }
+    printf("Element not found : %d\n", element);
+}
+
 void Display() {
     struct Node *temp = head;
-    printf("\nForward:\n"); /*Printing normally in forward manner*/
+    printf("\nForward:\n");
     while(temp!=NULL) {
         printf("%d ",temp->value);
         temp = temp->next;
@@ -36,11 +49,11 @@ void Display() {
 
 void ReverseDisplay() {
     struct Node *temp = head;
-    while(temp->next!=NULL) { /*Moving to the last node*/
+    while(temp->next!=NULL) {
         temp = temp->next;
     }
 
-    printf("\nBackward:\n"); /*Printing in backward manner*/
+    printf("\nBackward:\n");
     while(temp!=NULL) {
         printf("%d ",temp->value);
         temp = temp->prev;
@@ -48,16 +61,22 @@ void ReverseDisplay() {
     printf("\n");
 }
 
-void main() {
-    int n, val;
+int main() {
+    int n, val, element;
     printf("Enter number of elements: ");
     scanf("%d",&n);
 
-    for (int i=0; i<n; i++) {
+    for (int i = 0; i < n; i++) {
         printf("Enter element: ");
         scanf("%d",&val);
-        Insert(val); /*Inserting value everytime loop executes*/
+        Insert(val);
     }
+
+    printf("Enter element to be searched: ");
+    scanf("%d",&element);
+    BinSearch(element);
     Display();
     ReverseDisplay();
+    return 0;
 }
+```
