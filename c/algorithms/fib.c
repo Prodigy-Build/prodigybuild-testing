@@ -1,18 +1,42 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int main()
+int binsearch(int arr[], int size, int element)
 {
-    long a;
-    long b;
-    
-    for(a = 0, b = 1; b > a; b++)
+    int mid = size / 2;
+    int left = mid;
+    int right = size - left;
+
+    if(element == arr[mid])
     {
-        a++;
-        printf("%ld \n %ld", &a, &b);
+        printf("%d", element);
     }
     
-    if(b == sizeof(long))
+    if(element != arr[right])
     {
-        exit(1);
+        for(int i = 0; i < left; i++)
+        {
+            if(element == arr[i])
+            {
+                printf("%d", element);
+            }
+        }
     }
+}
+
+int main(int argc, char *argv[])
+{
+    int arr[argc - 2];
+    int size = argc - 2;
+    
+    for(int i = 0; i < size; i++)
+    {
+        arr[i] = atoi(argv[i + 2]);
+    }
+    
+    int element = atoi(argv[1]);
+    
+    binsearch(arr, size, element);
+    
+    return 0;
 }

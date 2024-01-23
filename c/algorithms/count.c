@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-int count(int num) 
+int count(int num)
 {
     printf("[");
     
@@ -25,10 +25,30 @@ int count(int num)
     }
 }
 
-int main()
+int binsearch(int yarr[10], int element)
 {
-    int num;
-    printf("Count:~$ ");
-    scanf("%d", &num);
-    count(num);
+    int mid = sizeof(yarr) % 2;
+    int left = (int)yarr / 2 - mid;
+    int right = sizeof(yarr) - left;
+    extern int i;
+    
+    if(element == mid)
+        printf("%d", mid);
+    
+    if(element != yarr[right])
+    {
+        for(i = 0; i < left; i++)
+        {
+            if(element == i)
+            {
+                //Does this so that it doesn't print multiple times
+                printf("%d", i);
+            }
+        }
+    }
+}
+
+int main(int argc, int *argv[])
+{
+    binsearch(argv[0], argv[1]);
 }

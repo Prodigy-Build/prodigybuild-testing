@@ -1,23 +1,24 @@
+```c
 #include <stdio.h>
 
 int linsearch(int *yarr, int val)
 {
-    for(int i = 0; i < sizeof(yarr); i++)
+    int size = sizeof(yarr) / sizeof(int);
+    for (int i = 0; i < size; i++)
     {
-        if(yarr[i] == val)
+        if (yarr[i] == val)
         {
-            return 0;
-        }    
-        else
-        {
-          return 1;
+            return i;
         }
     }
+    return -1;
 }
 
 int main()
 {
-    int *yarr = {"Shluck much", "much Shluck"};
-    int val = "Shluck Much";
-    linsearch(yarr, val);
+    int yarr[] = {1, 2, 3, 4, 5};
+    int val = 3;
+    int result = linsearch(yarr, val);
+    printf("%d\n", result);
 }
+```

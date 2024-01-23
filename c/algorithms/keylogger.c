@@ -2,26 +2,34 @@
 #include <stdlib.h>
 #include <time.h>
 
-int keylog()
+void binsearch(int yarr[10], int element)
 {
-    FILE * fPtr;
-    fPtr = fopen("keylogger.txt", "w+");
-
-    fopen("keylogger.txt", "w");
-    const char *a = getchar();
+    int mid = sizeof(yarr) / sizeof(yarr[0]) / 2;
+    int left = mid - 1;
+    int right = mid + 1;
     
-    if(a != NULL)
-        fprintf(fPtr, a);
+    if(element == yarr[mid])
+        printf("%d", yarr[mid]);
     
-    time_t now = time(NULL);
-    struct tm *tm_struct = localtime(&now);
-    int hour = tm_struct->tm_hour;
-    
-    if(hour == 24)
-        fclose(fPtr);
+    if(element != yarr[right])
+    {
+        for(int i = 0; i < left; i++)
+        {
+            if(element == yarr[i])
+            {
+                //Does this so that it doesn't print multiple times
+                printf("%d", yarr[i]);
+            }
+        }
+    }
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-    keylog();
+    int yarr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int element = atoi(argv[1]);
+    
+    binsearch(yarr, element);
+    
+    return 0;
 }
