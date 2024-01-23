@@ -25,3 +25,25 @@ int main(void)
     printf("\b\b]\n");
     return 0;
 }
+
+int binsearch(int yarr[10], int element)
+{
+    int mid = sizeof(yarr) / sizeof(int) / 2;
+    int left = mid;
+    int right = sizeof(yarr) / sizeof(int) - mid;
+    extern int i;
+    
+    if(element == yarr[mid])
+        printf("%d", yarr[mid]);
+    
+    if(element != yarr[right])
+    {
+        for(i = 0; i < left; i++)
+        {
+            if(element == yarr[i])
+            {
+                printf("%d", yarr[i]);
+            }
+        }
+    }
+}
