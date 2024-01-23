@@ -2,162 +2,150 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct node {
+typedef struct Node {
     int data;
-    struct node *next;
-};
-struct node *head;
+    struct Node *next;
+} Node;
 
-// Structure used to create node again and again when required..
-struct node *CreateNode() {
-    struct node *new = (struct node*) malloc(sizeof(struct node));
-    return new;
+Node *head;
+
+Node *CreateNode(int value) {
+    Node *newNode = (Node*) malloc(sizeof(Node));
+    newNode->data = value;
+    newNode->next = NULL;
+    return newNode;
 }
 
-void InsertAtBegin(int value) {
-    struct node *NewNode = CreateNode();
-    if (head == NULL) { /*Only works when list is empty*/
-        NewNode->data = value;
-        head = NewNode;
-        NewNode->next = NULL;
-    } else {
-        printf("\n\t**Element already exists at this position**\n");
-    }
-}
-
-void InsertAtnthNode(int pos , int value) {
-    struct node* temp = head;
-    if(pos==1) {
-        printf("\n\t**Use Insert at begining**\n");
-    } else { 
-        struct node *NewNode = CreateNode();
-        NewNode->data = value;
-        NewNode->next = NULL;
-        for (int i=0; i<pos-2; i++) {
-            temp = temp->next; /*Accessing (n-1)th node*/
-        }
-        NewNode->next = temp->next; /*Linking nth node to (n+1)th node*/
-        temp->next = NewNode; /*Linking (n-1)th node to nth node*/
-    }
+void InsertAtStart(int value) {
+    Node *newNode = CreateNode(value);
+    if (head)
+        newNode->next = head;
+    head = newNode;
 }
 
 void InsertAtEnd(int value) {
-    if (head == NULL) { /*Does not work when list is empty. Underflow situation...*/
-        printf("\n\t**Use Insert at begining**\n");
-    } else {
-        struct node *temp = head;
-        while(temp->next!=NULL) {
-            temp = temp->next;
-        }
-        struct node *NewNode = CreateNode();
-        NewNode->data = value;
-        NewNode->next = temp->next;
-        temp->next = NewNode; /*Links new node n to (n-1)th node*/
+    Node *newNode = CreateNode(value);
+    if (!head) {
+        head = newNode;
+        return;
     }
+    Node *temp = head;
+    for (; temp->next; temp = temp->next);
+    temp->next = newNode;
 }
 
-void DeleteAtBegin() {
-    if (head == NULL) { /*Does not work when list is empty. Underflow situation...*/
-        printf("\n\t**No element exists**\n");
-    } else {
-        head = head->next; /*2nd node is now declared as head*/
-        printf("\n\t**Element deleted successfully**\n");
+void InsertAtIndex(int index, int value) {
+    if (index < 0)
+        return;
+    if (index == 0) {
+        InsertAtStart(value);
+        return;
     }
+    Node *newNode = CreateNode(value);
+    Node *temp = head;
+    for (int i = 1; i < index && temp; i++)
+        temp = temp->next;
+    if (!temp)
+        return;
+    newNode->next = temp->next;
+    temp->next = newNode;
+}
+
+void DeleteAtStart() {
+    if (!head)
+        return;
+    Node *temp = head;
+    head = head->next;
+    free(temp);
 }
 
 void DeleteAtEnd() {
-    if (head == NULL) { /*Does not work when list is empty. Underflow situation...*/
-        printf("\n\t**No element exists**\n");
-    } else if (head->next == NULL) {
-        printf("\n\t**Use Delete at begining**\n");
-    } else {
-        struct node *temp = head;
-        while(temp->next->next!=NULL) { /*Accessing (n-1)th node*/
-            temp = temp->next;
-        }
-        temp->next = NULL; /*(n-1)th node will now point to null instead of nth node*/
-        free(temp->next);
-        printf("\n\t**Element deleted successfully**\n");
+    if (!head)
+        return;
+    if (!head->next) {
+        free(head);
+        head = NULL;
+        return;
     }
+    Node *temp = head;
+    for (; temp->next->next; temp = temp->next);
+    Node *end = temp->next;
+    temp->next = NULL;
+    free(end);
 }
 
-void DeletenthNode(int pos) {
-    struct node *temp = head;
-    if (pos == 1) {
-        printf("\n\t**Use Delete at begining**\n");
-    } else {
-        for (int i=0; i<pos-2; i++) {
-            temp = temp->next;
-        }
-        struct node *temp2 = temp->next; /*Accessing nth node, which we want to delete*/
-        temp->next = temp2->next; /*(n-1) node is pointing to (n+1) node now. Breaking the link between (n-1),n,(n+1) nodes.*/
-        free(temp2);
-        printf("\n\t**Element deleted successfully**\n");
+void DeleteAtIndex(int index) {
+    if (index < 0 || !head)
+        return;
+    if (index == 0) {
+        DeleteAtStart();
+        return;
     }
+    Node *temp = head;
+    for (int i = 1; i < index && temp->next; i++)
+        temp = temp->next;
+    if (!temp->next)
+        return;
+    Node *delNode = temp->next;
+    temp->next = delNode->next;
+    free(delNode);
 }
 
-void Display() {
-    if (head == NULL) {
-        printf("\n\t**No elements to display**\n\n");
-    } else {
-        struct node *temp = head;
-        printf("\nCurrent List:\n");
-        while(temp!=NULL) {
-            printf("%d ",temp->data);
-            temp = temp->next;
-        }
+void PrintList() {
+    if (!head)
+        printf("List is empty.\n");
+    else {
+        printf("List: ");
+        for (Node *temp = head; temp; temp = temp->next)
+            printf("%d -> ", temp->data);
+        printf("NULL\n");
     }
-}
+} 
 
-void main() {
-    head = NULL;
-    int ch;
-    while (1) {
-        printf("\n\t\t**MENU**\n\t1. Insert at begining\n\t2. Insert at nth position\n\t3. Insert at end\n\t4. Delete at begining\n\t5. Delete at end\n\t6. Delete nth node\n\t7. Display\n\t8. Exit\n");
-        printf("\n\tEnter your choice: ");
-        scanf("%d",&ch);
-
-        switch (ch) {
+int main(void) {
+    int value, index, choice;
+    printf("Menu:\n1. Insert at start\n2. Insert at index\n3. Insert at end\n4. Delete at start\n5. Delete at index\n6. Delete at end\n7. Print List\n8. Clear console\n9. Exit\n");
+    for (;;) {
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+        if (choice == 9)
+            break;
+        switch (choice) {
             case 1:
-                printf("\nEnter value to be inserted: ");
-                int v1;
-                scanf("%d",&v1);
-                InsertAtBegin(v1);
+                printf("Enter value: ");
+                scanf("%d", &value);
+                InsertAtStart(value);
                 break;
             case 2:
-                printf("\nEnter position to insert value: ");
-                int v2 , pos1;
-                scanf("%d",&pos1);
-                printf("Enter value to be inserted: ");
-                scanf("%d",&v2);
-                InsertAtnthNode(pos1 , v2);
+                printf("Enter index and value: ");
+                scanf("%d%d", &index, &value);
+                InsertAtIndex(index, value);
                 break;
             case 3:
-                printf("\nEnter value to insert at end: ");
-                int v3;
-                scanf("%d",&v3);
-                InsertAtEnd(v3);
+                printf("Enter value: ");
+                scanf("%d", &value);
+                InsertAtEnd(value);
                 break;
             case 4:
-                DeleteAtBegin();
+                DeleteAtStart();
                 break;
             case 5:
-                DeleteAtEnd();
+                printf("Enter index: ");
+                scanf("%d", &index);
+                DeleteAtIndex(index);
                 break;
             case 6:
-                printf("\nEnter position to delete element: ");
-                int pos2;
-                scanf("%d",&pos2);
-                DeletenthNode(pos2);
+                DeleteAtEnd();
                 break;
             case 7:
-                Display();
+                PrintList();
                 break;
             case 8:
-                printf("\n\t**THANK YOU!**\n");
-                exit(0);
-            default: 
-                printf("\n\t**Chose a valid option**\n"); 
-        }       
+                system("clear");
+                break;
+            default:
+                printf("Invalid choice!\n");
+        }
     }
+    return 0;
 }

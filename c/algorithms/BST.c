@@ -2,55 +2,52 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct BST {
+typedef struct BST {
     int data;
     struct BST* left;
     struct BST* right;
-};
+} BST;
 
-struct BST *CreateNode() {
-    struct BST* new = (struct BST*) malloc(sizeof(struct BST));
-    new->left = NULL;
-    new->right = NULL;
-    return new; 
-};
+BST* CreateNode(int value) {
+    BST* newNode = (BST*) malloc(sizeof(BST));
+    if(newNode==NULL){
+        printf("Error! Unable to allocate memory\n");
+        exit(-1);
+    }
+    newNode->data = value;
+    newNode->left = newNode->right = NULL;
+    return newNode;
+}
 
-void Insert(struct BST** RootPtr, int value) {
-    struct BST* temp = *RootPtr;
-    if (temp == NULL) { /*When list is empty*/
-        struct BST* NewNode = CreateNode();
-        NewNode->data = value;
-        *RootPtr = NewNode;
-    } else if (value <= temp->data) { /*If user value is less then current node value insert in left of the node...*/
-        struct BST* NewNode = CreateNode();
-        NewNode->data = value;
-        temp->left = NewNode;
-    } else { /*If user value is greater then current node value insert at right of the node*/
-        struct BST* NewNode = CreateNode();
-        NewNode->data = value;
-        temp->right = NewNode;
+void Insert(BST** root, int value) {
+    if (*root == NULL) {
+        *root = CreateNode(value);
+    } else if (value <= (*root)->data) {
+        Insert(&(*root)->left, value);
+    } else {
+        Insert(&(*root)->right, value);
     }
 }
 
-int Search(struct BST* RootPtr, int item) { /*Implemented search using recursion*/
-    if(RootPtr == NULL) {
-        return 0; /*Returns 0 if list is empty*/
-    } else if(item == RootPtr->data) {
-        return 1; /*Returns 1 when element found*/
-    } else if(item < RootPtr->data) {
-        Search(RootPtr->left, item); /*Otherwise search in left side of binary tree if searching value is less then the current node value*/
+int Search(BST* root, int item) {
+    if(root == NULL) {
+        return 0;
+    } else if(item == root->data) {
+        return 1;
+    } else if(item < root->data) {
+        return Search(root->left, item);
     } else {
-        Search(RootPtr->right, item); /*Otherwise search in right side of binary tree if searching value is greater then the current node value*/
+        return Search(root->right, item);
     }
 }
 
 void main() {
-    struct BST* RootPtr = NULL;
+    BST* root = NULL;
     int item, cont, key;
     do {
         printf("Enter item: ");
         scanf("%d",&item);
-        Insert(&RootPtr, item);
+        Insert(&root, item);
 
         printf("\n1 to keep inserting/ 0 to Exit: ");
         scanf("%d",&cont);
@@ -59,7 +56,7 @@ void main() {
     printf("\nEnter element to search: ");
     scanf("%d",&key);
 
-    if(Search(RootPtr, key) == 0) {
+    if(Search(root, key)==1) {
         printf("\nFound\n");
     } else {
         printf("\nNot Found\n");

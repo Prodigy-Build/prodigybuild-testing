@@ -1,92 +1,55 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void print_arr(int *ptr, int size)
-{
-    putchar('[');
-    while(size--)
-    {
-	printf("%d", *ptr++);
-	if(size)
-	    putchar(',');
+void printArray(int array[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", array[i]);
     }
-    printf("]\n");
+    printf("\n");
 }
 
-void swap(int *a, int *b)
-{
-    int tmp;
-
-    tmp = *a;
-    *a = *b;
-    *b = tmp;
+void swap(int *xp, int *yp) {
+    int temp = *xp;
+    *xp = *yp;
+    *yp = temp;
 }
 
-int *find_min(int *ptr, int size)
-{
-    int *min;
-
-    min = ptr;
-    while(size--)
-    {
-	if(*ptr < *min)
-	    min = ptr;
-	ptr++;
-    }
-    return (min);
-}
-
-void selection_sort(int *ptr, int size)
-{
-    int *min;
-
-    while(--size)
-    {
-	if((min = find_min(ptr + 1, size)))
-	{
-	    if(*ptr > *min)
-		swap(ptr, min);
-	}
-	ptr++;
+void selectionSort(int arr[], int n) {
+    int i, j, min_index;
+    for (i = 0; i < n-1; i++) {
+        min_index = i;
+        for (j = i+1; j < n; j++)
+          if (arr[j] < arr[min_index])
+            min_index = j;
+        swap(&arr[min_index], &arr[i]);
     }
 }
 
-void fill(char **av, int *ptr, int size)
-{
-    int i;
-
-    i = 2;
-    while(av[i] && size--)
-	*ptr++ = atoi(av[i++]); 
-}
-
-int main(int argc, char *argv[])
-{
-    if(argc < 3)
-    {
-	puts("Usage: ./your-executable-name [array size] [array]");
-	puts("Example: ./your-executable-name 3 2 1 0");
-	return EXIT_FAILURE;
+int main(int argc, char *argv[]) {
+    if(argc < 3) {
+        printf("Usage: ./your-executable-name [array size] [array]\n");
+        printf("Example: ./your-executable-name 3 2 1 0\n");
+        return EXIT_FAILURE;
     }
+
     int size = atoi(argv[1]);
-    if(!size)
-    {
-	puts("Error: size of array can't be 0");
-	return EXIT_FAILURE;
+    if(!size) {
+        printf("Error: size of array can't be 0\n");
+        return EXIT_FAILURE;
     }
-    int *arr = (int *)malloc(size * sizeof(int));
-    if(!arr)
-	return EXIT_FAILURE;
-    fill(argv, arr, size);
+
+    int arr[size];
+    for(int i = 0; i < size; i++) {
+        arr[i] = atoi(argv[i+2]); 
+    }
 
     printf("Before sorting: ");
-    print_arr(arr, size);
+    printArray(arr, size);
 
-    selection_sort(arr, size);
+    selectionSort(arr, size);
 
     printf("After sorting:  ");
-    print_arr(arr, size);
+    printArray(arr, size);
 
-    free(arr);
     return EXIT_SUCCESS;
 }
