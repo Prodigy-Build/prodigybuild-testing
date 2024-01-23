@@ -4,10 +4,10 @@
 void print_arr(int *ptr, int size)
 {
     putchar('[');
-    while(size--)
+    for(int i=0;i<size;i++)
     {
-	printf("%d", *ptr++);
-	if(size)
+	printf("%d", ptr[i]);
+	if(i != size-1)
 	    putchar(',');
     }
     printf("]\n");
@@ -27,11 +27,10 @@ int *find_min(int *ptr, int size)
     int *min;
 
     min = ptr;
-    while(size--)
+    for(int i=0;i<size;i++)
     {
-	if(*ptr < *min)
-	    min = ptr;
-	ptr++;
+	if(ptr[i] < *min)
+	    min = &ptr[i];
     }
     return (min);
 }
@@ -40,14 +39,13 @@ void selection_sort(int *ptr, int size)
 {
     int *min;
 
-    while(--size)
+    for(int i=0;i<size-1;i++)
     {
-	if((min = find_min(ptr + 1, size)))
+	if((min = find_min(&ptr[i + 1], size-i-1)))
 	{
-	    if(*ptr > *min)
-		swap(ptr, min);
+	    if(ptr[i] > *min)
+		swap(&ptr[i], min);
 	}
-	ptr++;
     }
 }
 
@@ -56,8 +54,11 @@ void fill(char **av, int *ptr, int size)
     int i;
 
     i = 2;
-    while(av[i] && size--)
-	*ptr++ = atoi(av[i++]); 
+    for (int j=0;j<size;j++)
+    {
+	 ptr[j] = atoi(av[i]);
+	 i++;
+	}
 }
 
 int main(int argc, char *argv[])

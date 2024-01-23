@@ -1,18 +1,36 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int main()
+int binsearch(int yarr[], int size, int element)
 {
-    long a;
-    long b;
+    int mid = size / 2;
+    int left = mid;
+    int right = size - left;
     
-    for(a = 0, b = 1; b > a; b++)
+    if (element == yarr[mid])
     {
-        a++;
-        printf("%ld \n %ld", &a, &b);
+        printf("%d\n", element);
     }
+    if (element != yarr[right])
+    {
+        for (int i = 0; i < left; i++)
+        {
+            if (element == yarr[i])
+            {
+                printf("%d\n", i);
+            }
+        }
+    }
+}
+
+int main(int argc, char *argv[])
+{
+    int yarr[10];
+    int yarrSize = sizeof(yarr) / sizeof(int);
+    // Initialize yarr with desired values
     
-    if(b == sizeof(long))
-    {
-        exit(1);
-    }
+    int element = atoi(argv[1]);
+    binsearch(yarr, yarrSize, element);
+    
+    return 0;
 }
