@@ -2,33 +2,37 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-int count(int num) 
-{
+void printArray(int arr[], int size) {
     printf("[");
-    
-    if(num > 20)
-    {
-        int i;
-        for(i = 0; i < num; i++)
-            printf("\n%d, \n", i);
+    for (int i = 0; i < size; i++) {
+        printf("%d", arr[i]);
+        
+        if (i < size - 1) {
+            printf(", ");
+        }
+    }
+    printf("]\n");
+}
+
+void count(int num) {
+    if (num > 20) {
+        int arr[num];
+        for (int i = 0; i < num; i++)
+            arr[i] = i;
             
-        if(i == num + 1)
-            printf("]");
-    } else
-    {
-        int i;
-        for(i = 0; i < num; i++)
+        printArray(arr, num);
+    } else {
+        for (int i = 0; i < num; i++)
             printf("%d", i);
             
-        if(i == num)
-            printf("]");
+        printf("\n");
     }
 }
 
-int main()
-{
+int main() {
     int num;
     printf("Count:~$ ");
     scanf("%d", &num);
     count(num);
+    return 0;
 }

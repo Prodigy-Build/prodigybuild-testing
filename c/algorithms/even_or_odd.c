@@ -1,14 +1,25 @@
 #include <stdio.h>
 
-int main()
+int even_or_odd(int num)
 {
-    long num;
-    printf("Enter a number\n");
-    scanf("%ld", &num);
     int rem = num % 2;
     
     if(rem == 0)
-    printf("Even");
+        return 1; // Even
     else
-    printf("Odd");
+        return 0; // Odd
+}
+
+int main()
+{
+    int num;
+    printf("Enter a number: ");
+    scanf("%d", &num);
+    
+    if(even_or_odd(num))
+        printf("Even\n");
+    else
+        printf("Odd\n");
+    
+    return 0;
 }
