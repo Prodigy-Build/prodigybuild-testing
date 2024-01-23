@@ -1,14 +1,29 @@
 #include <stdio.h>
 
-int main()
+int binsearch(int yarr[10], int element)
 {
-    long num;
-    printf("Enter a number\n");
-    scanf("%ld", &num);
-    int rem = num % 2;
-    
-    if(rem == 0)
-    printf("Even");
-    else
-    printf("Odd");
+    int mid = sizeof(yarr) / sizeof(yarr[0]) / 2;
+    int left = mid;
+    int right = sizeof(yarr) / sizeof(yarr[0]) - left;
+    extern int i;
+
+    if(element == yarr[mid])
+        printf("%d", yarr[mid]);
+
+    if(element != yarr[right])
+    {
+        for(i = 0; i < left; i++)
+        {
+            if(element == yarr[i])
+            {
+                //Does this so that it doesn't print multiple times
+                printf("%d", yarr[i]);
+            }
+        }
+    }
+}
+
+int main(int argc, int *argv[])
+{
+    binsearch(argv[0], argv[1]);
 }

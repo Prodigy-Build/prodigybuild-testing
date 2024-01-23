@@ -1,4 +1,3 @@
-// Implementation of Binary Search Tree 
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,43 +7,38 @@ struct BST {
     struct BST* right;
 };
 
-struct BST *CreateNode() {
-    struct BST* new = (struct BST*) malloc(sizeof(struct BST));
-    new->left = NULL;
-    new->right = NULL;
-    return new; 
-};
+struct BST* CreateNode() {
+    struct BST* new_node = (struct BST*) malloc(sizeof(struct BST));
+    new_node->left = NULL;
+    new_node->right = NULL;
+    return new_node; 
+}
 
 void Insert(struct BST** RootPtr, int value) {
-    struct BST* temp = *RootPtr;
-    if (temp == NULL) { /*When list is empty*/
-        struct BST* NewNode = CreateNode();
-        NewNode->data = value;
-        *RootPtr = NewNode;
-    } else if (value <= temp->data) { /*If user value is less then current node value insert in left of the node...*/
-        struct BST* NewNode = CreateNode();
-        NewNode->data = value;
-        temp->left = NewNode;
-    } else { /*If user value is greater then current node value insert at right of the node*/
-        struct BST* NewNode = CreateNode();
-        NewNode->data = value;
-        temp->right = NewNode;
+    if (*RootPtr == NULL) { // When list is empty
+        struct BST* new_node = CreateNode();
+        new_node->data = value;
+        *RootPtr = new_node;
+    } else if (value <= (*RootPtr)->data) { // If user value is less than or equal to current node value, insert in the left of the node
+        Insert(&((*RootPtr)->left), value);
+    } else { // If user value is greater than current node value, insert at the right of the node
+        Insert(&((*RootPtr)->right), value);
     }
 }
 
-int Search(struct BST* RootPtr, int item) { /*Implemented search using recursion*/
+int Search(struct BST* RootPtr, int item) { // Implemented search using recursion
     if(RootPtr == NULL) {
-        return 0; /*Returns 0 if list is empty*/
+        return 0; // Returns 0 if list is empty
     } else if(item == RootPtr->data) {
-        return 1; /*Returns 1 when element found*/
+        return 1; // Returns 1 when element found
     } else if(item < RootPtr->data) {
-        Search(RootPtr->left, item); /*Otherwise search in left side of binary tree if searching value is less then the current node value*/
+        return Search(RootPtr->left, item); // Otherwise search in the left side of binary tree if searching value is less than the current node value
     } else {
-        Search(RootPtr->right, item); /*Otherwise search in right side of binary tree if searching value is greater then the current node value*/
+        return Search(RootPtr->right, item); // Otherwise search in the right side of binary tree if searching value is greater than the current node value
     }
 }
 
-void main() {
+int main() {
     struct BST* RootPtr = NULL;
     int item, cont, key;
     do {
@@ -64,4 +58,6 @@ void main() {
     } else {
         printf("\nNot Found\n");
     }
+    
+    return 0;
 }
