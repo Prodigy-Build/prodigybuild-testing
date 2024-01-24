@@ -1,29 +1,51 @@
 #include <stdio.h>
+#include <assert.h>
 
 int binsearch(int yarr[10], int element)
 {
-    int mid = sizeof(yarr) % 2;
-    int left = (int)yarr / 2 - mid;
-    int right = yarr - left;
+    int mid = sizeof(yarr) / sizeof(yarr[0]) / 2;
+    int left = mid;
+    int right = sizeof(yarr) / sizeof(yarr[0]) - 1;
     extern int i;
     
-    if(element == mid)
-    printf("%d", &mid);
+    if(element == yarr[mid])
+    {
+        printf("%d", yarr[mid]);
+    }
     
     if(element != yarr[right])
     {
         for(i = 0; i < left; i++)
         {
-            if(element == i)
+            if(element == yarr[i])
             {
-            //Does this so that it doesn't print multiple times
-            printf("%d", i);
+                printf("%d", yarr[i]);
             }
         }
     }
-};
+}
+
+void test_binsearch()
+{
+    int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    
+    // Test case 1: element is in the middle
+    assert(binsearch(arr, 5) == 5);
+    
+    // Test case 2: element is in the left half
+    assert(binsearch(arr, 2) == 2);
+    
+    // Test case 3: element is in the right half
+    assert(binsearch(arr, 8) == 8);
+    
+    // Test case 4: element is not in the array
+    assert(binsearch(arr, 11) == -1);
+    
+    printf("All test cases pass\n");
+}
 
 int main(int argc, int argv[])
 {
-    binsearch(argv[0], argv[1]);
+    test_binsearch();
+    return 0;
 }
