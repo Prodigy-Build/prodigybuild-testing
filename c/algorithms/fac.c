@@ -1,24 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int fak(int n) {
-    if (n == 0 || n == 1) {
-        return 1;
-    } else if (n < 0) {
-        return 1;
-        exit(1);
+int binsearch(int yarr[], int element)
+{
+    int mid = sizeof(yarr) / sizeof(yarr[0]) / 2;
+    int left = mid;
+    int right = sizeof(yarr) / sizeof(yarr[0]) - left;
+    extern int i;
+    
+    if(element == yarr[mid])
+    {
+        printf("%d", yarr[mid]);
     }
-    return n * fak(n-1);
+    
+    if(element != yarr[right])
+    {
+        for(i = 0; i < left; i++)
+        {
+            if(element == yarr[i])
+            {
+                //Does this so that it doesn't print multiple times
+                printf("%d", yarr[i]);
+            }
+        }
+    }
 }
 
-int main() {
-    printf("fak(1): %d\n", fak(1));
-    printf("fak(2): %d\n", fak(2));
-    printf("fak(3): %d\n", fak(3));
-    printf("fak(4): %d\n", fak(4));
-    printf("fak(5): %d\n", fak(5));
+int main(int argc, char *argv[])
+{
+    int arr[] = {1, 2, 3, 4, 5};
+    binsearch(arr, 1);
+    binsearch(arr, 2);
+    binsearch(arr, 3);
+    binsearch(arr, 4);
+    binsearch(arr, 5);
     
-    printf("fak(-1): %d\n", fak(-1));
-
     return 1;
 }

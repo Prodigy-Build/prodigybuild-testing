@@ -48,7 +48,7 @@ void ReverseDisplay() {
     printf("\n");
 }
 
-void main() {
+int main() {
     int n, val;
     printf("Enter number of elements: ");
     scanf("%d",&n);
@@ -60,4 +60,5 @@ void main() {
     }
     Display();
     ReverseDisplay();
+    return 0;
 }
