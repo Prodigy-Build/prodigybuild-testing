@@ -1,0 +1,66 @@
+#include <stdio.h>
+
+// Define maximum size of the chessboard
+#define SIZE 8
+
+// Function to print the chess board
+void printBoard(char board[SIZE][SIZE]) {
+    int i, j;
+
+    for (i = 0; i < SIZE; i++) {
+        for (j = 0; j < SIZE; j++) {
+            printf("%c ", board[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+// Function to set up the chess board
+void setupBoard(char board[SIZE][SIZE]) {
+    int i, j;
+
+    // Set up the pawn rows
+    for (i = 0; i < SIZE; i++) {
+        board[1][i] = 'P';
+        board[6][i] = 'p';
+    }
+
+    // Set up the back rows
+    board[0][0] = 'R';
+    board[0][1] = 'N';
+    board[0][2] = 'B';
+    board[0][3] = 'Q';
+    board[0][4] = 'K';
+    board[0][5] = 'B';
+    board[0][6] = 'N';
+    board[0][7] = 'R';
+
+    board[7][0] = 'r';
+    board[7][1] = 'n';
+    board[7][2] = 'b';
+    board[7][3] = 'q';
+    board[7][4] = 'k';
+    board[7][5] = 'b';
+    board[7][6] = 'n';
+    board[7][7] = 'r';
+
+    // Set up the empty spots
+    for (i = 2; i < 6; i++) {
+        for (j = 0; j < SIZE; j++) {
+            board[i][j] = '-';
+        }
+    }
+}
+
+int main() {
+    // Chess board
+    char board[SIZE][SIZE];
+
+    // Setup the board
+    setupBoard(board);
+
+    // Print the board
+    printBoard(board);
+
+    return 0;
+}
