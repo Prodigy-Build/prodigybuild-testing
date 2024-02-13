@@ -1,0 +1,38 @@
+#include <stdio.h>
+
+// Define the chessboard
+char chessBoard[8][8];
+
+// Initialize the chessboard with all pieces.
+void initializeBoard() {
+    // normal setup for a new game
+    char setup[8] = {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'};
+    for (int i = 0; i < 8; i++) {
+        chessBoard[0][i] = setup[i];
+        chessBoard[7][i] = setup[i] - ('a' - 'A'); // capital letters represent the white player pieces
+        
+        chessBoard[1][i] = 'p'; // lower case p denote black's pawn
+        chessBoard[6][i] = 'P'; // upper case P denote white's pawn
+        
+        chessBoard[2][i] = ' '; // the middle of the board is empty
+        chessBoard[5][i] = ' ';
+        chessBoard[3][i] = ' ';
+        chessBoard[4][i] = ' ';
+    }
+}
+
+// Print the chessboard.
+void printBoard() {
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            printf("%c ", chessBoard[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    initializeBoard();
+    printBoard();
+    return 0;
+}
