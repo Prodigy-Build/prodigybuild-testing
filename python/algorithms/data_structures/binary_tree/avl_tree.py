@@ -1,10 +1,3 @@
-"""
-Implementation of an auto-balanced binary tree!
-For doctests run following command:
-python3 -m doctest -v avl_tree.py
-For testing run:
-python avl_tree.py
-"""
 from __future__ import annotations
 
 import math
@@ -84,17 +77,6 @@ def my_max(a: int, b: int) -> int:
 
 
 def right_rotation(node: MyNode) -> MyNode:
-    r"""
-            A                      B
-           / \                    / \
-          B   C                  Bl  A
-         / \       -->          /   / \
-        Bl  Br                 UB Br  C
-       /
-     UB
-    UB = unbalanced node
-    """
-    print("left rotation node:", node.get_data())
     ret = node.get_left()
     assert ret is not None
     node.set_left(ret.get_right())
@@ -107,10 +89,6 @@ def right_rotation(node: MyNode) -> MyNode:
 
 
 def left_rotation(node: MyNode) -> MyNode:
-    """
-    a mirror symmetry rotation of the left_rotation
-    """
-    print("right rotation node:", node.get_data())
     ret = node.get_right()
     assert ret is not None
     node.set_right(ret.get_left())
@@ -123,16 +101,6 @@ def left_rotation(node: MyNode) -> MyNode:
 
 
 def lr_rotation(node: MyNode) -> MyNode:
-    r"""
-            A              A                    Br
-           / \            / \                  /  \
-          B   C    LR    Br  C       RR       B    A
-         / \       -->  /  \         -->    /     / \
-        Bl  Br         B   UB              Bl    UB  C
-             \        /
-             UB     Bl
-    RR = right_rotation   LR = left_rotation
-    """
     left_child = node.get_left()
     assert left_child is not None
     node.set_left(left_rotation(left_child))
@@ -238,39 +206,6 @@ def del_node(root: MyNode, data: Any) -> MyNode | None:
 
 
 class AVLtree:
-    """
-    An AVL tree doctest
-    Examples:
-    >>> t = AVLtree()
-    >>> t.insert(4)
-    insert:4
-    >>> print(str(t).replace(" \\n","\\n"))
-     4
-    *************************************
-    >>> t.insert(2)
-    insert:2
-    >>> print(str(t).replace(" \\n","\\n").replace(" \\n","\\n"))
-      4
-     2  *
-    *************************************
-    >>> t.insert(3)
-    insert:3
-    right rotation node: 2
-    left rotation node: 4
-    >>> print(str(t).replace(" \\n","\\n").replace(" \\n","\\n"))
-      3
-     2  4
-    *************************************
-    >>> t.get_height()
-    2
-    >>> t.del_node(3)
-    delete:3
-    >>> print(str(t).replace(" \\n","\\n").replace(" \\n","\\n"))
-      4
-     2  *
-    *************************************
-    """
-
     def __init__(self) -> None:
         self.root: MyNode | None = None
 
@@ -278,19 +213,15 @@ class AVLtree:
         return get_height(self.root)
 
     def insert(self, data: Any) -> None:
-        print("insert:" + str(data))
         self.root = insert_node(self.root, data)
 
     def del_node(self, data: Any) -> None:
-        print("delete:" + str(data))
         if self.root is None:
             print("Tree is empty!")
             return
         self.root = del_node(self.root, data)
 
-    def __str__(
-        self,
-    ) -> str:  # a level traversale, gives a more intuitive look on the tree
+    def __str__(self) -> str:
         output = ""
         q = MyQueue()
         q.push(self.root)

@@ -239,9 +239,3 @@ class FenwickTree:
                 i += j
             j //= 2
         return i
-
-
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()

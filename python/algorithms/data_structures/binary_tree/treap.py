@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from random import random
+from typing import Optional, Tuple
 
 
 class Node:
@@ -9,11 +10,11 @@ class Node:
     Treap is a binary tree by value and heap by priority
     """
 
-    def __init__(self, value: int | None = None):
+    def __init__(self, value: Optional[int] = None):
         self.value = value
         self.prior = random()
-        self.left: Node | None = None
-        self.right: Node | None = None
+        self.left: Optional[Node] = None
+        self.right: Optional[Node] = None
 
     def __repr__(self) -> str:
         from pprint import pformat
@@ -32,7 +33,7 @@ class Node:
         return value + left + right
 
 
-def split(root: Node | None, value: int) -> tuple[Node | None, Node | None]:
+def split(root: Optional[Node], value: int) -> Tuple[Optional[Node], Optional[Node]]:
     """
     We split current tree into 2 trees with value:
 
@@ -61,7 +62,7 @@ def split(root: Node | None, value: int) -> tuple[Node | None, Node | None]:
             return root, right
 
 
-def merge(left: Node | None, right: Node | None) -> Node | None:
+def merge(left: Optional[Node], right: Optional[Node]) -> Optional[Node]:
     """
     We merge 2 trees into one.
     Note: all left tree's values must be less than all right tree's
@@ -83,7 +84,7 @@ def merge(left: Node | None, right: Node | None) -> Node | None:
         return right
 
 
-def insert(root: Node | None, value: int) -> Node | None:
+def insert(root: Optional[Node], value: int) -> Optional[Node]:
     """
     Insert element
 
@@ -96,7 +97,7 @@ def insert(root: Node | None, value: int) -> Node | None:
     return merge(merge(left, node), right)
 
 
-def erase(root: Node | None, value: int) -> Node | None:
+def erase(root: Optional[Node], value: int) -> Optional[Node]:
     """
     Erase element
 
@@ -109,7 +110,7 @@ def erase(root: Node | None, value: int) -> Node | None:
     return merge(left, right)
 
 
-def inorder(root: Node | None) -> None:
+def inorder(root: Optional[Node]) -> None:
     """
     Just recursive print of a tree
     """
@@ -121,7 +122,7 @@ def inorder(root: Node | None) -> None:
         inorder(root.right)
 
 
-def interact_treap(root: Node | None, args: str) -> Node | None:
+def interact_treap(root: Optional[Node], args: str) -> Optional[Node]:
     """
     Commands:
     + value to add value into treap

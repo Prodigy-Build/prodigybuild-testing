@@ -17,7 +17,7 @@ class SegmentTree:
 
     def build(self, idx, l, r):  # noqa: E741
         if l == r:
-            self.st[idx] = A[l]
+            self.st[idx] = a[l]
         else:
             mid = (l + r) // 2
             self.build(self.left(idx), l, mid)
@@ -60,15 +60,14 @@ class SegmentTree:
 
     def show_data(self):
         show_list = []
-        for i in range(1, N + 1):
+        for i in range(1, self.N + 1):
             show_list += [self.query(i, i)]
         print(show_list)
 
 
 if __name__ == "__main__":
-    A = [1, 2, -4, 7, 3, -5, 6, 11, -20, 9, 14, 15, 5, 2, -8]
-    N = 15
-    segt = SegmentTree(A)
+    a = [1, 2, -4, 7, 3, -5, 6, 11, -20, 9, 14, 15, 5, 2, -8]
+    segt = SegmentTree(a)
     print(segt.query(4, 6))
     print(segt.query(7, 11))
     print(segt.query(7, 12))

@@ -81,7 +81,7 @@ class MaxFenwickTree:
             if current_left_border == index:
                 self.tree[index] = value
             else:
-                self.tree[index] = max(value, current_left_border, index)
+                self.tree[index] = max(value, self.tree[index], self.tree[current_left_border])
             index = self.get_next(index)
 
     def query(self, left: int, right: int) -> int:

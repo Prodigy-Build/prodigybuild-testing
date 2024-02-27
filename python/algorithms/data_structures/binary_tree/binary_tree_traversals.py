@@ -1,4 +1,3 @@
-# https://en.wikipedia.org/wiki/Tree_traversal
 from __future__ import annotations
 
 from collections import deque

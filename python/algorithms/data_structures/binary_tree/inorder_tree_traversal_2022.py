@@ -1,10 +1,3 @@
-"""
-Illustrate how to implement inorder traversal in binary search tree.
-Author: Gurneet Singh
-https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/
-"""
-
-
 class BinaryTreeNode:
     """Defining the structure of BinaryTreeNode"""
 
@@ -50,8 +43,8 @@ def inorder(node: None | BinaryTreeNode) -> list[int]:  # if node is None,return
     """
     if node:
         inorder_array = inorder(node.left_child)
-        inorder_array = [*inorder_array, node.data]
-        inorder_array = inorder_array + inorder(node.right_child)
+        inorder_array.append(node.data)
+        inorder_array.extend(inorder(node.right_child))
     else:
         inorder_array = []
     return inorder_array
@@ -72,7 +65,7 @@ def main() -> None:
     # main function
     root = make_tree()
     print("Printing values of binary search tree in Inorder Traversal.")
-    inorder(root)
+    print(inorder(root))
 
 
 if __name__ == "__main__":

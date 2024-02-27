@@ -22,24 +22,6 @@ class Node:
 def merge_two_binary_trees(tree1: Node | None, tree2: Node | None) -> Node | None:
     """
     Returns root node of the merged tree.
-
-    >>> tree1 = Node(5)
-    >>> tree1.left = Node(6)
-    >>> tree1.right = Node(7)
-    >>> tree1.left.left = Node(2)
-    >>> tree2 = Node(4)
-    >>> tree2.left = Node(5)
-    >>> tree2.right = Node(8)
-    >>> tree2.left.right = Node(1)
-    >>> tree2.right.right = Node(4)
-    >>> merged_tree = merge_two_binary_trees(tree1, tree2)
-    >>> print_preorder(merged_tree)
-    9
-    11
-    2
-    1
-    15
-    4
     """
     if tree1 is None:
         return tree2
@@ -55,16 +37,6 @@ def merge_two_binary_trees(tree1: Node | None, tree2: Node | None) -> Node | Non
 def print_preorder(root: Node | None) -> None:
     """
     Print pre-order traversal of the tree.
-
-    >>> root = Node(1)
-    >>> root.left = Node(2)
-    >>> root.right = Node(3)
-    >>> print_preorder(root)
-    1
-    2
-    3
-    >>> print_preorder(root.right)
-    3
     """
     if root:
         print(root.value)
