@@ -1,28 +1,22 @@
+```python
 from operator import delitem, getitem, setitem
-
 import pytest
-
 from data_structures.hashing.hash_map import HashMap
-
 
 def _get(k):
     return getitem, k
 
-
 def _set(k, v):
     return setitem, k, v
 
-
 def _del(k):
     return delitem, k
-
 
 def _run_operation(obj, fun, *args):
     try:
         return fun(obj, *args), None
     except Exception as e:
         return None, e
-
 
 _add_items = (
     _set("key_a", "val_a"),
@@ -62,7 +56,6 @@ _add_with_resize_down = [
     _set("key_a", "val_b"),
 ]
 
-
 @pytest.mark.parametrize(
     "operations",
     (
@@ -86,7 +79,6 @@ def test_hash_map_is_the_same_as_dict(operations):
         assert len(py) == len(my)
         assert set(my.items()) == set(py.items())
 
-
 def test_no_new_methods_was_added_to_api():
     def is_public(name: str) -> bool:
         return not name.startswith("_")
@@ -95,3 +87,4 @@ def test_no_new_methods_was_added_to_api():
     hash_public_names = {name for name in dir(HashMap()) if is_public(name)}
 
     assert dict_public_names > hash_public_names
+```

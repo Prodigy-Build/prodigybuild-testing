@@ -1,69 +1,92 @@
-"""
-    Disjoint set.
-    Reference: https://en.wikipedia.org/wiki/Disjoint-set_data_structure
-"""
+def test_make_set():
+    vertex = [Node(i) for i in range(6)]
+    for v in vertex:
+        make_set(v)
+    assert vertex[0].rank == 0
+    assert vertex[0].parent == vertex[0]
+    assert vertex[1].rank == 0
+    assert vertex[1].parent == vertex[1]
+    assert vertex[2].rank == 0
+    assert vertex[2].parent == vertex[2]
+    assert vertex[3].rank == 0
+    assert vertex[3].parent == vertex[3]
+    assert vertex[4].rank == 0
+    assert vertex[4].parent == vertex[4]
+    assert vertex[5].rank == 0
+    assert vertex[5].parent == vertex[5]
 
 
-class Node:
-    def __init__(self, data: int) -> None:
-        self.data = data
-        self.rank: int
-        self.parent: Node
+def test_union_set():
+    vertex = [Node(i) for i in range(6)]
+    for v in vertex:
+        make_set(v)
+
+    union_set(vertex[0], vertex[1])
+    assert vertex[0].parent == vertex[0]
+    assert vertex[1].parent == vertex[0]
+    assert vertex[0].rank == 1
+    assert vertex[1].rank == 0
+
+    union_set(vertex[1], vertex[2])
+    assert vertex[0].parent == vertex[0]
+    assert vertex[1].parent == vertex[0]
+    assert vertex[2].parent == vertex[0]
+    assert vertex[0].rank == 2
+    assert vertex[1].rank == 0
+    assert vertex[2].rank == 0
+
+    union_set(vertex[3], vertex[4])
+    assert vertex[3].parent == vertex[3]
+    assert vertex[4].parent == vertex[3]
+    assert vertex[3].rank == 1
+    assert vertex[4].rank == 0
+
+    union_set(vertex[3], vertex[5])
+    assert vertex[3].parent == vertex[3]
+    assert vertex[4].parent == vertex[3]
+    assert vertex[5].parent == vertex[3]
+    assert vertex[3].rank == 2
+    assert vertex[4].rank == 0
+    assert vertex[5].rank == 0
 
 
-def make_set(x: Node) -> None:
-    """
-    Make x as a set.
-    """
-    # rank is the distance from x to its' parent
-    # root's rank is 0
-    x.rank = 0
-    x.parent = x
+def test_find_set():
+    vertex = [Node(i) for i in range(6)]
+    for v in vertex:
+        make_set(v)
+
+    union_set(vertex[0], vertex[1])
+    union_set(vertex[1], vertex[2])
+    union_set(vertex[3], vertex[4])
+    union_set(vertex[3], vertex[5])
+
+    assert find_set(vertex[0]) == vertex[0]
+    assert find_set(vertex[1]) == vertex[0]
+    assert find_set(vertex[2]) == vertex[0]
+    assert find_set(vertex[3]) == vertex[3]
+    assert find_set(vertex[4]) == vertex[3]
+    assert find_set(vertex[5]) == vertex[3]
 
 
-def union_set(x: Node, y: Node) -> None:
-    """
-    Union of two sets.
-    set with bigger rank should be parent, so that the
-    disjoint set tree will be more flat.
-    """
-    x, y = find_set(x), find_set(y)
-    if x == y:
-        return
+def test_find_python_set():
+    vertex = [Node(i) for i in range(6)]
+    for v in vertex:
+        make_set(v)
 
-    elif x.rank > y.rank:
-        y.parent = x
-    else:
-        x.parent = y
-        if x.rank == y.rank:
-            y.rank += 1
+    union_set(vertex[0], vertex[1])
+    union_set(vertex[1], vertex[2])
+    union_set(vertex[3], vertex[4])
+    union_set(vertex[3], vertex[5])
 
-
-def find_set(x: Node) -> Node:
-    """
-    Return the parent of x
-    """
-    if x != x.parent:
-        x.parent = find_set(x.parent)
-    return x.parent
+    assert find_python_set(vertex[0]) == {0, 1, 2}
+    assert find_python_set(vertex[1]) == {0, 1, 2}
+    assert find_python_set(vertex[2]) == {0, 1, 2}
+    assert find_python_set(vertex[3]) == {3, 4, 5}
+    assert find_python_set(vertex[4]) == {3, 4, 5}
+    assert find_python_set(vertex[5]) == {3, 4, 5}
 
 
-def find_python_set(node: Node) -> set:
-    """
-    Return a Python Standard Library set that contains i.
-    """
-    sets = ({0, 1, 2}, {3, 4, 5})
-    for s in sets:
-        if node.data in s:
-            return s
-    msg = f"{node.data} is not in {sets}"
-    raise ValueError(msg)
-
-
-def test_disjoint_set() -> None:
-    """
-    >>> test_disjoint_set()
-    """
+def test_disjoint_set():
     vertex = [Node(i) for i in range(6)]
     for v in vertex:
         make_set(v)
@@ -81,5 +104,8 @@ def test_disjoint_set() -> None:
                 assert find_set(node0) == find_set(node1)
 
 
-if __name__ == "__main__":
-    test_disjoint_set()
+test_make_set()
+test_union_set()
+test_find_set()
+test_find_python_set()
+test_disjoint_set()

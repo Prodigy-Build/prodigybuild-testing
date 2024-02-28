@@ -1,6 +1,4 @@
-# Recursive Prorgam to create a Linked List from a sequence and
-# print a string representation of it.
-
+# New code with unit test cases
 
 class Node:
     def __init__(self, data=None):
@@ -36,9 +34,35 @@ def make_linked_list(elements_list):
     return head
 
 
-list_data = [1, 3, 5, 32, 44, 12, 43]
-print(f"List: {list_data}")
-print("Creating Linked List from List.")
-linked_list = make_linked_list(list_data)
-print("Linked List:")
-print(linked_list)
+# Unit test cases
+def test_make_linked_list():
+    # Test case 1: Empty list
+    elements_list = []
+    try:
+        make_linked_list(elements_list)
+    except Exception as e:
+        assert str(e) == "The Elements List is empty"
+
+    # Test case 2: Single element list
+    elements_list = [1]
+    linked_list = make_linked_list(elements_list)
+    assert linked_list.data == 1
+    assert linked_list.next is None
+
+    # Test case 3: Multiple element list
+    elements_list = [1, 3, 5, 32, 44, 12, 43]
+    linked_list = make_linked_list(elements_list)
+    assert linked_list.data == 1
+    assert linked_list.next.data == 3
+    assert linked_list.next.next.data == 5
+    assert linked_list.next.next.next.data == 32
+    assert linked_list.next.next.next.next.data == 44
+    assert linked_list.next.next.next.next.next.data == 12
+    assert linked_list.next.next.next.next.next.next.data == 43
+    assert linked_list.next.next.next.next.next.next.next is None
+
+    print("All test cases pass")
+
+
+if __name__ == "__main__":
+    test_make_linked_list()

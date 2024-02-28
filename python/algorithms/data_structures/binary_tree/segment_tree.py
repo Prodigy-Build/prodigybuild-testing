@@ -1,4 +1,5 @@
 import math
+import unittest
 
 
 class SegmentTree:
@@ -65,14 +66,22 @@ class SegmentTree:
         print(show_list)
 
 
+class TestSegmentTree(unittest.TestCase):
+    def test_query(self):
+        A = [1, 2, -4, 7, 3, -5, 6, 11, -20, 9, 14, 15, 5, 2, -8]
+        segt = SegmentTree(A)
+        self.assertEqual(segt.query(4, 6), 3)
+        self.assertEqual(segt.query(7, 11), 15)
+        self.assertEqual(segt.query(7, 12), 15)
+
+    def test_update(self):
+        A = [1, 2, -4, 7, 3, -5, 6, 11, -20, 9, 14, 15, 5, 2, -8]
+        segt = SegmentTree(A)
+        segt.update(1, 3, 111)
+        self.assertEqual(segt.query(1, 15), 111)
+        segt.update(7, 8, 235)
+        self.assertEqual(segt.query(1, 15), 235)
+
+
 if __name__ == "__main__":
-    A = [1, 2, -4, 7, 3, -5, 6, 11, -20, 9, 14, 15, 5, 2, -8]
-    N = 15
-    segt = SegmentTree(A)
-    print(segt.query(4, 6))
-    print(segt.query(7, 11))
-    print(segt.query(7, 12))
-    segt.update(1, 3, 111)
-    print(segt.query(1, 15))
-    segt.update(7, 8, 235)
-    segt.show_data()
+    unittest.main()

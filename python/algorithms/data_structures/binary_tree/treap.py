@@ -1,7 +1,6 @@
-from __future__ import annotations
-
+import unittest
 from random import random
-
+from typing import Optional, Tuple
 
 class Node:
     """
@@ -174,9 +173,89 @@ def main() -> None:
 
     print("good by!")
 
+class TestTreap(unittest.TestCase):
+    def test_split(self):
+        root = Node(5)
+        root.left = Node(3)
+        root.right = Node(7)
+        root.left.left = Node(2)
+        root.left.right = Node(4)
+        root.right.left = Node(6)
+        root.right.right = Node(8)
+
+        left, right = split(root, 4)
+        self.assertEqual(left, root.left)
+        self.assertEqual(right, root)
+
+    def test_merge(self):
+        left = Node(3)
+        right = Node(7)
+        left.left = Node(2)
+        left.right = Node(4)
+        right.left = Node(6)
+        right.right = Node(8)
+
+        root = merge(left, right)
+        self.assertEqual(root.value, 3)
+        self.assertEqual(root.left.value, 2)
+        self.assertEqual(root.right.value, 4)
+        self.assertEqual(root.right.right.value, 7)
+        self.assertEqual(root.right.right.right.value, 8)
+
+    def test_insert(self):
+        root = Node(5)
+        root.left = Node(3)
+        root.right = Node(7)
+        root.left.left = Node(2)
+        root.left.right = Node(4)
+        root.right.left = Node(6)
+        root.right.right = Node(8)
+
+        root = insert(root, 9)
+        self.assertEqual(root.right.right.right.value, 9)
+
+    def test_erase(self):
+        root = Node(5)
+        root.left = Node(3)
+        root.right = Node(7)
+        root.left.left = Node(2)
+        root.left.right = Node(4)
+        root.right.left = Node(6)
+        root.right.right = Node(8)
+
+        root = erase(root, 7)
+        self.assertEqual(root.right.value, 8)
+
+    def test_inorder(self):
+        root = Node(5)
+        root.left = Node(3)
+        root.right = Node(7)
+        root.left.left = Node(2)
+        root.left.right = Node(4)
+        root.right.left = Node(6)
+        root.right.right = Node(8)
+
+        self.assertEqual(inorder(root), [2, 3, 4, 5, 6, 7, 8])
+
+    def test_interact_treap(self):
+        root = None
+        root = interact_treap(root, "+1")
+        self.assertEqual(root.value, 1)
+
+        root = interact_treap(root, "+3 +5 +17 +19 +2 +16 +4 +0")
+        self.assertEqual(inorder(root), [0, 1, 2, 3, 4, 5, 16, 17, 19])
+
+        root = interact_treap(root, "+4 +4 +4")
+        self.assertEqual(inorder(root), [0, 1, 2, 3, 4, 4, 4, 4, 5, 16, 17, 19])
+
+        root = interact_treap(root, "-0")
+        self.assertEqual(inorder(root), [1, 2, 3, 4, 4, 4, 4, 5, 16, 17, 19])
+
+        root = interact_treap(root, "-4")
+        self.assertEqual(inorder(root), [1, 2, 3, 5, 16, 17, 19])
+
+        root = interact_treap(root, "=0")
+        self.assertEqual(inorder(root), [1, 2, 3, 5, 16, 17, 19])
 
 if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()
-    main()
+    unittest.main()

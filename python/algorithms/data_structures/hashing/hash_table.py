@@ -1,5 +1,9 @@
+The updated code with unit test cases is as follows:
+
+```python
 #!/usr/bin/env python3
 from .number_theory.prime_numbers import next_prime
+import unittest
 
 
 class HashTable:
@@ -84,3 +88,39 @@ class HashTable:
             else:
                 self.rehashing()
                 self.insert_data(data)
+
+
+class TestHashTable(unittest.TestCase):
+    def test_insert_data(self):
+        ht = HashTable(5)
+        ht.insert_data(1)
+        self.assertEqual(ht.values, [1, None, None, None, None])
+        self.assertEqual(ht._keys, {1: 1})
+
+    def test_collision_resolution(self):
+        ht = HashTable(5)
+        ht.insert_data(1)
+        ht.insert_data(6)
+        self.assertEqual(ht.values, [1, 6, None, None, None])
+        self.assertEqual(ht._keys, {1: 1, 6: 6})
+
+    def test_rehashing(self):
+        ht = HashTable(5)
+        ht.insert_data(1)
+        ht.insert_data(6)
+        ht.insert_data(11)
+        self.assertEqual(ht.size_table, 11)
+        self.assertEqual(ht.values, [1, 6, 11, None, None, None, None, None, None, None, None])
+        self.assertEqual(ht._keys, {1: 1, 6: 6, 11: 11})
+
+    def test_bulk_insert(self):
+        ht = HashTable(5)
+        ht.bulk_insert([1, 6, 11])
+        self.assertEqual(ht.size_table, 11)
+        self.assertEqual(ht.values, [1, 6, 11, None, None, None, None, None, None, None, None])
+        self.assertEqual(ht._keys, {1: 1, 6: 6, 11: 11})
+
+
+if __name__ == "__main__":
+    unittest.main()
+```

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import unittest
+
 
 class Node:
     def __init__(self, data: int) -> None:
@@ -18,36 +20,6 @@ class LinkedList:
         return self.head.data
 
     def middle_element(self) -> int | None:
-        """
-        >>> link = LinkedList()
-        >>> link.middle_element()
-        No element found.
-        >>> link.push(5)
-        5
-        >>> link.push(6)
-        6
-        >>> link.push(8)
-        8
-        >>> link.push(8)
-        8
-        >>> link.push(10)
-        10
-        >>> link.push(12)
-        12
-        >>> link.push(17)
-        17
-        >>> link.push(7)
-        7
-        >>> link.push(3)
-        3
-        >>> link.push(20)
-        20
-        >>> link.push(-20)
-        -20
-        >>> link.middle_element()
-        12
-        >>>
-        """
         slow_pointer = self.head
         fast_pointer = self.head
         if self.head:
@@ -60,9 +32,45 @@ class LinkedList:
             return None
 
 
+class TestLinkedList(unittest.TestCase):
+    def test_middle_element_empty_list(self):
+        link = LinkedList()
+        self.assertIsNone(link.middle_element())
+
+    def test_middle_element_single_element(self):
+        link = LinkedList()
+        link.push(5)
+        self.assertEqual(link.middle_element(), 5)
+
+    def test_middle_element_odd_elements(self):
+        link = LinkedList()
+        link.push(5)
+        link.push(6)
+        link.push(8)
+        link.push(8)
+        link.push(10)
+        link.push(12)
+        link.push(17)
+        link.push(7)
+        link.push(3)
+        link.push(20)
+        link.push(-20)
+        self.assertEqual(link.middle_element(), 12)
+
+    def test_middle_element_even_elements(self):
+        link = LinkedList()
+        link.push(5)
+        link.push(6)
+        link.push(8)
+        link.push(8)
+        link.push(10)
+        link.push(12)
+        link.push(17)
+        link.push(7)
+        link.push(3)
+        link.push(20)
+        self.assertEqual(link.middle_element(), 7)
+
+
 if __name__ == "__main__":
-    link = LinkedList()
-    for _ in range(int(input().strip())):
-        data = int(input().strip())
-        link.push(data)
-    print(link.middle_element())
+    unittest.main()

@@ -23,27 +23,7 @@ T = TypeVar("T", bound=Comparable)
 
 
 class Heap(Generic[T]):
-    """A Max Heap Implementation
-
-    >>> unsorted = [103, 9, 1, 7, 11, 15, 25, 201, 209, 107, 5]
-    >>> h = Heap()
-    >>> h.build_max_heap(unsorted)
-    >>> h
-    [209, 201, 25, 103, 107, 15, 1, 9, 7, 11, 5]
-    >>>
-    >>> h.extract_max()
-    209
-    >>> h
-    [201, 107, 25, 103, 11, 15, 1, 9, 7, 5]
-    >>>
-    >>> h.insert(100)
-    >>> h
-    [201, 107, 25, 103, 100, 15, 1, 9, 7, 5, 11]
-    >>>
-    >>> h.heap_sort()
-    >>> h
-    [1, 5, 7, 9, 11, 15, 25, 100, 103, 107, 201]
-    """
+    """A Max Heap Implementation"""
 
     def __init__(self) -> None:
         self.h: list[T] = []

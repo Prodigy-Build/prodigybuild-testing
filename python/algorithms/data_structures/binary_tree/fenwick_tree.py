@@ -1,4 +1,5 @@
 from copy import deepcopy
+import unittest
 
 
 class FenwickTree:
@@ -34,14 +35,6 @@ class FenwickTree:
 
         Returns:
             None
-
-        >>> a = [1, 2, 3, 4, 5]
-        >>> f1 = FenwickTree(a)
-        >>> f2 = FenwickTree(size=len(a))
-        >>> for index, value in enumerate(a):
-        ...     f2.add(index, value)
-        >>> f1.tree == f2.tree
-        True
         """
         self.size = len(arr)
         self.tree = deepcopy(arr)
@@ -56,11 +49,6 @@ class FenwickTree:
 
         Returns:
             list: Normal Array of the Fenwick tree
-
-        >>> a = [i for i in range(128)]
-        >>> f = FenwickTree(a)
-        >>> f.get_array() == a
-        True
         """
         arr = self.tree[:]
         for i in range(self.size - 1, 0, -1):
@@ -87,15 +75,6 @@ class FenwickTree:
 
         Returns:
             None
-
-        >>> f = FenwickTree([1, 2, 3, 4, 5])
-        >>> f.add(0, 1)
-        >>> f.add(1, 2)
-        >>> f.add(2, 3)
-        >>> f.add(3, 4)
-        >>> f.add(4, 5)
-        >>> f.get_array()
-        [2, 4, 6, 8, 10]
         """
         if index == 0:
             self.tree[0] += value
@@ -114,15 +93,6 @@ class FenwickTree:
 
         Returns:
             None
-
-        >>> f = FenwickTree([5, 4, 3, 2, 1])
-        >>> f.update(0, 1)
-        >>> f.update(1, 2)
-        >>> f.update(2, 3)
-        >>> f.update(3, 4)
-        >>> f.update(4, 5)
-        >>> f.get_array()
-        [1, 2, 3, 4, 5]
         """
         self.add(index, value - self.get(index))
 
@@ -135,14 +105,6 @@ class FenwickTree:
 
         Returns:
             int: sum of all elements in [0, right)
-
-        >>> a = [i for i in range(128)]
-        >>> f = FenwickTree(a)
-        >>> res = True
-        >>> for i in range(len(a)):
-        ...     res = res and f.prefix(i) == sum(a[:i])
-        >>> res
-        True
         """
         if right == 0:
             return 0
@@ -163,15 +125,6 @@ class FenwickTree:
 
         Returns:
             int: sum of all elements in [left, right)
-
-        >>> a = [i for i in range(128)]
-        >>> f = FenwickTree(a)
-        >>> res = True
-        >>> for i in range(len(a)):
-        ...     for j in range(i + 1, len(a)):
-        ...         res = res and f.query(i, j) == sum(a[i:j])
-        >>> res
-        True
         """
         return self.prefix(right) - self.prefix(left)
 
@@ -184,14 +137,6 @@ class FenwickTree:
 
         Returns:
             int: Value of element at index
-
-        >>> a = [i for i in range(128)]
-        >>> f = FenwickTree(a)
-        >>> res = True
-        >>> for i in range(len(a)):
-        ...     res = res and f.get(i) == a[i]
-        >>> res
-        True
         """
         return self.query(index, index + 1)
 
@@ -206,22 +151,6 @@ class FenwickTree:
         Returns:
             -1: if value is smaller than all elements in prefix sum
             int: largest index with prefix(i) <= value
-
-        >>> f = FenwickTree([1, 2, 0, 3, 0, 5])
-        >>> f.rank_query(0)
-        -1
-        >>> f.rank_query(2)
-        0
-        >>> f.rank_query(1)
-        0
-        >>> f.rank_query(3)
-        2
-        >>> f.rank_query(5)
-        2
-        >>> f.rank_query(6)
-        4
-        >>> f.rank_query(11)
-        5
         """
         value -= self.tree[0]
         if value < 0:
@@ -241,7 +170,67 @@ class FenwickTree:
         return i
 
 
-if __name__ == "__main__":
-    import doctest
+class FenwickTreeTestCase(unittest.TestCase):
+    def test_init(self):
+        a = [1, 2, 3, 4, 5]
+        f1 = FenwickTree(a)
+        f2 = FenwickTree(size=len(a))
+        for index, value in enumerate(a):
+            f2.add(index, value)
+        self.assertEqual(f1.tree, f2.tree)
 
-    doctest.testmod()
+    def test_get_array(self):
+        a = [i for i in range(128)]
+        f = FenwickTree(a)
+        self.assertEqual(f.get_array(), a)
+
+    def test_add(self):
+        f = FenwickTree([1, 2, 3, 4, 5])
+        f.add(0, 1)
+        f.add(1, 2)
+        f.add(2, 3)
+        f.add(3, 4)
+        f.add(4, 5)
+        self.assertEqual(f.get_array(), [2, 4, 6, 8, 10])
+
+    def test_update(self):
+        f = FenwickTree([5, 4, 3, 2, 1])
+        f.update(0, 1)
+        f.update(1, 2)
+        f.update(2, 3)
+        f.update(3, 4)
+        f.update(4, 5)
+        self.assertEqual(f.get_array(), [1, 2, 3, 4, 5])
+
+    def test_prefix(self):
+        a = [i for i in range(128)]
+        f = FenwickTree(a)
+        for i in range(len(a)):
+            self.assertEqual(f.prefix(i), sum(a[:i]))
+
+    def test_query(self):
+        a = [i for i in range(128)]
+        f = FenwickTree(a)
+        for i in range(len(a)):
+            for j in range(i + 1, len(a)):
+                self.assertEqual(f.query(i, j), sum(a[i:j]))
+
+    def test_get(self):
+        a = [i for i in range(128)]
+        f = FenwickTree(a)
+        for i in range(len(a)):
+            self.assertEqual(f.get(i), a[i])
+
+    def test_rank_query(self):
+        f = FenwickTree([1, 2, 0, 3, 0, 5])
+        self.assertEqual(f.rank_query(0), -1)
+        self.assertEqual(f.rank_query(2), 0)
+        self.assertEqual(f.rank_query(1), 0)
+        self.assertEqual(f.rank_query(3), 2)
+        self.assertEqual(f.rank_query(5), 2)
+        self.assertEqual(f.rank_query(6), 4)
+        self.assertEqual(f.rank_query(11), 5)
+
+
+if __name__ == "__main__":
+    unittest.main()

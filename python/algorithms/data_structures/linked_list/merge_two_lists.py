@@ -1,6 +1,6 @@
-"""
-Algorithm that merges two sorted linked lists into one sorted linked list.
-"""
+The new code with unit test cases is as follows:
+
+```python
 from __future__ import annotations
 
 from collections.abc import Iterable, Iterator
@@ -23,60 +23,52 @@ class SortedLinkedList:
             self.head = Node(i, self.head)
 
     def __iter__(self) -> Iterator[int]:
-        """
-        >>> tuple(SortedLinkedList(test_data_odd)) == tuple(sorted(test_data_odd))
-        True
-        >>> tuple(SortedLinkedList(test_data_even)) == tuple(sorted(test_data_even))
-        True
-        """
         node = self.head
         while node:
             yield node.data
             node = node.next_node
 
     def __len__(self) -> int:
-        """
-        >>> for i in range(3):
-        ...     len(SortedLinkedList(range(i))) == i
-        True
-        True
-        True
-        >>> len(SortedLinkedList(test_data_odd))
-        8
-        """
         return sum(1 for _ in self)
 
     def __str__(self) -> str:
-        """
-        >>> str(SortedLinkedList([]))
-        ''
-        >>> str(SortedLinkedList(test_data_odd))
-        '-11 -> -1 -> 0 -> 1 -> 3 -> 5 -> 7 -> 9'
-        >>> str(SortedLinkedList(test_data_even))
-        '-2 -> 0 -> 2 -> 3 -> 4 -> 6 -> 8 -> 10'
-        """
         return " -> ".join([str(node) for node in self])
 
 
 def merge_lists(
     sll_one: SortedLinkedList, sll_two: SortedLinkedList
 ) -> SortedLinkedList:
-    """
-    >>> SSL = SortedLinkedList
-    >>> merged = merge_lists(SSL(test_data_odd), SSL(test_data_even))
-    >>> len(merged)
-    16
-    >>> str(merged)
-    '-11 -> -2 -> -1 -> 0 -> 0 -> 1 -> 2 -> 3 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10'
-    >>> list(merged) == list(sorted(test_data_odd + test_data_even))
-    True
-    """
     return SortedLinkedList(list(sll_one) + list(sll_two))
 
 
-if __name__ == "__main__":
-    import doctest
+# Unit test cases
+def test_SortedLinkedList():
+    sll = SortedLinkedList(test_data_odd)
+    assert tuple(sll) == tuple(sorted(test_data_odd))
 
-    doctest.testmod()
+    sll = SortedLinkedList(test_data_even)
+    assert tuple(sll) == tuple(sorted(test_data_even))
+
+    assert len(SortedLinkedList(range(0))) == 0
+    assert len(SortedLinkedList(range(1))) == 1
+    assert len(SortedLinkedList(range(2))) == 2
+
+    assert len(SortedLinkedList(test_data_odd)) == 8
+
+    assert str(SortedLinkedList([])) == ""
+    assert str(SortedLinkedList(test_data_odd)) == "-11 -> -1 -> 0 -> 1 -> 3 -> 5 -> 7 -> 9"
+    assert str(SortedLinkedList(test_data_even)) == "-2 -> 0 -> 2 -> 3 -> 4 -> 6 -> 8 -> 10"
+
+
+def test_merge_lists():
     SSL = SortedLinkedList
-    print(merge_lists(SSL(test_data_odd), SSL(test_data_even)))
+    merged = merge_lists(SSL(test_data_odd), SSL(test_data_even))
+    assert len(merged) == 16
+    assert str(merged) == "-11 -> -2 -> -1 -> 0 -> 0 -> 1 -> 2 -> 3 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10"
+    assert list(merged) == list(sorted(test_data_odd + test_data_even))
+
+
+if __name__ == "__main__":
+    test_SortedLinkedList()
+    test_merge_lists()
+```

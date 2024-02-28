@@ -1,3 +1,6 @@
+The updated code with unit test cases is as follows:
+
+```python
 """
 Illustrate how to implement inorder traversal in binary search tree.
 Author: Gurneet Singh
@@ -80,3 +83,28 @@ if __name__ == "__main__":
 
     doctest.testmod()
     main()
+```
+
+Unit test cases:
+
+```python
+import unittest
+from binary_tree.inorder_tree_traversal_2022 import BinaryTreeNode, insert, inorder, make_tree
+
+
+class TestBinaryTree(unittest.TestCase):
+    def test_insert(self):
+        node_a = BinaryTreeNode(12345)
+        node_b = insert(node_a, 67890)
+        self.assertEqual(node_a.left_child, node_b.left_child)
+        self.assertEqual(node_a.right_child, node_b.right_child)
+        self.assertEqual(node_a.data, node_b.data)
+
+    def test_inorder(self):
+        root = make_tree()
+        self.assertEqual(inorder(root), [6, 10, 14, 15, 20, 25, 60])
+
+
+if __name__ == "__main__":
+    unittest.main()
+```

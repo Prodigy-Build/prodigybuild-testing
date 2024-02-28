@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Any
+import unittest
 
 
 class ContainsLoopError(Exception):
@@ -43,20 +44,26 @@ class Node:
             return True
 
 
+class TestNode(unittest.TestCase):
+    def test_has_loop(self):
+        root_node = Node(1)
+        root_node.next_node = Node(2)
+        root_node.next_node.next_node = Node(3)
+        root_node.next_node.next_node.next_node = Node(4)
+        self.assertFalse(root_node.has_loop)
+
+        root_node.next_node.next_node.next_node = root_node.next_node
+        self.assertTrue(root_node.has_loop)
+
+        root_node = Node(5)
+        root_node.next_node = Node(6)
+        root_node.next_node.next_node = Node(5)
+        root_node.next_node.next_node.next_node = Node(6)
+        self.assertFalse(root_node.has_loop)
+
+        root_node = Node(1)
+        self.assertFalse(root_node.has_loop)
+
+
 if __name__ == "__main__":
-    root_node = Node(1)
-    root_node.next_node = Node(2)
-    root_node.next_node.next_node = Node(3)
-    root_node.next_node.next_node.next_node = Node(4)
-    print(root_node.has_loop)  # False
-    root_node.next_node.next_node.next_node = root_node.next_node
-    print(root_node.has_loop)  # True
-
-    root_node = Node(5)
-    root_node.next_node = Node(6)
-    root_node.next_node.next_node = Node(5)
-    root_node.next_node.next_node.next_node = Node(6)
-    print(root_node.has_loop)  # False
-
-    root_node = Node(1)
-    print(root_node.has_loop)  # False
+    unittest.main()

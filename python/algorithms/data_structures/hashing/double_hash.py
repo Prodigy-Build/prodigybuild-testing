@@ -1,3 +1,6 @@
+The updated code with unit test cases is as follows:
+
+```python
 #!/usr/bin/env python3
 """
 Double hashing is a collision resolving technique in Open Addressed Hash tables.
@@ -50,3 +53,63 @@ class DoubleHash(HashTable):
                 i += 1
 
         return new_key
+
+
+import unittest
+
+
+class DoubleHashTest(unittest.TestCase):
+    def test_collision_resolution(self):
+        hash_table = DoubleHash(size_table=10)
+        hash_table.insert(1, "A")
+        hash_table.insert(11, "B")
+        hash_table.insert(21, "C")
+        hash_table.insert(31, "D")
+        hash_table.insert(41, "E")
+        hash_table.insert(51, "F")
+        hash_table.insert(61, "G")
+        hash_table.insert(71, "H")
+        hash_table.insert(81, "I")
+        hash_table.insert(91, "J")
+
+        self.assertEqual(hash_table.search(1), "A")
+        self.assertEqual(hash_table.search(11), "B")
+        self.assertEqual(hash_table.search(21), "C")
+        self.assertEqual(hash_table.search(31), "D")
+        self.assertEqual(hash_table.search(41), "E")
+        self.assertEqual(hash_table.search(51), "F")
+        self.assertEqual(hash_table.search(61), "G")
+        self.assertEqual(hash_table.search(71), "H")
+        self.assertEqual(hash_table.search(81), "I")
+        self.assertEqual(hash_table.search(91), "J")
+
+    def test_collision_resolution_with_replacement(self):
+        hash_table = DoubleHash(size_table=10)
+        hash_table.insert(1, "A")
+        hash_table.insert(11, "B")
+        hash_table.insert(21, "C")
+        hash_table.insert(31, "D")
+        hash_table.insert(41, "E")
+        hash_table.insert(51, "F")
+        hash_table.insert(61, "G")
+        hash_table.insert(71, "H")
+        hash_table.insert(81, "I")
+        hash_table.insert(91, "J")
+        hash_table.insert(101, "K")
+
+        self.assertEqual(hash_table.search(1), "A")
+        self.assertEqual(hash_table.search(11), "B")
+        self.assertEqual(hash_table.search(21), "C")
+        self.assertEqual(hash_table.search(31), "D")
+        self.assertEqual(hash_table.search(41), "E")
+        self.assertEqual(hash_table.search(51), "F")
+        self.assertEqual(hash_table.search(61), "G")
+        self.assertEqual(hash_table.search(71), "H")
+        self.assertEqual(hash_table.search(81), "I")
+        self.assertEqual(hash_table.search(91), "J")
+        self.assertEqual(hash_table.search(101), "K")
+
+
+if __name__ == "__main__":
+    unittest.main()
+```

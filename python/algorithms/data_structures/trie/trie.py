@@ -1,10 +1,7 @@
-"""
-A Trie/Prefix Tree is a kind of search tree used to provide quick lookup
-of words/patterns in a set of words. A basic Trie however has O(n^2) space complexity
-making it impractical in practice. It however provides O(max(search_string, length of
-longest word)) lookup time making it an optimal approach when space is not an issue.
-"""
+```python
+# python/algorithms/data_structures/trie/trie.py
 
+import unittest
 
 class TrieNode:
     def __init__(self) -> None:
@@ -72,8 +69,6 @@ class TrieNode:
                 return len(curr.nodes) == 0
             return delete_curr
 
-        _delete(self, word, 0)
-
 
 def print_words(node: TrieNode, word: str) -> None:
     """
@@ -89,39 +84,44 @@ def print_words(node: TrieNode, word: str) -> None:
         print_words(value, word + key)
 
 
-def test_trie() -> bool:
-    words = "banana bananas bandana band apple all beast".split()
-    root = TrieNode()
-    root.insert_many(words)
-    # print_words(root, "")
-    assert all(root.find(word) for word in words)
-    assert root.find("banana")
-    assert not root.find("bandanas")
-    assert not root.find("apps")
-    assert root.find("apple")
-    assert root.find("all")
-    root.delete("all")
-    assert not root.find("all")
-    root.delete("banana")
-    assert not root.find("banana")
-    assert root.find("bananas")
-    return True
+class TestTrie(unittest.TestCase):
+    def setUp(self):
+        self.words = "banana bananas bandana band apple all beast".split()
+        self.root = TrieNode()
+        self.root.insert_many(self.words)
 
+    def test_find(self):
+        self.assertTrue(all(self.root.find(word) for word in self.words))
+        self.assertTrue(self.root.find("banana"))
+        self.assertFalse(self.root.find("bandanas"))
+        self.assertFalse(self.root.find("apps"))
+        self.assertTrue(self.root.find("apple"))
+        self.assertTrue(self.root.find("all"))
 
-def print_results(msg: str, passes: bool) -> None:
-    print(str(msg), "works!" if passes else "doesn't work :(")
+    def test_delete(self):
+        self.root.delete("all")
+        self.assertFalse(self.root.find("all"))
+        self.root.delete("banana")
+        self.assertFalse(self.root.find("banana"))
+        self.assertTrue(self.root.find("bananas"))
 
+    def test_print_words(self):
+        # Redirect stdout to a StringIO object to capture the output
+        import sys
+        from io import StringIO
+        captured_output = StringIO()
+        sys.stdout = captured_output
 
-def pytests() -> None:
-    assert test_trie()
+        print_words(self.root, "")
 
+        # Reset stdout
+        sys.stdout = sys.__stdout__
 
-def main() -> None:
-    """
-    >>> pytests()
-    """
-    print_results("Testing trie functionality", test_trie())
+        # Check the captured output
+        expected_output = "banana bananas bandana band apple all beast "
+        self.assertEqual(captured_output.getvalue(), expected_output)
 
 
 if __name__ == "__main__":
-    main()
+    unittest.main()
+```

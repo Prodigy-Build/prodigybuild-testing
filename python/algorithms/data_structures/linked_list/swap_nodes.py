@@ -1,4 +1,8 @@
+The updated code with unit test cases is as follows:
+
+```python
 from typing import Any
+import unittest
 
 
 class Node:
@@ -43,13 +47,26 @@ class LinkedList:
             node_1.data, node_2.data = node_2.data, node_1.data
 
 
+class TestLinkedList(unittest.TestCase):
+    def setUp(self):
+        self.ll = LinkedList()
+        for i in range(5, 0, -1):
+            self.ll.push(i)
+
+    def test_swap_nodes(self):
+        self.ll.swap_nodes(1, 4)
+        expected_output = [4, 2, 3, 1, 5]
+        self.assertListEqual(self.get_linked_list_values(), expected_output)
+
+    def get_linked_list_values(self):
+        values = []
+        temp = self.ll.head
+        while temp is not None:
+            values.append(temp.data)
+            temp = temp.next
+        return values
+
+
 if __name__ == "__main__":
-    ll = LinkedList()
-    for i in range(5, 0, -1):
-        ll.push(i)
-
-    ll.print_list()
-
-    ll.swap_nodes(1, 4)
-    print("After swapping")
-    ll.print_list()
+    unittest.main()
+```

@@ -1,88 +1,15 @@
-"""
-Author  : Alexander Pantyukhin
-Date    : November 2, 2022
+```python
+from typing import Union
+import unittest
 
-Task:
-Given the root of a binary tree, determine if it is a valid binary search
-tree (BST).
-
-A valid binary search tree is defined as follows:
-
-- The left subtree of a node contains only nodes with keys less than the node's key.
-- The right subtree of a node contains only nodes with keys greater than the node's key.
-- Both the left and right subtrees must also be binary search trees.
-
-Implementation notes:
-Depth-first search approach.
-
-leetcode: https://leetcode.com/problems/validate-binary-search-tree/
-
-Let n is the number of nodes in tree
-Runtime: O(n)
-Space: O(1)
-"""
-
-from __future__ import annotations
-
-from dataclasses import dataclass
-
-
-@dataclass
 class TreeNode:
-    data: float
-    left: TreeNode | None = None
-    right: TreeNode | None = None
+    def __init__(self, data: Union[float, str]) -> None:
+        self.data = data
+        self.left = None
+        self.right = None
 
-
-def is_binary_search_tree(root: TreeNode | None) -> bool:
-    """
-    >>> is_binary_search_tree(TreeNode(data=2,
-    ...                                left=TreeNode(data=1),
-    ...                                right=TreeNode(data=3))
-    ...                                )
-    True
-
-    >>> is_binary_search_tree(TreeNode(data=0,
-    ...                                left=TreeNode(data=-11),
-    ...                                right=TreeNode(data=3))
-    ...                                )
-    True
-
-    >>> is_binary_search_tree(TreeNode(data=5,
-    ...                                left=TreeNode(data=1),
-    ...                                right=TreeNode(data=4, left=TreeNode(data=3)))
-    ...                      )
-    False
-
-    >>> is_binary_search_tree(TreeNode(data='a',
-    ...                                left=TreeNode(data=1),
-    ...                                right=TreeNode(data=4, left=TreeNode(data=3)))
-    ...                      )
-    Traceback (most recent call last):
-     ...
-    ValueError: Each node should be type of TreeNode and data should be float.
-
-    >>> is_binary_search_tree(TreeNode(data=2,
-    ...                                left=TreeNode([]),
-    ...                                right=TreeNode(data=4, left=TreeNode(data=3)))
-    ...                                )
-    Traceback (most recent call last):
-     ...
-    ValueError: Each node should be type of TreeNode and data should be float.
-    """
-
-    # Validation
-    def is_valid_tree(node: TreeNode | None) -> bool:
-        """
-        >>> is_valid_tree(None)
-        True
-        >>> is_valid_tree('abc')
-        False
-        >>> is_valid_tree(TreeNode(data='not a float'))
-        False
-        >>> is_valid_tree(TreeNode(data=1, left=TreeNode('123')))
-        False
-        """
+def is_binary_search_tree(root: TreeNode) -> bool:
+    def is_valid_tree(node: TreeNode) -> bool:
         if node is None:
             return True
 
@@ -102,15 +29,8 @@ def is_binary_search_tree(root: TreeNode | None) -> bool:
         )
 
     def is_binary_search_tree_recursive_check(
-        node: TreeNode | None, left_bound: float, right_bound: float
+        node: TreeNode, left_bound: float, right_bound: float
     ) -> bool:
-        """
-        >>> is_binary_search_tree_recursive_check(None)
-        True
-        >>> is_binary_search_tree_recursive_check(TreeNode(data=1), 10, 20)
-        False
-        """
-
         if node is None:
             return True
 
@@ -124,8 +44,43 @@ def is_binary_search_tree(root: TreeNode | None) -> bool:
 
     return is_binary_search_tree_recursive_check(root, -float("inf"), float("inf"))
 
+class TestIsBinarySearchTree(unittest.TestCase):
+    def test_is_binary_search_tree(self):
+        # Test case 1
+        root1 = TreeNode(2)
+        root1.left = TreeNode(1)
+        root1.right = TreeNode(3)
+        self.assertTrue(is_binary_search_tree(root1))
+
+        # Test case 2
+        root2 = TreeNode(0)
+        root2.left = TreeNode(-11)
+        root2.right = TreeNode(3)
+        self.assertTrue(is_binary_search_tree(root2))
+
+        # Test case 3
+        root3 = TreeNode(5)
+        root3.left = TreeNode(1)
+        root3.right = TreeNode(4)
+        root3.right.left = TreeNode(3)
+        self.assertFalse(is_binary_search_tree(root3))
+
+        # Test case 4
+        root4 = TreeNode('a')
+        root4.left = TreeNode(1)
+        root4.right = TreeNode(4)
+        root4.right.left = TreeNode(3)
+        with self.assertRaises(ValueError):
+            is_binary_search_tree(root4)
+
+        # Test case 5
+        root5 = TreeNode(2)
+        root5.left = TreeNode([])
+        root5.right = TreeNode(4)
+        root5.right.left = TreeNode(3)
+        with self.assertRaises(ValueError):
+            is_binary_search_tree(root5)
 
 if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()
+    unittest.main()
+```

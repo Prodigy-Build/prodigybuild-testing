@@ -167,8 +167,38 @@ def test_heap() -> None:
     [9, -40]
     """
 
+import unittest
+
+class TestHeap(unittest.TestCase):
+    def test_insert_item(self):
+        h = Heap()
+        h.insert_item(5, 34)
+        self.assertEqual(h.get_top(), [5, 34])
+
+    def test_extract_top(self):
+        h = Heap()
+        h.insert_item(5, 34)
+        h.insert_item(6, 31)
+        h.insert_item(7, 37)
+        self.assertEqual(h.extract_top(), [7, 37])
+        self.assertEqual(h.extract_top(), [5, 34])
+        self.assertEqual(h.extract_top(), [6, 31])
+
+    def test_update_item(self):
+        h = Heap()
+        h.insert_item(5, 34)
+        h.insert_item(6, 31)
+        h.insert_item(7, 37)
+        h.update_item(7, 30)
+        self.assertEqual(h.get_top(), [7, 30])
+
+    def test_delete_item(self):
+        h = Heap()
+        h.insert_item(5, 34)
+        h.insert_item(6, 31)
+        h.insert_item(7, 37)
+        h.delete_item(6)
+        self.assertEqual(h.get_top(), [7, 37])
 
 if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()
+    unittest.main()

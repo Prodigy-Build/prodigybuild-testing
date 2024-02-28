@@ -1,84 +1,49 @@
-"""
-Linked Lists consists of Nodes.
-Nodes contain data and also may link to other nodes:
-    - Head Node: First node, the address of the
-                 head node gives us access of the complete list
-    - Last node: points to null
-"""
-from __future__ import annotations
-
 from typing import Any
+import unittest
 
+class TestLinkedList(unittest.TestCase):
+    def test_add(self):
+        linked_list = LinkedList()
+        linked_list.add(23)
+        self.assertEqual(str(linked_list), "23")
+        linked_list.add(14)
+        self.assertEqual(str(linked_list), "14 --> 23")
+        linked_list.add(9)
+        self.assertEqual(str(linked_list), "9 --> 14 --> 23")
 
-class Node:
-    def __init__(self, item: Any, next: Any) -> None:  # noqa: A002
-        self.item = item
-        self.next = next
+    def test_remove(self):
+        linked_list = LinkedList()
+        self.assertIsNone(linked_list.remove())
+        linked_list.add(23)
+        linked_list.add(14)
+        linked_list.add(9)
+        self.assertEqual(linked_list.remove(), 9)
+        self.assertEqual(str(linked_list), "14 --> 23")
+        self.assertEqual(linked_list.remove(), 14)
+        self.assertEqual(str(linked_list), "23")
+        self.assertEqual(linked_list.remove(), 23)
+        self.assertEqual(str(linked_list), "")
+        self.assertIsNone(linked_list.remove())
 
+    def test_is_empty(self):
+        linked_list = LinkedList()
+        self.assertTrue(linked_list.is_empty())
+        linked_list.add(23)
+        self.assertFalse(linked_list.is_empty())
+        linked_list.remove()
+        self.assertTrue(linked_list.is_empty())
 
-class LinkedList:
-    def __init__(self) -> None:
-        self.head: Node | None = None
-        self.size = 0
+    def test_len(self):
+        linked_list = LinkedList()
+        self.assertEqual(len(linked_list), 0)
+        linked_list.add("a")
+        self.assertEqual(len(linked_list), 1)
+        linked_list.add("b")
+        self.assertEqual(len(linked_list), 2)
+        linked_list.remove()
+        self.assertEqual(len(linked_list), 1)
+        linked_list.remove()
+        self.assertEqual(len(linked_list), 0)
 
-    def add(self, item: Any) -> None:
-        self.head = Node(item, self.head)
-        self.size += 1
-
-    def remove(self) -> Any:
-        # Switched 'self.is_empty()' to 'self.head is None'
-        # because mypy was considering the possibility that 'self.head'
-        # can be None in below else part and giving error
-        if self.head is None:
-            return None
-        else:
-            item = self.head.item
-            self.head = self.head.next
-            self.size -= 1
-            return item
-
-    def is_empty(self) -> bool:
-        return self.head is None
-
-    def __str__(self) -> str:
-        """
-        >>> linked_list = LinkedList()
-        >>> linked_list.add(23)
-        >>> linked_list.add(14)
-        >>> linked_list.add(9)
-        >>> print(linked_list)
-        9 --> 14 --> 23
-        """
-        if self.is_empty():
-            return ""
-        else:
-            iterate = self.head
-            item_str = ""
-            item_list: list[str] = []
-            while iterate:
-                item_list.append(str(iterate.item))
-                iterate = iterate.next
-
-            item_str = " --> ".join(item_list)
-
-            return item_str
-
-    def __len__(self) -> int:
-        """
-        >>> linked_list = LinkedList()
-        >>> len(linked_list)
-        0
-        >>> linked_list.add("a")
-        >>> len(linked_list)
-        1
-        >>> linked_list.add("b")
-        >>> len(linked_list)
-        2
-        >>> _ = linked_list.remove()
-        >>> len(linked_list)
-        1
-        >>> _ = linked_list.remove()
-        >>> len(linked_list)
-        0
-        """
-        return self.size
+if __name__ == "__main__":
+    unittest.main()
