@@ -1,93 +1,44 @@
-#!/usr/local/bin/python3
-"""
-Problem Description: Given two binary tree, return the merged tree.
-The rule for merging is that if two nodes overlap, then put the value sum of
-both nodes to the new value of the merged node. Otherwise, the NOT null node
-will be used as the node of new tree.
-"""
-from __future__ import annotations
+import unittest
 
+class TestMergeTwoBinaryTrees(unittest.TestCase):
+    def setUp(self):
+        self.node1 = Node(1)
+        self.node1.left = Node(2)
+        self.node1.right = Node(3)
+        self.node1.left.left = Node(4)
 
-class Node:
-    """
-    A binary node has value variable and pointers to its left and right node.
-    """
+        self.node2 = Node(2)
+        self.node2.left = Node(4)
+        self.node2.right = Node(6)
+        self.node2.left.right = Node(9)
+        self.node2.right.right = Node(5)
 
-    def __init__(self, value: int = 0) -> None:
-        self.value = value
-        self.left: Node | None = None
-        self.right: Node | None = None
+    def test_merge_two_binary_trees(self):
+        merged_tree = merge_two_binary_trees(self.node1, self.node2)
+        self.assertEqual(merged_tree.value, 3)
+        self.assertEqual(merged_tree.left.value, 6)
+        self.assertEqual(merged_tree.right.value, 9)
+        self.assertEqual(merged_tree.left.left.value, 4)
+        self.assertEqual(merged_tree.left.right.value, 9)
+        self.assertEqual(merged_tree.right.right.value, 5)
 
+    def test_merge_with_None_tree(self):
+        merged_tree = merge_two_binary_trees(self.node1, None)
+        self.assertEqual(merged_tree.value, self.node1.value)
+        self.assertEqual(merged_tree.left.value, self.node1.left.value)
+        self.assertEqual(merged_tree.right.value, self.node1.right.value)
+        self.assertEqual(merged_tree.left.left.value, self.node1.left.left.value)
 
-def merge_two_binary_trees(tree1: Node | None, tree2: Node | None) -> Node | None:
-    """
-    Returns root node of the merged tree.
+        merged_tree = merge_two_binary_trees(None, self.node2)
+        self.assertEqual(merged_tree.value, self.node2.value)
+        self.assertEqual(merged_tree.left.value, self.node2.left.value)
+        self.assertEqual(merged_tree.right.value, self.node2.right.value)
+        self.assertEqual(merged_tree.left.right.value, self.node2.left.right.value)
+        self.assertEqual(merged_tree.right.right.value, self.node2.right.right.value)
 
-    >>> tree1 = Node(5)
-    >>> tree1.left = Node(6)
-    >>> tree1.right = Node(7)
-    >>> tree1.left.left = Node(2)
-    >>> tree2 = Node(4)
-    >>> tree2.left = Node(5)
-    >>> tree2.right = Node(8)
-    >>> tree2.left.right = Node(1)
-    >>> tree2.right.right = Node(4)
-    >>> merged_tree = merge_two_binary_trees(tree1, tree2)
-    >>> print_preorder(merged_tree)
-    9
-    11
-    2
-    1
-    15
-    4
-    """
-    if tree1 is None:
-        return tree2
-    if tree2 is None:
-        return tree1
-
-    tree1.value = tree1.value + tree2.value
-    tree1.left = merge_two_binary_trees(tree1.left, tree2.left)
-    tree1.right = merge_two_binary_trees(tree1.right, tree2.right)
-    return tree1
-
-
-def print_preorder(root: Node | None) -> None:
-    """
-    Print pre-order traversal of the tree.
-
-    >>> root = Node(1)
-    >>> root.left = Node(2)
-    >>> root.right = Node(3)
-    >>> print_preorder(root)
-    1
-    2
-    3
-    >>> print_preorder(root.right)
-    3
-    """
-    if root:
-        print(root.value)
-        print_preorder(root.left)
-        print_preorder(root.right)
-
+    def test_merge_both_None_trees(self):
+        merged_tree = merge_two_binary_trees(None, None)
+        self.assertEqual(merged_tree, None)
 
 if __name__ == "__main__":
-    tree1 = Node(1)
-    tree1.left = Node(2)
-    tree1.right = Node(3)
-    tree1.left.left = Node(4)
-
-    tree2 = Node(2)
-    tree2.left = Node(4)
-    tree2.right = Node(6)
-    tree2.left.right = Node(9)
-    tree2.right.right = Node(5)
-
-    print("Tree1 is: ")
-    print_preorder(tree1)
-    print("Tree2 is: ")
-    print_preorder(tree2)
-    merged_tree = merge_two_binary_trees(tree1, tree2)
-    print("Merged Tree is: ")
-    print_preorder(merged_tree)
+    unittest.main()

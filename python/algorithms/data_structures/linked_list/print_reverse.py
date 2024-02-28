@@ -1,70 +1,24 @@
-from __future__ import annotations
+import unittest
+from io import StringIO
+import sys
 
+class TestLinkedList(unittest.TestCase):
 
-class Node:
-    def __init__(self, data=None):
-        self.data = data
-        self.next = None
+    def setUp(self):
+        self.linked_list = make_linked_list([14, 52, 14, 12, 43])
 
-    def __repr__(self):
-        """Returns a visual representation of the node and all its following nodes."""
-        string_rep = []
-        temp = self
-        while temp:
-            string_rep.append(f"{temp.data}")
-            temp = temp.next
-        return "->".join(string_rep)
+    def test_make_linked_list(self):
+        self.assertEqual(str(self.linked_list), '14->52->14->12->43')
+        self.assertRaises(Exception, make_linked_list, [])
 
+    def test_print_reverse(self):
+        captured_output = StringIO()
+        sys.stdout = captured_output
 
-def make_linked_list(elements_list: list):
-    """Creates a Linked List from the elements of the given sequence
-    (list/tuple) and returns the head of the Linked List.
-    >>> make_linked_list([])
-    Traceback (most recent call last):
-        ...
-    Exception: The Elements List is empty
-    >>> make_linked_list([7])
-    7
-    >>> make_linked_list(['abc'])
-    abc
-    >>> make_linked_list([7, 25])
-    7->25
-    """
-    if not elements_list:
-        raise Exception("The Elements List is empty")
+        print_reverse(self.linked_list)
+        sys.stdout = sys.__stdout__
 
-    current = head = Node(elements_list[0])
-    for i in range(1, len(elements_list)):
-        current.next = Node(elements_list[i])
-        current = current.next
-    return head
+        self.assertEqual(captured_output.getvalue(), '43\n12\n14\n52\n14\n')
 
-
-def print_reverse(head_node: Node) -> None:
-    """Prints the elements of the given Linked List in reverse order
-    >>> print_reverse([])
-    >>> linked_list = make_linked_list([69, 88, 73])
-    >>> print_reverse(linked_list)
-    73
-    88
-    69
-    """
-    if head_node is not None and isinstance(head_node, Node):
-        print_reverse(head_node.next)
-        print(head_node.data)
-
-
-def main():
-    from doctest import testmod
-
-    testmod()
-
-    linked_list = make_linked_list([14, 52, 14, 12, 43])
-    print("Linked List:")
-    print(linked_list)
-    print("Elements in Reverse:")
-    print_reverse(linked_list)
-
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    unittest.main()

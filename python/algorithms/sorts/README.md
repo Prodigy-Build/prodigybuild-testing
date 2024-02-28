@@ -1,11 +1,32 @@
-# Sorting Algorithms
-Sorting is the process of putting data in a specific order. The way to arrange data in a specific order
-is specified by the sorting algorithm. The most typical orders are lexical or numerical. The significance
-of sorting lies in the fact that, if data is stored in a sorted manner, data searching can be highly optimised.
-Another use for sorting is to represent data in a more readable manner.
+import unittest
+from sorting_algorithms import bubble_sort, quick_sort, merge_sort 
 
-This section contains a lot of important algorithms that helps us to use sorting algorithms in various scenarios.
-## References
-* <https://www.tutorialspoint.com/python_data_structure/python_sorting_algorithms.htm>
-* <https://www.geeksforgeeks.org/sorting-algorithms-in-python>
-* <https://realpython.com/sorting-algorithms-python>
+class TestSortingAlgorithms(unittest.TestCase):
+
+    def setUp(self):
+        self.list1 = [7, 1, 6, 3, 2, 8, 4, 5]
+        self.list2 = [37, 22, 45, 79, 32, 65, 21, 83]
+
+    def test_bubble_sort(self):
+        result = bubble_sort(self.list1)
+        self.assertEqual(result, [1, 2, 3, 4, 5, 6, 7, 8])
+
+        result = bubble_sort(self.list2)
+        self.assertEqual(result, [21, 22, 32, 37, 45, 65, 79, 83])
+
+    def test_quick_sort(self):
+        result = quick_sort(self.list1)
+        self.assertEqual(result, [1, 2, 3, 4, 5, 6, 7, 8])
+
+        result = quick_sort(self.list2)
+        self.assertEqual(result, [21, 22, 32, 37, 45, 65, 79, 83])
+
+    def test_merge_sort(self):
+        result = merge_sort(self.list1)
+        self.assertEqual(result, [1, 2, 3, 4, 5, 6, 7, 8])
+
+        result = merge_sort(self.list2)
+        self.assertEqual(result, [21, 22, 32, 37, 45, 65, 79, 83])
+
+if __name__ == "__main__":
+    unittest.main()

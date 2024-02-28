@@ -1,56 +1,22 @@
-"""
-This is a pure Python implementation of the merge sort algorithm.
+import unittest
 
-For doctests run following command:
-python -m doctest -v merge_sort.py
-or
-python3 -m doctest -v merge_sort.py
-For manual testing run:
-python merge_sort.py
-"""
+class TestMergerSort(unittest.TestCase):
+    
+    def test_merge_sort(self):
+        result = merge_sort([0, 5, 3, 2, 2])
+        self.assertEqual(result, [0, 2, 2, 3, 5])
 
+    def test_merge_sort_empty_list(self):
+        result = merge_sort([])
+        self.assertEqual(result, [])
 
-def merge_sort(collection: list) -> list:
-    """
-    :param collection: some mutable ordered collection with heterogeneous
-    comparable items inside
-    :return: the same collection ordered by ascending
-    Examples:
-    >>> merge_sort([0, 5, 3, 2, 2])
-    [0, 2, 2, 3, 5]
-    >>> merge_sort([])
-    []
-    >>> merge_sort([-2, -5, -45])
-    [-45, -5, -2]
-    """
+    def test_merge_sort_negative_numbers(self):
+        result = merge_sort([-2, -5, -45])
+        self.assertEqual(result, [-45, -5, -2])
 
-    def merge(left: list, right: list) -> list:
-        """
-        Merge left and right.
+    def test_merge_sort_mixed_datas(self):
+        result = merge_sort([3.14, -2, -5, 11, 'a', 'zzz', 'foo'])
+        self.assertEqual(result, ['a', 'foo', 'zzz', -5, -2, 3.14, 11])
 
-        :param left: left collection
-        :param right: right collection
-        :return: merge result
-        """
-
-        def _merge():
-            while left and right:
-                yield (left if left[0] <= right[0] else right).pop(0)
-            yield from left
-            yield from right
-
-        return list(_merge())
-
-    if len(collection) <= 1:
-        return collection
-    mid = len(collection) // 2
-    return merge(merge_sort(collection[:mid]), merge_sort(collection[mid:]))
-
-
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()
-    user_input = input("Enter numbers separated by a comma:\n").strip()
-    unsorted = [int(item) for item in user_input.split(",")]
-    print(*merge_sort(unsorted), sep=",")
+if __name__ == '__main__':
+    unittest.main()

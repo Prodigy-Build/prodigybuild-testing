@@ -1,33 +1,22 @@
-"""
-Source: https://en.wikipedia.org/wiki/Odd%E2%80%93even_sort
-
-This is a non-parallelized implementation of odd-even transposition sort.
-
-Normally the swaps in each set happen simultaneously, without that the algorithm
-is no better than bubble sort.
-"""
+import unittest
 
 
-def odd_even_transposition(arr: list) -> list:
-    """
-    >>> odd_even_transposition([5, 4, 3, 2, 1])
-    [1, 2, 3, 4, 5]
+class TestOddEvenTransposition(unittest.TestCase):
 
-    >>> odd_even_transposition([13, 11, 18, 0, -1])
-    [-1, 0, 11, 13, 18]
+    def test_odd_even_transposition(self):
+        self.assertEqual(odd_even_transposition([5, 4, 3, 2, 1]), [1, 2, 3, 4, 5])
+        self.assertEqual(odd_even_transposition([13, 11, 18, 0, -1]), [-1, 0, 11, 13, 18])
+        self.assertEqual(odd_even_transposition([-.1, 1.1, .1, -2.9]), [-2.9, -0.1, 0.1, 1.1])
 
-    >>> odd_even_transposition([-.1, 1.1, .1, -2.9])
-    [-2.9, -0.1, 0.1, 1.1]
-    """
-    arr_size = len(arr)
-    for _ in range(arr_size):
-        for i in range(_ % 2, arr_size - 1, 2):
-            if arr[i + 1] < arr[i]:
-                arr[i], arr[i + 1] = arr[i + 1], arr[i]
+    def test_odd_even_transposition_with_duplicates(self):
+        self.assertEqual(odd_even_transposition([3, 1, 2, 1, 2, 3, 3, 1, 2]), [1, 1, 1, 2, 2, 2, 3, 3, 3])
 
-    return arr
+    def test_odd_even_transposition_with_single_element(self):
+        self.assertEqual(odd_even_transposition([123]), [123])
+        
+    def test_odd_even_transposition_with_empty_list(self):
+        self.assertEqual(odd_even_transposition([]), [])
 
 
-if __name__ == "__main__":
-    arr = list(range(10, 0, -1))
-    print(f"Original: {arr}. Sorted: {odd_even_transposition(arr)}")
+if __name__ == '__main__':
+    unittest.main()

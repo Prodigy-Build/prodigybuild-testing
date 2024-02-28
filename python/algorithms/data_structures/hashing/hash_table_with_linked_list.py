@@ -1,27 +1,22 @@
-from collections import deque
+import unittest
 
-from .hash_table import HashTable
+class TestHashTableWithLinkedList(unittest.TestCase):
+    def setUp(self):
+        self.hash_table = HashTableWithLinkedList()
 
+    def test_set_value(self):
+        self.hash_table._set_value('test', 'data')
+        self.assertEqual(self.hash_table.values['test'][0], 'data')
 
-class HashTableWithLinkedList(HashTable):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def test_collision_resolution(self):
+        for i in range(self.hash_table.charge_factor):
+            self.hash_table._set_value('test', 'data')
+        self.assertEqual(self.hash_table._collision_resolution('test', 'data2'), 'test')
 
-    def _set_value(self, key, data):
-        self.values[key] = deque([]) if self.values[key] is None else self.values[key]
-        self.values[key].appendleft(data)
-        self._keys[key] = self.values[key]
+    def test_balanced_factor(self):
+        for i in range(self.hash_table.charge_factor):
+            self.hash_table._set_value(str(i), 'data')
+        self.assertEqual(self.hash_table.balanced_factor(), 0)
 
-    def balanced_factor(self):
-        return (
-            sum(self.charge_factor - len(slot) for slot in self.values)
-            / self.size_table
-            * self.charge_factor
-        )
-
-    def _collision_resolution(self, key, data=None):
-        if not (
-            len(self.values[key]) == self.charge_factor and self.values.count(None) == 0
-        ):
-            return key
-        return super()._collision_resolution(key, data)
+if __name__ == '__main__':
+    unittest.main()

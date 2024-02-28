@@ -1,39 +1,22 @@
-def stooge_sort(arr):
-    """
-    Examples:
-    >>> stooge_sort([18.1, 0, -7.1, -1, 2, 2])
-    [-7.1, -1, 0, 2, 2, 18.1]
+import unittest
 
-    >>> stooge_sort([])
-    []
-    """
-    stooge(arr, 0, len(arr) - 1)
-    return arr
+class TestStoogeSort(unittest.TestCase):
 
+    def test_sort1(self):
+        arr = [18.1, 0, -7.1, -1, 2, 2]
+        result = stooge_sort(arr)
+        self.assertEqual(result, [-7.1, -1, 0, 2, 2, 18.1])
 
-def stooge(arr, i, h):
-    if i >= h:
-        return
+    def test_sort2(self):
+        arr = [5, 2, 8, 3, 1, 9]
+        result = stooge_sort(arr)
+        self.assertEqual(result, [1, 2, 3, 5, 8, 9])
 
-    # If first element is smaller than the last then swap them
-    if arr[i] > arr[h]:
-        arr[i], arr[h] = arr[h], arr[i]
-
-    # If there are more than 2 elements in the array
-    if h - i + 1 > 2:
-        t = (int)((h - i + 1) / 3)
-
-        # Recursively sort first 2/3 elements
-        stooge(arr, i, (h - t))
-
-        # Recursively sort last 2/3 elements
-        stooge(arr, i + t, (h))
-
-        # Recursively sort first 2/3 elements
-        stooge(arr, i, (h - t))
+    def test_empty(self):
+        arr = []
+        result = stooge_sort(arr)
+        self.assertEqual(result, [])
 
 
-if __name__ == "__main__":
-    user_input = input("Enter numbers separated by a comma:\n").strip()
-    unsorted = [int(item) for item in user_input.split(",")]
-    print(stooge_sort(unsorted))
+if __name__ == '__main__':
+    unittest.main()

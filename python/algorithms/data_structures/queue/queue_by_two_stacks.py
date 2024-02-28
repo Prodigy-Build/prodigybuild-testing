@@ -1,115 +1,34 @@
-"""Queue implementation using two stacks"""
-
-from collections.abc import Iterable
-from typing import Generic, TypeVar
-
-_T = TypeVar("_T")
+import unittest
+from typing import Any, List
+from queue_by_two_stacks import QueueByTwoStacks
 
 
-class QueueByTwoStacks(Generic[_T]):
-    def __init__(self, iterable: Iterable[_T] | None = None) -> None:
-        """
-        >>> QueueByTwoStacks()
-        Queue(())
-        >>> QueueByTwoStacks([10, 20, 30])
-        Queue((10, 20, 30))
-        >>> QueueByTwoStacks((i**2 for i in range(1, 4)))
-        Queue((1, 4, 9))
-        """
-        self._stack1: list[_T] = list(iterable or [])
-        self._stack2: list[_T] = []
+class TestQueueByTwoStacks(unittest.TestCase):
+    def setUp(self) -> None:
+        self.queue: QueueByTwoStacks[Any] = QueueByTwoStacks()
 
-    def __len__(self) -> int:
-        """
-        >>> len(QueueByTwoStacks())
-        0
-        >>> from string import ascii_lowercase
-        >>> len(QueueByTwoStacks(ascii_lowercase))
-        26
-        >>> queue = QueueByTwoStacks()
-        >>> for i in range(1, 11):
-        ...     queue.put(i)
-        ...
-        >>> len(queue)
-        10
-        >>> for i in range(2):
-        ...   queue.get()
-        1
-        2
-        >>> len(queue)
-        8
-        """
+    def test_put(self) -> None:
+        self.queue.put(1)
+        self.assertEqual(len(self.queue), 1)
 
-        return len(self._stack1) + len(self._stack2)
+    def test_get(self) -> None:
+        self.queue.put(1)
+        self.queue.put(2)
+        self.assertEqual(self.queue.get(), 1)
+        self.assertEqual(self.queue.get(), 2)
 
-    def __repr__(self) -> str:
-        """
-        >>> queue = QueueByTwoStacks()
-        >>> queue
-        Queue(())
-        >>> str(queue)
-        'Queue(())'
-        >>> queue.put(10)
-        >>> queue
-        Queue((10,))
-        >>> queue.put(20)
-        >>> queue.put(30)
-        >>> queue
-        Queue((10, 20, 30))
-        """
-        return f"Queue({tuple(self._stack2[::-1] + self._stack1)})"
+    def test_queue(self) -> None:
+        items: List[int] = list(range(10))
+        for item in items:
+            self.queue.put(item)
+        self.assertEqual(len(self.queue), len(items))
+        for item in items:
+            self.assertEqual(self.queue.get(), item)
 
-    def put(self, item: _T) -> None:
-        """
-        Put `item` into the Queue
-
-        >>> queue = QueueByTwoStacks()
-        >>> queue.put(10)
-        >>> queue.put(20)
-        >>> len(queue)
-        2
-        >>> queue
-        Queue((10, 20))
-        """
-
-        self._stack1.append(item)
-
-    def get(self) -> _T:
-        """
-        Get `item` from the Queue
-
-        >>> queue = QueueByTwoStacks((10, 20, 30))
-        >>> queue.get()
-        10
-        >>> queue.put(40)
-        >>> queue.get()
-        20
-        >>> queue.get()
-        30
-        >>> len(queue)
-        1
-        >>> queue.get()
-        40
-        >>> queue.get()
-        Traceback (most recent call last):
-            ...
-        IndexError: Queue is empty
-        """
-
-        # To reduce number of attribute look-ups in `while` loop.
-        stack1_pop = self._stack1.pop
-        stack2_append = self._stack2.append
-
-        if not self._stack2:
-            while self._stack1:
-                stack2_append(stack1_pop())
-
-        if not self._stack2:
-            raise IndexError("Queue is empty")
-        return self._stack2.pop()
+    def test_empty_queue_raises_error(self) -> None:
+        with self.assertRaises(IndexError):
+            self.queue.get()
 
 
 if __name__ == "__main__":
-    from doctest import testmod
-
-    testmod()
+    unittest.main()

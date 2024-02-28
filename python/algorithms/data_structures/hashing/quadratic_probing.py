@@ -1,29 +1,31 @@
-#!/usr/bin/env python3
+import unittest
+from quadratic_probing import QuadraticProbing
 
-from .hash_table import HashTable
+class TestQuadraticProbing(unittest.TestCase):
 
+    def setUp(self):
+        self.qp = QuadraticProbing()
 
-class QuadraticProbing(HashTable):
-    """
-    Basic Hash Table example with open addressing using Quadratic Probing
-    """
+    def test_collision_resolution(self):
+        self.qp.add("test_key", "test_val")
+        hashed_key = self.qp.hash_function("test_key")
+        self.qp.values[hashed_key] = "test_key"
+        new_key = self.qp._collision_resolution("test_key")
+        self.assertNotEqual(hashed_key, new_key)
+        
+    def test_collision_resolution_none(self):
+        self.qp.add("test_key", "test_val")
+        hashed_key = self.qp.hash_function("test_key")
+        self.qp.values[hashed_key] = "test_key"
+        self.qp.lim_charge = 0.5
+        new_key = self.qp._collision_resolution("test_key")
+        self.assertIsNone(new_key)
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def test_collision_resolution_same_key(self):
+        self.qp.add("test_key", "test_val")
+        hashed_key = self.qp.hash_function("test_key")
+        new_key = self.qp._collision_resolution("test_key")
+        self.assertEqual(new_key, hashed_key)
 
-    def _collision_resolution(self, key, data=None):
-        i = 1
-        new_key = self.hash_function(key + i * i)
-
-        while self.values[new_key] is not None and self.values[new_key] != key:
-            i += 1
-            new_key = (
-                self.hash_function(key + i * i)
-                if not self.balanced_factor() >= self.lim_charge
-                else None
-            )
-
-            if new_key is None:
-                break
-
-        return new_key
+if __name__ == '__main__':
+    unittest.main()

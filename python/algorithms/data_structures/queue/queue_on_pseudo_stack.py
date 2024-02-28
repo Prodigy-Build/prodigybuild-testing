@@ -1,58 +1,35 @@
-"""Queue represented by a pseudo stack (represented by a list with pop and append)"""
-from typing import Any
+import unittest
 
+class TestQueue(unittest.TestCase):
 
-class Queue:
-    def __init__(self):
-        self.stack = []
-        self.length = 0
+    def setUp(self):
+        self.queue = Queue()
+        
+    def test_put(self):
+        self.queue.put('Test')
+        self.assertEqual(str(self.queue), '<Test>')
+        self.assertEqual(self.queue.size(), 1)
 
-    def __str__(self):
-        printed = "<" + str(self.stack)[1:-1] + ">"
-        return printed
+    def test_get(self):
+        self.queue.put('Test')
+        self.assertEqual(self.queue.get(), 'Test')
+        self.assertEqual(self.queue.size(), 0)
 
-    """Enqueues {@code item}
-    @param item
-        item to enqueue"""
+    def test_rotate(self):
+        self.queue.put('Test1')
+        self.queue.put('Test2')
+        self.queue.rotate(1)
+        self.assertEqual(str(self.queue), '<Test2, Test1>')
+        
+    def test_front(self):
+        self.queue.put('Test1')
+        self.queue.put('Test2')
+        self.assertEqual(self.queue.front(), 'Test1')
+        
+    def test_size(self):
+        self.queue.put('Test1')
+        self.queue.put('Test2')
+        self.assertEqual(self.queue.size(), 2)
 
-    def put(self, item: Any) -> None:
-        self.stack.append(item)
-        self.length = self.length + 1
-
-    """Dequeues {@code item}
-    @requirement: |self.length| > 0
-    @return dequeued
-        item that was dequeued"""
-
-    def get(self) -> Any:
-        self.rotate(1)
-        dequeued = self.stack[self.length - 1]
-        self.stack = self.stack[:-1]
-        self.rotate(self.length - 1)
-        self.length = self.length - 1
-        return dequeued
-
-    """Rotates the queue {@code rotation} times
-    @param rotation
-        number of times to rotate queue"""
-
-    def rotate(self, rotation: int) -> None:
-        for _ in range(rotation):
-            temp = self.stack[0]
-            self.stack = self.stack[1:]
-            self.put(temp)
-            self.length = self.length - 1
-
-    """Reports item at the front of self
-    @return item at front of self.stack"""
-
-    def front(self) -> Any:
-        front = self.get()
-        self.put(front)
-        self.rotate(self.length - 1)
-        return front
-
-    """Returns the length of this.stack"""
-
-    def size(self) -> int:
-        return self.length
+if __name__ == '__main__':
+    unittest.main()

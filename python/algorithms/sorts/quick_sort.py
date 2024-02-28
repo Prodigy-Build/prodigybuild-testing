@@ -1,48 +1,26 @@
-"""
-A pure Python implementation of the quick sort algorithm
+import unittest
 
-For doctests run following command:
-python3 -m doctest -v quick_sort.py
+class TestQuickSort(unittest.TestCase):
 
-For manual testing run:
-python3 quick_sort.py
-"""
-from __future__ import annotations
+    def test_quick_sort(self):
+        data = [6, 2, 7, 4, 1, 3, 5]
+        result = quick_sort(data)
+        self.assertEqual(result, [1, 2, 3, 4, 5, 6, 7])
 
-from random import randrange
+    def test_quick_sort_empty(self):
+        data = []
+        result = quick_sort(data)
+        self.assertEqual(result, [])
 
+    def test_quick_sort_one_element(self):
+        data = [1]
+        result = quick_sort(data)
+        self.assertEqual(result, [1])
 
-def quick_sort(collection: list) -> list:
-    """A pure Python implementation of quick sort algorithm
+    def test_quick_sort_negative_numbers(self):
+        data = [-2, -5, -1]
+        result = quick_sort(data)
+        self.assertEqual(result, [-5, -2, -1])
 
-    :param collection: a mutable collection of comparable items
-    :return: the same collection ordered by ascending
-
-    Examples:
-    >>> quick_sort([0, 5, 3, 2, 2])
-    [0, 2, 2, 3, 5]
-    >>> quick_sort([])
-    []
-    >>> quick_sort([-2, 5, 0, -45])
-    [-45, -2, 0, 5]
-    """
-    if len(collection) < 2:
-        return collection
-    pivot_index = randrange(len(collection))  # Use random element as pivot
-    pivot = collection[pivot_index]
-    greater: list[int] = []  # All elements greater than pivot
-    lesser: list[int] = []  # All elements less than or equal to pivot
-
-    for element in collection[:pivot_index]:
-        (greater if element > pivot else lesser).append(element)
-
-    for element in collection[pivot_index + 1 :]:
-        (greater if element > pivot else lesser).append(element)
-
-    return [*quick_sort(lesser), pivot, *quick_sort(greater)]
-
-
-if __name__ == "__main__":
-    user_input = input("Enter numbers separated by a comma:\n").strip()
-    unsorted = [int(item) for item in user_input.split(",")]
-    print(quick_sort(unsorted))
+if __name__ == '__main__':
+    unittest.main()

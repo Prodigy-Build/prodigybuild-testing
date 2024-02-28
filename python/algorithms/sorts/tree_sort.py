@@ -1,53 +1,21 @@
-"""
-Tree_sort algorithm.
+import unittest
 
-Build a BST and in order traverse.
-"""
+class TestTreeSort(unittest.TestCase):
 
+    def test_tree_sort(self):
+        self.assertEqual(tree_sort([10, 1, 3, 2, 9, 14, 13]), [1, 2, 3, 9, 10, 13, 14])
+        self.assertEqual(tree_sort([]), [])
+        self.assertEqual(tree_sort([1,1,1,1,1]), [1,1,1,1,1])
+        self.assertEqual(tree_sort([100,5,3,9,16,35,2]), [2,3,5,9,16,35,100])
 
-class Node:
-    # BST data structure
-    def __init__(self, val):
-        self.val = val
-        self.left = None
-        self.right = None
-
-    def insert(self, val):
-        if self.val:
-            if val < self.val:
-                if self.left is None:
-                    self.left = Node(val)
-                else:
-                    self.left.insert(val)
-            elif val > self.val:
-                if self.right is None:
-                    self.right = Node(val)
-                else:
-                    self.right.insert(val)
-        else:
-            self.val = val
-
-
-def inorder(root, res):
-    # Recursive traversal
-    if root:
-        inorder(root.left, res)
-        res.append(root.val)
-        inorder(root.right, res)
-
-
-def tree_sort(arr):
-    # Build BST
-    if len(arr) == 0:
-        return arr
-    root = Node(arr[0])
-    for i in range(1, len(arr)):
-        root.insert(arr[i])
-    # Traverse BST in order.
-    res = []
-    inorder(root, res)
-    return res
+    def test_inorder(self):
+        root = Node(10)
+        for i in [1, 3, 2, 9, 14, 13]:
+            root.insert(i)
+        res = []
+        inorder(root, res)
+        self.assertEqual(res, [1, 2, 3, 9, 10, 13, 14])
 
 
 if __name__ == "__main__":
-    print(tree_sort([10, 1, 3, 2, 9, 14, 13]))
+    unittest.main()

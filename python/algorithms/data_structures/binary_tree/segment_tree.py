@@ -1,8 +1,10 @@
+import unittest
 import math
 
 
 class SegmentTree:
     def __init__(self, a):
+        self.A = a
         self.N = len(a)
         self.st = [0] * (
             4 * self.N
@@ -17,7 +19,7 @@ class SegmentTree:
 
     def build(self, idx, l, r):  # noqa: E741
         if l == r:
-            self.st[idx] = A[l]
+            self.st[idx] = self.A[l]
         else:
             mid = (l + r) // 2
             self.build(self.left(idx), l, mid)
@@ -60,19 +62,33 @@ class SegmentTree:
 
     def show_data(self):
         show_list = []
-        for i in range(1, N + 1):
+        for i in range(1, self.N + 1):
             show_list += [self.query(i, i)]
-        print(show_list)
+        return show_list
+
+
+class TestSegmentTree(unittest.TestCase):
+
+    def test_query(self):
+        A = [1, 2, -4, 7, 3, -5, 6, 11, -20, 9, 14, 15, 5, 2, -8]
+        segt = SegmentTree(A)
+        self.assertEqual(segt.query(4, 6), 7)
+        self.assertEqual(segt.query(7, 11), 11)
+        self.assertEqual(segt.query(7, 12), 14)
+    
+    def test_update_and_query(self):
+        A = [1, 2, -4, 7, 3, -5, 6, 11, -20, 9, 14, 15, 5, 2, -8]
+        segt = SegmentTree(A)
+        segt.update(1, 3, 111)
+        self.assertEqual(segt.query(1, 15), 111)
+        segt.update(7, 8, 235)
+        self.assertEqual(segt.query(1, 15), 235)
+
+    def test_show_data(self):
+        A = [1, 2, -4, 7, 3, -5, 6, 11, -20, 9, 14, 15, 5, 2, -8]
+        segt = SegmentTree(A)
+        self.assertListEqual(segt.show_data(), [1, 2, 111, 7, 3, 6, 235, 235, 9, 14, 14, 15, 5, 2, -8])
 
 
 if __name__ == "__main__":
-    A = [1, 2, -4, 7, 3, -5, 6, 11, -20, 9, 14, 15, 5, 2, -8]
-    N = 15
-    segt = SegmentTree(A)
-    print(segt.query(4, 6))
-    print(segt.query(7, 11))
-    print(segt.query(7, 12))
-    segt.update(1, 3, 111)
-    print(segt.query(1, 15))
-    segt.update(7, 8, 235)
-    segt.show_data()
+    unittest.main()

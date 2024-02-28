@@ -1,40 +1,17 @@
-"""
-https://en.wikipedia.org/wiki/Shellsort#Pseudocode
-"""
+import unittest
 
+class TestShellSort(unittest.TestCase):
+    def test_shell_sort(self):
+        self.assertEqual(shell_sort([0, 5, 3, 2, 2]), [0, 2, 2, 3, 5])
+        self.assertEqual(shell_sort([]), [])
+        self.assertEqual(shell_sort([-2, -5, -45]), [-45, -5, -2])
+        self.assertEqual(shell_sort([10, -2, 8, 6, -7, 8]), [-7, -2, 6, 8, 8, 10])
 
-def shell_sort(collection):
-    """Pure implementation of shell sort algorithm in Python
-    :param collection:  Some mutable ordered collection with heterogeneous
-    comparable items inside
-    :return:  the same collection ordered by ascending
+    def test_shell_sort_unordered(self):
+        self.assertEqual(shell_sort([10, 9, 8, 7, 6, 5, 4, 3, 2, 1]), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
-    >>> shell_sort([0, 5, 3, 2, 2])
-    [0, 2, 2, 3, 5]
-    >>> shell_sort([])
-    []
-    >>> shell_sort([-2, -5, -45])
-    [-45, -5, -2]
-    """
-    # Marcin Ciura's gap sequence
-
-    gaps = [701, 301, 132, 57, 23, 10, 4, 1]
-    for gap in gaps:
-        for i in range(gap, len(collection)):
-            insert_value = collection[i]
-            j = i
-            while j >= gap and collection[j - gap] > insert_value:
-                collection[j] = collection[j - gap]
-                j -= gap
-            if j != i:
-                collection[j] = insert_value
-    return collection
-
+    def test_shell_sort_ordered(self):
+        self.assertEqual(shell_sort([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
 if __name__ == "__main__":
-    from doctest import testmod
-
-    testmod()
-    user_input = input("Enter numbers separated by a comma:\n").strip()
-    unsorted = [int(item) for item in user_input.split(",")]
-    print(shell_sort(unsorted))
+    unittest.main()

@@ -1,45 +1,34 @@
-# Python program to implement Pigeonhole Sorting in python
+import unittest
+from pigeonhole_sort import pigeonhole_sort
 
-# Algorithm for the pigeonhole sorting
+class TestPigeonholeSort(unittest.TestCase):
+    
+    def test_pigeonhole_sort(self):
+        data = [8, 3, 2, 7, 4, 6, 8]
+        b = sorted(data.copy())
+        pigeonhole_sort(data)
+        self.assertEqual(data, b)
+        
+    def test_pigeonhole_empty(self):
+        data = []
+        pigeonhole_sort(data)
+        self.assertEqual(data, [])
 
+    def test_pigeonhole_one_element(self):
+        data = [5]
+        pigeonhole_sort(data)
+        self.assertEqual(data, [5])
 
-def pigeonhole_sort(a):
-    """
-    >>> a = [8, 3, 2, 7, 4, 6, 8]
-    >>> b = sorted(a)  # a nondestructive sort
-    >>> pigeonhole_sort(a)  # a destructive sort
-    >>> a == b
-    True
-    """
-    # size of range of values in the list (ie, number of pigeonholes we need)
+    def test_pigeonhole_sort_negative(self):
+        data = [8, -3, 2, -7, 4, -6, 8]
+        b = sorted(data.copy())
+        pigeonhole_sort(data)
+        self.assertEqual(data, b)
+        
+    def test_pigeonhole_non_integer(self):
+        data = [8, 3.4, 2, "7", 4, 6, 8]
+        with self.assertRaises(AssertionError):
+            pigeonhole_sort(data)
 
-    min_val = min(a)  # min() finds the minimum value
-    max_val = max(a)  # max() finds the maximum value
-
-    size = max_val - min_val + 1  # size is difference of max and min values plus one
-
-    # list of pigeonholes of size equal to the variable size
-    holes = [0] * size
-
-    # Populate the pigeonholes.
-    for x in a:
-        assert isinstance(x, int), "integers only please"
-        holes[x - min_val] += 1
-
-    # Putting the elements back into the array in an order.
-    i = 0
-    for count in range(size):
-        while holes[count] > 0:
-            holes[count] -= 1
-            a[i] = count + min_val
-            i += 1
-
-
-def main():
-    a = [8, 3, 2, 7, 4, 6, 8]
-    pigeonhole_sort(a)
-    print("Sorted order is:", " ".join(a))
-
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    unittest.main()

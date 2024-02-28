@@ -1,62 +1,32 @@
-from __future__ import annotations
+import unittest
 
-from typing import Any
+class TestNodeHasLoop(unittest.TestCase):
 
+    def test_has_loop(self):
+        root_node = Node(1)
+        root_node.next_node = Node(2)
+        root_node.next_node.next_node = Node(3)
+        root_node.next_node.next_node.next_node = Node(4)
+        self.assertEqual(root_node.has_loop,False)
 
-class ContainsLoopError(Exception):
-    pass
+    def test_has_loop_with_loop(self):
+        root_node = Node(1)
+        root_node.next_node = Node(2)
+        root_node.next_node.next_node = Node(3)
+        root_node.next_node.next_node.next_node = root_node.next_node
+        self.assertEqual(root_node.has_loop,True)
 
+    def test_has_loop_with_same_data(self):
+        root_node = Node(5)
+        root_node.next_node = Node(6)
+        root_node.next_node.next_node = Node(5)
+        root_node.next_node.next_node.next_node = Node(6)
+        self.assertEqual(root_node.has_loop,False)
 
-class Node:
-    def __init__(self, data: Any) -> None:
-        self.data: Any = data
-        self.next_node: Node | None = None
-
-    def __iter__(self):
-        node = self
-        visited = []
-        while node:
-            if node in visited:
-                raise ContainsLoopError
-            visited.append(node)
-            yield node.data
-            node = node.next_node
-
-    @property
-    def has_loop(self) -> bool:
-        """
-        A loop is when the exact same Node appears more than once in a linked list.
-        >>> root_node = Node(1)
-        >>> root_node.next_node = Node(2)
-        >>> root_node.next_node.next_node = Node(3)
-        >>> root_node.next_node.next_node.next_node = Node(4)
-        >>> root_node.has_loop
-        False
-        >>> root_node.next_node.next_node.next_node = root_node.next_node
-        >>> root_node.has_loop
-        True
-        """
-        try:
-            list(self)
-            return False
-        except ContainsLoopError:
-            return True
+    def test_has_loop_with_single_node(self):
+        root_node = Node(1)
+        self.assertEqual(root_node.has_loop,False)
 
 
 if __name__ == "__main__":
-    root_node = Node(1)
-    root_node.next_node = Node(2)
-    root_node.next_node.next_node = Node(3)
-    root_node.next_node.next_node.next_node = Node(4)
-    print(root_node.has_loop)  # False
-    root_node.next_node.next_node.next_node = root_node.next_node
-    print(root_node.has_loop)  # True
-
-    root_node = Node(5)
-    root_node.next_node = Node(6)
-    root_node.next_node.next_node = Node(5)
-    root_node.next_node.next_node.next_node = Node(6)
-    print(root_node.has_loop)  # False
-
-    root_node = Node(1)
-    print(root_node.has_loop)  # False
+    unittest.main()

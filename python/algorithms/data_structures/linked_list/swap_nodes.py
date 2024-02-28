@@ -1,55 +1,31 @@
-from typing import Any
+import unittest
 
+class TestLinkedList(unittest.TestCase):
 
-class Node:
-    def __init__(self, data: Any):
-        self.data = data
-        self.next = None
+    def setUp(self):
+        self.ll = LinkedList()
+        for i in range(1, 6):
+            self.ll.push(i)
 
+    def test_print_list(self):
+        self.assertEqual(self.ll.print_list(), [5, 4, 3, 2, 1])
 
-class LinkedList:
-    def __init__(self):
-        self.head = None
+    def test_push(self):
+        self.ll.push(0)
+        self.assertEqual(self.ll.print_list(), [0, 5, 4, 3, 2, 1])
 
-    def print_list(self):
-        temp = self.head
-        while temp is not None:
-            print(temp.data, end=" ")
-            temp = temp.next
-        print()
+    def test_swap_nodes(self):
+        self.ll.swap_nodes(1, 5)
+        self.assertEqual(self.ll.print_list(), [1, 4, 3, 2, 5])
 
-    # adding nodes
-    def push(self, new_data: Any):
-        new_node = Node(new_data)
-        new_node.next = self.head
-        self.head = new_node
+    def test_swap_same_node(self):
+        self.ll.swap_nodes(3, 3)
+        self.assertEqual(self.ll.print_list(), [5, 4, 3, 2, 1])
 
-    # swapping nodes
-    def swap_nodes(self, node_data_1, node_data_2):
-        if node_data_1 == node_data_2:
-            return
-        else:
-            node_1 = self.head
-            while node_1 is not None and node_1.data != node_data_1:
-                node_1 = node_1.next
-
-            node_2 = self.head
-            while node_2 is not None and node_2.data != node_data_2:
-                node_2 = node_2.next
-
-            if node_1 is None or node_2 is None:
-                return
-
-            node_1.data, node_2.data = node_2.data, node_1.data
+    def test_swap_nodes_not_in_list(self):
+        self.ll.swap_nodes(6, 7)
+        self.assertEqual(self.ll.print_list(), [5, 4, 3, 2, 1])
 
 
 if __name__ == "__main__":
-    ll = LinkedList()
-    for i in range(5, 0, -1):
-        ll.push(i)
-
-    ll.print_list()
-
-    ll.swap_nodes(1, 4)
-    print("After swapping")
-    ll.print_list()
+    unittest.main()

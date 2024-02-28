@@ -1,47 +1,21 @@
-"""
-This is a pure Python implementation of the radix sort algorithm
+import unittest
 
-Source: https://en.wikipedia.org/wiki/Radix_sort
-"""
-from __future__ import annotations
+class TestRadixSort(unittest.TestCase):
+    def test_sort(self):
+        self.assertEqual(radix_sort([0, 5, 3, 2, 2]), [0, 2, 2, 3, 5])
+        self.assertEqual(radix_sort(list(range(15))), sorted(range(15)))
+        self.assertEqual(radix_sort(list(range(14,-1,-1))), sorted(range(15)))
+        self.assertEqual(radix_sort([1,100,10,1000]), sorted([1,100,10,1000]))
 
-RADIX = 10
+    def test_empty_list(self):
+        self.assertEqual(radix_sort([]), [])
 
+    def test_single_element_list(self):
+        self.assertEqual(radix_sort([10]), [10])
 
-def radix_sort(list_of_ints: list[int]) -> list[int]:
-    """
-    Examples:
-    >>> radix_sort([0, 5, 3, 2, 2])
-    [0, 2, 2, 3, 5]
-
-    >>> radix_sort(list(range(15))) == sorted(range(15))
-    True
-    >>> radix_sort(list(range(14,-1,-1))) == sorted(range(15))
-    True
-    >>> radix_sort([1,100,10,1000]) == sorted([1,100,10,1000])
-    True
-    """
-    placement = 1
-    max_digit = max(list_of_ints)
-    while placement <= max_digit:
-        # declare and initialize empty buckets
-        buckets: list[list] = [[] for _ in range(RADIX)]
-        # split list_of_ints between the buckets
-        for i in list_of_ints:
-            tmp = int((i / placement) % RADIX)
-            buckets[tmp].append(i)
-        # put each buckets' contents into list_of_ints
-        a = 0
-        for b in range(RADIX):
-            for i in buckets[b]:
-                list_of_ints[a] = i
-                a += 1
-        # move to next
-        placement *= RADIX
-    return list_of_ints
+    def test_negative_numbers(self):
+        self.assertEqual(radix_sort([-3, -1, -2]), sorted([-3, -1, -2]))
 
 
 if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()
+    unittest.main()

@@ -1,133 +1,54 @@
-from __future__ import annotations
+import unittest
 
-from typing import Generic, TypeVar
+class TestStack(unittest.TestCase):
+    def setUp(self):
+        self.stack: Stack[int] = Stack(10)
 
-T = TypeVar("T")
+    def test_stack_bool(self):
+        self.assertEqual(bool(self.stack), False)
 
+    def test_stack_is_empty(self):
+        self.assertEqual(self.stack.is_empty(), True)
 
-class StackOverflowError(BaseException):
-    pass
+    def test_stack_is_full(self):
+        self.assertEqual(self.stack.is_full(), False)
 
+    def test_stack_str(self):
+        self.assertEqual(str(self.stack), "[]")
 
-class StackUnderflowError(BaseException):
-    pass
+    def test_stack_underflow_pop(self):
+        with self.assertRaises(StackUnderflowError):
+            _ = self.stack.pop()
 
+    def test_stack_underflow_peek(self):
+        with self.assertRaises(StackUnderflowError):
+            _ = self.stack.peek()
 
-class Stack(Generic[T]):
-    """A stack is an abstract data type that serves as a collection of
-    elements with two principal operations: push() and pop(). push() adds an
-    element to the top of the stack, and pop() removes an element from the top
-    of a stack. The order in which elements come off of a stack are
-    Last In, First Out (LIFO).
-    https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
-    """
+    def test_stack_push(self):
+        for i in range(10):
+            self.assertEqual(self.stack.size(), i)
+            self.stack.push(i)
+        self.assertEqual(bool(self.stack), True)
+        self.assertEqual(self.stack.is_empty(), False)
+        self.assertEqual(self.stack.is_full(), True)
+        self.assertEqual(str(self.stack), str(list(range(10))))
+    
+    def test_stack_pop_and_peek(self):
+        self.assertEqual(self.stack.pop(), 9)
+        self.assertEqual(self.stack.peek(), 8)
+        self.stack.push(100)
+        self.assertEqual(str(self.stack), str([0, 1, 2, 3, 4, 5, 6, 7, 8, 100]))
 
-    def __init__(self, limit: int = 10):
-        self.stack: list[T] = []
-        self.limit = limit
+    def test_stack_overflow(self):
+        with self.assertRaises(StackOverflowError):
+            self.stack.push(200)
+        self.assertEqual(self.stack.is_empty(), False)
+        self.assertEqual(self.stack.size(), 10)
 
-    def __bool__(self) -> bool:
-        return bool(self.stack)
-
-    def __str__(self) -> str:
-        return str(self.stack)
-
-    def push(self, data: T) -> None:
-        """Push an element to the top of the stack."""
-        if len(self.stack) >= self.limit:
-            raise StackOverflowError
-        self.stack.append(data)
-
-    def pop(self) -> T:
-        """
-        Pop an element off of the top of the stack.
-
-        >>> Stack().pop()
-        Traceback (most recent call last):
-            ...
-        data_structures.stacks.stack.StackUnderflowError
-        """
-        if not self.stack:
-            raise StackUnderflowError
-        return self.stack.pop()
-
-    def peek(self) -> T:
-        """
-        Peek at the top-most element of the stack.
-
-        >>> Stack().pop()
-        Traceback (most recent call last):
-            ...
-        data_structures.stacks.stack.StackUnderflowError
-        """
-        if not self.stack:
-            raise StackUnderflowError
-        return self.stack[-1]
-
-    def is_empty(self) -> bool:
-        """Check if a stack is empty."""
-        return not bool(self.stack)
-
-    def is_full(self) -> bool:
-        return self.size() == self.limit
-
-    def size(self) -> int:
-        """Return the size of the stack."""
-        return len(self.stack)
-
-    def __contains__(self, item: T) -> bool:
-        """Check if item is in stack"""
-        return item in self.stack
-
-
-def test_stack() -> None:
-    """
-    >>> test_stack()
-    """
-    stack: Stack[int] = Stack(10)
-    assert bool(stack) is False
-    assert stack.is_empty() is True
-    assert stack.is_full() is False
-    assert str(stack) == "[]"
-
-    try:
-        _ = stack.pop()
-        raise AssertionError  # This should not happen
-    except StackUnderflowError:
-        assert True  # This should happen
-
-    try:
-        _ = stack.peek()
-        raise AssertionError  # This should not happen
-    except StackUnderflowError:
-        assert True  # This should happen
-
-    for i in range(10):
-        assert stack.size() == i
-        stack.push(i)
-
-    assert bool(stack)
-    assert not stack.is_empty()
-    assert stack.is_full()
-    assert str(stack) == str(list(range(10)))
-    assert stack.pop() == 9
-    assert stack.peek() == 8
-
-    stack.push(100)
-    assert str(stack) == str([0, 1, 2, 3, 4, 5, 6, 7, 8, 100])
-
-    try:
-        stack.push(200)
-        raise AssertionError  # This should not happen
-    except StackOverflowError:
-        assert True  # This should happen
-
-    assert not stack.is_empty()
-    assert stack.size() == 10
-
-    assert 5 in stack
-    assert 55 not in stack
+    def test_stack_contains(self):    
+        self.assertTrue(5 in self.stack)
+        self.assertFalse(55 in self.stack)
 
 
 if __name__ == "__main__":
-    test_stack()
+    unittest.main()
