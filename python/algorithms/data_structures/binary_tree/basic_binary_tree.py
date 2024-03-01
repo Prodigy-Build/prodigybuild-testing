@@ -1,4 +1,5 @@
 from __future__ import annotations
+import unittest
 
 
 class Node:
@@ -99,3 +100,41 @@ def main() -> None:  # Main function for testing.
 
 if __name__ == "__main__":
     main()
+
+
+class TestBinaryTree(unittest.TestCase):
+    def test_display(self):
+        root = Node(1)
+        root.left = Node(0)
+        root.right = Node(2)
+        expected_output = "0\n1\n2\n"
+        with patch("sys.stdout", new=StringIO()) as fake_output:
+            display(root)
+            self.assertEqual(fake_output.getvalue(), expected_output)
+
+    def test_depth_of_tree(self):
+        root = Node(0)
+        self.assertEqual(depth_of_tree(root), 1)
+        root.left = Node(0)
+        self.assertEqual(depth_of_tree(root), 2)
+        root.right = Node(0)
+        self.assertEqual(depth_of_tree(root), 2)
+        root.left.right = Node(0)
+        self.assertEqual(depth_of_tree(root), 3)
+        self.assertEqual(depth_of_tree(root.left), 2)
+
+    def test_is_full_binary_tree(self):
+        root = Node(0)
+        self.assertTrue(is_full_binary_tree(root))
+        root.left = Node(0)
+        self.assertFalse(is_full_binary_tree(root))
+        root.right = Node(0)
+        self.assertTrue(is_full_binary_tree(root))
+        root.left.left = Node(0)
+        self.assertFalse(is_full_binary_tree(root))
+        root.right.right = Node(0)
+        self.assertFalse(is_full_binary_tree(root))
+
+
+if __name__ == "__main__":
+    unittest.main()

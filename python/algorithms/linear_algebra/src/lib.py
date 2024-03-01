@@ -1,3 +1,6 @@
+The updated code with unit test cases is as follows:
+
+```python
 """
 Created on Mon Feb 26 14:29:11 2018
 
@@ -437,3 +440,105 @@ def random_matrix(width: int, height: int, a: int, b: int) -> Matrix:
         [random.randint(a, b) for _ in range(width)] for _ in range(height)
     ]
     return Matrix(matrix, width, height)
+
+
+# Unit test cases
+def test_vector() -> None:
+    v1 = Vector([1, 2, 3])
+    v2 = Vector([4, 5, 6])
+    v3 = Vector([7, 8, 9, 10])
+
+    assert len(v1) == 3
+    assert str(v1) == "(1,2,3)"
+    assert v1 + v2 == Vector([5, 7, 9])
+    assert v1 - v2 == Vector([-3, -3, -3])
+    assert v1 * 2 == Vector([2, 4, 6])
+    assert v1 * v2 == 32
+    assert v1.copy() == v1
+    assert v1.component(0) == 1
+    v1.change_component(0, 5)
+    assert v1.component(0) == 5
+    assert math.isclose(v1.euclidean_length(), 6.164414002968976)
+    assert math.isclose(v1.angle(v2), 0.2257261285527342)
+    assert math.isclose(v1.angle(v2, deg=True), 12.927943874743326)
+
+    try:
+        Vector([]).euclidean_length()
+        assert False
+    except Exception as e:
+        assert str(e) == "Vector is empty"
+
+    try:
+        v1.angle(v3)
+        assert False
+    except Exception as e:
+        assert str(e) == "invalid operand!"
+
+
+def test_zero_vector() -> None:
+    v = zero_vector(5)
+    assert len(v) == 5
+    assert str(v) == "(0,0,0,0,0)"
+
+
+def test_unit_basis_vector() -> None:
+    v = unit_basis_vector(5, 2)
+    assert len(v) == 5
+    assert str(v) == "(0,0,1,0,0)"
+
+
+def test_axpy() -> None:
+    v1 = Vector([1, 2, 3])
+    v2 = Vector([4, 5, 6])
+    assert axpy(2, v1, v2) == Vector([6, 9, 12])
+
+
+def test_random_vector() -> None:
+    v = random_vector(5, 0, 10)
+    assert len(v) == 5
+    assert all(0 <= c <= 10 for c in v)
+
+
+def test_matrix() -> None:
+    m1 = Matrix([[1, 2, 3], [4, 5, 6]], 3, 2)
+    m2 = Matrix([[7, 8, 9], [10, 11, 12]], 3, 2)
+    m3 = Matrix([[1, 2, 3], [4, 5, 6], [7, 8, 9]], 3, 3)
+
+    assert str(m1) == "|1,2,3|\n|4,5,6|\n"
+    assert m1 + m2 == Matrix([[8, 10, 12], [14, 16, 18]], 3, 2)
+    assert m1 - m2 == Matrix([[-6, -6, -6], [-6, -6, -6]], 3, 2)
+    assert m1 * 2 == Matrix([[2, 4, 6], [8, 10, 12]], 3, 2)
+    assert m1 * Vector([1, 2, 3]) == Vector([14, 32])
+    assert m1.height() == 2
+    assert m1.width() == 3
+    assert m1.component(0, 0) == 1
+    m1.change_component(0, 0, 5)
+    assert m1.component(0, 0) == 5
+    assert m3.minor(0, 0) == 0
+    assert m3.cofactor(0, 0) == 0
+    assert m3.determinant() == 0
+
+
+def test_square_zero_matrix() -> None:
+    m = square_zero_matrix(3)
+    assert str(m) == "|0,0,0|\n|0,0,0|\n|0,0,0|\n"
+
+
+def test_random_matrix() -> None:
+    m = random_matrix(3, 2, 0, 10)
+    assert m.height() == 2
+    assert m.width() == 3
+    assert all(0 <= c <= 10 for row in m for c in row)
+
+
+if __name__ == "__main__":
+    test_vector()
+    test_zero_vector()
+    test_unit_basis_vector()
+    test_axpy()
+    test_random_vector()
+    test_matrix()
+    test_square_zero_matrix()
+    test_random_matrix()
+    print("All tests passed!")
+```

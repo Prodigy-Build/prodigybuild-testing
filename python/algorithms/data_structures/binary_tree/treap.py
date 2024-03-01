@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from random import random
+import unittest
 
 
 class Node:
@@ -180,3 +181,89 @@ if __name__ == "__main__":
 
     doctest.testmod()
     main()
+
+
+class TreapTestCase(unittest.TestCase):
+    def test_insert(self):
+        root = None
+        root = insert(root, 1)
+        self.assertEqual(root.value, 1)
+        self.assertIsNone(root.left)
+        self.assertIsNone(root.right)
+
+        root = insert(root, 2)
+        self.assertEqual(root.value, 1)
+        self.assertIsNone(root.left)
+        self.assertEqual(root.right.value, 2)
+
+        root = insert(root, 0)
+        self.assertEqual(root.value, 1)
+        self.assertEqual(root.left.value, 0)
+        self.assertEqual(root.right.value, 2)
+
+    def test_erase(self):
+        root = None
+        root = insert(root, 1)
+        root = insert(root, 2)
+        root = insert(root, 0)
+
+        root = erase(root, 1)
+        self.assertEqual(root.value, 0)
+        self.assertIsNone(root.left)
+        self.assertEqual(root.right.value, 2)
+
+        root = erase(root, 0)
+        self.assertEqual(root.value, 2)
+        self.assertIsNone(root.left)
+        self.assertIsNone(root.right)
+
+        root = erase(root, 2)
+        self.assertIsNone(root)
+
+    def test_interact_treap(self):
+        root = None
+        root = interact_treap(root, "+1")
+        self.assertEqual(root.value, 1)
+        self.assertIsNone(root.left)
+        self.assertIsNone(root.right)
+
+        root = interact_treap(root, "+3 +5 +17 +19 +2 +16 +4 +0")
+        self.assertEqual(root.value, 0)
+        self.assertEqual(root.left.value, 1)
+        self.assertEqual(root.right.value, 2)
+
+        root = interact_treap(root, "+4 +4 +4")
+        self.assertEqual(root.value, 0)
+        self.assertEqual(root.left.value, 1)
+        self.assertEqual(root.right.value, 2)
+        self.assertEqual(root.right.right.value, 4)
+
+        root = interact_treap(root, "-0")
+        self.assertEqual(root.value, 1)
+        self.assertIsNone(root.left)
+        self.assertEqual(root.right.value, 2)
+
+        root = interact_treap(root, "-4")
+        self.assertEqual(root.value, 1)
+        self.assertIsNone(root.left)
+        self.assertEqual(root.right.value, 2)
+        self.assertIsNone(root.right.right)
+
+        root = interact_treap(root, "=0")
+        self.assertEqual(root.value, 1)
+        self.assertIsNone(root.left)
+        self.assertEqual(root.right.value, 2)
+        self.assertIsNone(root.right.right)
+
+        root = interact_treap(root, "+4")
+        self.assertEqual(root.value, 1)
+        self.assertIsNone(root.left)
+        self.assertEqual(root.right.value, 2)
+        self.assertEqual(root.right.right.value, 4)
+
+        root = interact_treap(root, "q")
+        self.assertIsNone(root)
+
+
+if __name__ == "__main__":
+    unittest.main()

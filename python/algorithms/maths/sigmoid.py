@@ -1,15 +1,5 @@
-"""
-This script demonstrates the implementation of the Sigmoid function.
-
-The function takes a vector of K real numbers as input and then 1 / (1 + exp(-x)).
-After through Sigmoid, the element of the vector mostly 0 between 1. or 1 between -1.
-
-Script inspired from its corresponding Wikipedia article
-https://en.wikipedia.org/wiki/Sigmoid_function
-"""
-
+import unittest
 import numpy as np
-
 
 def sigmoid(vector: np.array) -> np.array:
     """
@@ -32,8 +22,10 @@ def sigmoid(vector: np.array) -> np.array:
     """
     return 1 / (1 + np.exp(-vector))
 
+class TestSigmoid(unittest.TestCase):
+    def test_sigmoid(self):
+        self.assertTrue(np.allclose(sigmoid(np.array([-1.0, 1.0, 2.0])), np.array([0.26894142, 0.73105858, 0.88079708])))
+        self.assertTrue(np.allclose(sigmoid(np.array([0.0])), np.array([0.5])))
 
 if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()
+    unittest.main()

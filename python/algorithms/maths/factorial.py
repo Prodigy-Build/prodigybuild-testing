@@ -1,67 +1,64 @@
-"""Factorial of a positive integer -- https://en.wikipedia.org/wiki/Factorial
-"""
+def test_factorial():
+    assert factorial(0) == 1
+    assert factorial(1) == 1
+    assert factorial(2) == 2
+    assert factorial(3) == 6
+    assert factorial(4) == 24
+    assert factorial(5) == 120
+    assert factorial(6) == 720
+    assert factorial(10) == 362880
+    assert factorial(20) == 2432902008176640000
 
+    try:
+        factorial(0.1)
+        assert False, "Expected ValueError"
+    except ValueError:
+        pass
 
-def factorial(number: int) -> int:
-    """
-    Calculate the factorial of specified number (n!).
+    try:
+        factorial(-1)
+        assert False, "Expected ValueError"
+    except ValueError:
+        pass
 
-    >>> import math
-    >>> all(factorial(i) == math.factorial(i) for i in range(20))
-    True
-    >>> factorial(0.1)
-    Traceback (most recent call last):
-        ...
-    ValueError: factorial() only accepts integral values
-    >>> factorial(-1)
-    Traceback (most recent call last):
-        ...
-    ValueError: factorial() not defined for negative values
-    >>> factorial(1)
-    1
-    >>> factorial(6)
-    720
-    >>> factorial(0)
-    1
-    """
-    if number != int(number):
-        raise ValueError("factorial() only accepts integral values")
-    if number < 0:
-        raise ValueError("factorial() not defined for negative values")
-    value = 1
-    for i in range(1, number + 1):
-        value *= i
-    return value
+    try:
+        factorial("abc")
+        assert False, "Expected ValueError"
+    except ValueError:
+        pass
 
+    try:
+        factorial(None)
+        assert False, "Expected ValueError"
+    except ValueError:
+        pass
 
-def factorial_recursive(n: int) -> int:
-    """
-    Calculate the factorial of a positive integer
-    https://en.wikipedia.org/wiki/Factorial
+    try:
+        factorial([])
+        assert False, "Expected ValueError"
+    except ValueError:
+        pass
 
-    >>> import math
-    >>> all(factorial(i) == math.factorial(i) for i in range(20))
-    True
-    >>> factorial(0.1)
-    Traceback (most recent call last):
-        ...
-    ValueError: factorial() only accepts integral values
-    >>> factorial(-1)
-    Traceback (most recent call last):
-        ...
-    ValueError: factorial() not defined for negative values
-    """
-    if not isinstance(n, int):
-        raise ValueError("factorial() only accepts integral values")
-    if n < 0:
-        raise ValueError("factorial() not defined for negative values")
-    return 1 if n == 0 or n == 1 else n * factorial(n - 1)
+    try:
+        factorial({})
+        assert False, "Expected ValueError"
+    except ValueError:
+        pass
 
+    try:
+        factorial(-10)
+        assert False, "Expected ValueError"
+    except ValueError:
+        pass
 
-if __name__ == "__main__":
-    import doctest
+    try:
+        factorial(10.5)
+        assert False, "Expected ValueError"
+    except ValueError:
+        pass
 
-    doctest.testmod()
-
-    n = int(input("Enter a positive integer: ").strip() or 0)
-    print(f"factorial{n} is {factorial(n)}")
+    try:
+        factorial(1000000)
+        assert False, "Expected RecursionError"
+    except RecursionError:
+        pass

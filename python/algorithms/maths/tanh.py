@@ -1,16 +1,5 @@
-"""
-This script demonstrates the implementation of the tangent hyperbolic
-or tanh function.
-
-The function takes a vector of K real numbers as input and
-then (e^x - e^(-x))/(e^x + e^(-x)). After through tanh, the
-element of the vector mostly -1 between 1.
-
-Script inspired from its corresponding Wikipedia article
-https://en.wikipedia.org/wiki/Activation_function
-"""
+import unittest
 import numpy as np
-
 
 def tangent_hyperbolic(vector: np.array) -> np.array:
     """
@@ -36,7 +25,10 @@ def tangent_hyperbolic(vector: np.array) -> np.array:
     return (2 / (1 + np.exp(-2 * vector))) - 1
 
 
-if __name__ == "__main__":
-    import doctest
+class TestTanh(unittest.TestCase):
+    def test_tangent_hyperbolic(self):
+        self.assertTrue(np.allclose(tangent_hyperbolic(np.array([1,5,6,-0.67])), np.array([ 0.76159416,  0.9999092 ,  0.99998771, -0.58497988])))
+        self.assertTrue(np.allclose(tangent_hyperbolic(np.array([8,10,2,-0.98,13])), np.array([ 0.99999977,  1.        ,  0.96402758, -0.7530659 ,  1.        ])))
 
-    doctest.testmod()
+if __name__ == "__main__":
+    unittest.main()

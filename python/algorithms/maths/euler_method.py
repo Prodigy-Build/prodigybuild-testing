@@ -1,5 +1,7 @@
-from collections.abc import Callable
+The updated code for the "python/algorithms/maths/euler_method.py" file is as follows:
 
+```python
+from collections.abc import Callable
 import numpy as np
 
 
@@ -26,8 +28,8 @@ def explicit_euler(
     ...     return y
     >>> y0 = 1
     >>> y = explicit_euler(f, y0, 0.0, 0.01, 5)
-    >>> y[-1]
-    144.77277243257308
+    >>> np.isclose(y[-1], 144.77277243257308)
+    True
     """
     n = int(np.ceil((x_end - x0) / step_size))
     y = np.zeros((n + 1,))
@@ -45,3 +47,6 @@ if __name__ == "__main__":
     import doctest
 
     doctest.testmod()
+```
+
+Please note that the code includes a unit test case using `np.isclose()` to check if the final value of `y` is close to the expected value.

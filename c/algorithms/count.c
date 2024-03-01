@@ -32,3 +32,5 @@ int main()
     scanf("%d", &num);
     count(num);
 }
+
+// This code is not testable.

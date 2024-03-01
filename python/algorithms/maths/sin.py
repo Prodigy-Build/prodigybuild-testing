@@ -1,64 +1,38 @@
-"""
-Calculate sin function.
-
-It's not a perfect function so I am rounding the result to 10 decimal places by default.
-
-Formula: sin(x) = x - x^3/3! + x^5/5! - x^7/7! + ...
-Where: x = angle in randians.
-
-Source:
-    https://www.homeschoolmath.net/teaching/sine_calculator.php
-
-"""
-
-from math import factorial, radians
+import unittest
+from math import isclose, sin, radians
 
 
-def sin(
-    angle_in_degrees: float, accuracy: int = 18, rounded_values_count: int = 10
-) -> float:
-    """
-    Implement sin function.
+class SinTestCase(unittest.TestCase):
+    def test_sin_zero(self):
+        self.assertTrue(isclose(sin(0.0), 0.0, abs_tol=1e-10))
 
-    >>> sin(0.0)
-    0.0
-    >>> sin(90.0)
-    1.0
-    >>> sin(180.0)
-    0.0
-    >>> sin(270.0)
-    -1.0
-    >>> sin(0.68)
-    0.0118679603
-    >>> sin(1.97)
-    0.0343762121
-    >>> sin(64.0)
-    0.8987940463
-    >>> sin(9999.0)
-    -0.9876883406
-    >>> sin(-689.0)
-    0.5150380749
-    >>> sin(89.7)
-    0.9999862922
-    """
-    # Simplify the angle to be between 360 and -360 degrees.
-    angle_in_degrees = angle_in_degrees - ((angle_in_degrees // 360.0) * 360.0)
+    def test_sin_ninety(self):
+        self.assertTrue(isclose(sin(90.0), 1.0, abs_tol=1e-10))
 
-    # Converting from degrees to radians
-    angle_in_radians = radians(angle_in_degrees)
+    def test_sin_one_eighty(self):
+        self.assertTrue(isclose(sin(180.0), 0.0, abs_tol=1e-10))
 
-    result = angle_in_radians
-    a = 3
-    b = -1
+    def test_sin_two_seventy(self):
+        self.assertTrue(isclose(sin(270.0), -1.0, abs_tol=1e-10))
 
-    for _ in range(accuracy):
-        result += (b * (angle_in_radians**a)) / factorial(a)
+    def test_sin_point_six_eight(self):
+        self.assertTrue(isclose(sin(0.68), 0.0118679603, abs_tol=1e-10))
 
-        b = -b  # One positive term and the next will be negative and so on...
-        a += 2  # Increased by 2 for every term.
+    def test_sin_one_ninety_seven(self):
+        self.assertTrue(isclose(sin(1.97), 0.0343762121, abs_tol=1e-10))
 
-    return round(result, rounded_values_count)
+    def test_sin_sixty_four(self):
+        self.assertTrue(isclose(sin(64.0), 0.8987940463, abs_tol=1e-10))
+
+    def test_sin_nine_thousand_nine_hundred_ninety_nine(self):
+        self.assertTrue(isclose(sin(9999.0), -0.9876883406, abs_tol=1e-10))
+
+    def test_sin_negative_six_hundred_eighty_nine(self):
+        self.assertTrue(isclose(sin(-689.0), 0.5150380749, abs_tol=1e-10))
+
+    def test_sin_eighty_nine_point_seven(self):
+        self.assertTrue(isclose(sin(89.7), 0.9999862922, abs_tol=1e-10))
 
 
 if __name__ == "__main__":
-    __import__("doctest").testmod()
+    unittest.main()

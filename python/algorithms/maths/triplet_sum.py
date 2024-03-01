@@ -1,25 +1,22 @@
-"""
-Given an array of integers and another integer target,
-we are required to find a triplet from the array such that it's sum is equal to
-the target.
-"""
-from __future__ import annotations
+The updated code for the file "python/algorithms/maths/triplet_sum.py" is as follows:
 
+```python
+from typing import List, Tuple
 from itertools import permutations
 from random import randint
 from timeit import repeat
 
 
-def make_dataset() -> tuple[list[int], int]:
-    arr = [randint(-1000, 1000) for i in range(10)]
+def make_dataset() -> Tuple[List[int], int]:
+    arr = [randint(-1000, 1000) for _ in range(10)]
     r = randint(-5000, 5000)
-    return (arr, r)
+    return arr, r
 
 
 dataset = make_dataset()
 
 
-def triplet_sum1(arr: list[int], target: int) -> tuple[int, ...]:
+def triplet_sum1(arr: List[int], target: int) -> Tuple[int, int, int]:
     """
     Returns a triplet in the array with sum equal to target,
     else (0, 0, 0).
@@ -35,10 +32,10 @@ def triplet_sum1(arr: list[int], target: int) -> tuple[int, ...]:
     for triplet in permutations(arr, 3):
         if sum(triplet) == target:
             return tuple(sorted(triplet))
-    return (0, 0, 0)
+    return 0, 0, 0
 
 
-def triplet_sum2(arr: list[int], target: int) -> tuple[int, int, int]:
+def triplet_sum2(arr: List[int], target: int) -> Tuple[int, int, int]:
     """
     Returns a triplet in the array with sum equal to target,
     else (0, 0, 0).
@@ -53,19 +50,19 @@ def triplet_sum2(arr: list[int], target: int) -> tuple[int, int, int]:
     """
     arr.sort()
     n = len(arr)
-    for i in range(n - 1):
+    for i in range(n - 2):
         left, right = i + 1, n - 1
         while left < right:
             if arr[i] + arr[left] + arr[right] == target:
-                return (arr[i], arr[left], arr[right])
+                return arr[i], arr[left], arr[right]
             elif arr[i] + arr[left] + arr[right] < target:
                 left += 1
-            elif arr[i] + arr[left] + arr[right] > target:
+            else:
                 right -= 1
-    return (0, 0, 0)
+    return 0, 0, 0
 
 
-def solution_times() -> tuple[float, float]:
+def solution_times() -> Tuple[float, float]:
     setup_code = """
 from __main__ import dataset, triplet_sum1, triplet_sum2
 """
@@ -77,7 +74,7 @@ triplet_sum2(*dataset)
 """
     times1 = repeat(setup=setup_code, stmt=test_code1, repeat=5, number=10000)
     times2 = repeat(setup=setup_code, stmt=test_code2, repeat=5, number=10000)
-    return (min(times1), min(times2))
+    return min(times1), min(times2)
 
 
 if __name__ == "__main__":
@@ -87,3 +84,4 @@ if __name__ == "__main__":
     times = solution_times()
     print(f"The time for naive implementation is {times[0]}.")
     print(f"The time for optimized implementation is {times[1]}.")
+```

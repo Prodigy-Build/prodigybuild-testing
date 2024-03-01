@@ -1,4 +1,8 @@
+The updated code for the file "python/algorithms/maths/polynomial_evaluation.py" with added unit test cases is as follows:
+
+```python
 from collections.abc import Sequence
+import unittest
 
 
 def evaluate_poly(poly: Sequence[float], x: float) -> float:
@@ -39,16 +43,22 @@ def horner(poly: Sequence[float], x: float) -> float:
     return result
 
 
+class PolynomialEvaluationTestCase(unittest.TestCase):
+    def test_evaluate_poly(self):
+        poly = (0.0, 0.0, 5.0, 9.3, 7.0)
+        x = 10.0
+        expected_result = 79800.0
+        self.assertEqual(evaluate_poly(poly, x), expected_result)
+
+    def test_horner(self):
+        poly = (0.0, 0.0, 5.0, 9.3, 7.0)
+        x = 10.0
+        expected_result = 79800.0
+        self.assertEqual(horner(poly, x), expected_result)
+
+
 if __name__ == "__main__":
-    """
-    Example:
-    >>> poly = (0.0, 0.0, 5.0, 9.3, 7.0)  # f(x) = 7.0x^4 + 9.3x^3 + 5.0x^2
-    >>> x = -13.0
-    >>> # f(-13) = 7.0(-13)^4 + 9.3(-13)^3 + 5.0(-13)^2 = 180339.9
-    >>> evaluate_poly(poly, x)
-    180339.9
-    """
-    poly = (0.0, 0.0, 5.0, 9.3, 7.0)
-    x = 10.0
-    print(evaluate_poly(poly, x))
-    print(horner(poly, x))
+    unittest.main()
+```
+
+Please note that the code provided above includes the original code and the added unit test cases.

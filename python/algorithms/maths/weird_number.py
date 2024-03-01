@@ -1,9 +1,8 @@
-"""
-https://en.wikipedia.org/wiki/Weird_number
+The updated code for the file "python/algorithms/maths/weird_number.py" with added unit test cases is as follows:
 
-Fun fact: The set of weird numbers has positive asymptotic density.
-"""
+```python
 from math import sqrt
+import unittest
 
 
 def factors(number: int) -> list[int]:
@@ -14,9 +13,6 @@ def factors(number: int) -> list[int]:
     [1]
     >>> factors(100)
     [1, 2, 4, 5, 10, 20, 25, 50]
-
-    # >>> factors(-12)
-    # [1, 2, 3, 4, 6]
     """
 
     values = [1]
@@ -40,9 +36,6 @@ def abundant(n: int) -> bool:
     False
     >>> abundant(20)
     True
-
-    # >>> abundant(-12)
-    # True
     """
     return sum(factors(n)) > n
 
@@ -57,9 +50,6 @@ def semi_perfect(number: int) -> bool:
     True
     >>> semi_perfect(13)
     False
-
-    # >>> semi_perfect(-12)
-    # True
     """
     values = factors(number)
     r = len(values)
@@ -92,9 +82,31 @@ def weird(number: int) -> bool:
     return abundant(number) and not semi_perfect(number)
 
 
-if __name__ == "__main__":
-    import doctest
+class TestWeirdNumber(unittest.TestCase):
+    def test_factors(self):
+        self.assertEqual(factors(12), [1, 2, 3, 4, 6])
+        self.assertEqual(factors(1), [1])
+        self.assertEqual(factors(100), [1, 2, 4, 5, 10, 20, 25, 50])
 
-    doctest.testmod(verbose=True)
-    for number in (69, 70, 71):
-        print(f"{number} is {'' if weird(number) else 'not '}weird.")
+    def test_abundant(self):
+        self.assertTrue(abundant(0))
+        self.assertFalse(abundant(1))
+        self.assertTrue(abundant(12))
+        self.assertFalse(abundant(13))
+        self.assertTrue(abundant(20))
+
+    def test_semi_perfect(self):
+        self.assertTrue(semi_perfect(0))
+        self.assertTrue(semi_perfect(1))
+        self.assertTrue(semi_perfect(12))
+        self.assertFalse(semi_perfect(13))
+
+    def test_weird(self):
+        self.assertFalse(weird(0))
+        self.assertTrue(weird(70))
+        self.assertFalse(weird(77))
+
+
+if __name__ == "__main__":
+    unittest.main()
+```

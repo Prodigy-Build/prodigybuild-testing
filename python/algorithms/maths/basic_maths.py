@@ -1,5 +1,8 @@
-"""Implementation of Basic Math in Python."""
+The updated code for the file "python/algorithms/maths/basic_maths.py" with added unit test cases is as follows:
+
+```python
 import math
+import unittest
 
 
 def prime_factors(n: int) -> list:
@@ -105,7 +108,26 @@ def euler_phi(n: int) -> int:
     return int(s)
 
 
-if __name__ == "__main__":
-    import doctest
+class TestBasicMath(unittest.TestCase):
+    def test_prime_factors(self):
+        self.assertEqual(prime_factors(100), [2, 2, 5, 5])
+        self.assertRaises(ValueError, prime_factors, 0)
+        self.assertRaises(ValueError, prime_factors, -10)
 
-    doctest.testmod()
+    def test_number_of_divisors(self):
+        self.assertEqual(number_of_divisors(100), 9)
+        self.assertRaises(ValueError, number_of_divisors, 0)
+        self.assertRaises(ValueError, number_of_divisors, -10)
+
+    def test_sum_of_divisors(self):
+        self.assertEqual(sum_of_divisors(100), 217)
+        self.assertRaises(ValueError, sum_of_divisors, 0)
+        self.assertRaises(ValueError, sum_of_divisors, -10)
+
+    def test_euler_phi(self):
+        self.assertEqual(euler_phi(100), 40)
+
+
+if __name__ == "__main__":
+    unittest.main()
+```

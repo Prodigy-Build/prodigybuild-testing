@@ -1,12 +1,5 @@
 from math import factorial
-
-"""
-https://en.wikipedia.org/wiki/Automatic_differentiation#Automatic_differentiation_using_dual_numbers
-https://blog.jliszka.org/2013/10/24/exact-numeric-nth-derivatives.html
-
-Note this only works for basic functions, f(x) where the power of x is positive.
-"""
-
+import unittest
 
 class Dual:
     def __init__(self, real, rank):
@@ -130,12 +123,18 @@ def differentiate(func, position, order):
     return result.duals[order - 1] * factorial(order)
 
 
+class TestDualNumberAutomaticDifferentiation(unittest.TestCase):
+    def test_differentiate(self):
+        self.assertEqual(differentiate(lambda x: x**2, 2, 2), 2)
+        self.assertEqual(differentiate(lambda x: x**2 * x**4, 9, 2), 196830)
+        self.assertEqual(differentiate(lambda y: 0.5 * (y + 3) ** 6, 3.5, 4), 7605.0)
+        self.assertEqual(differentiate(lambda y: y ** 2, 4, 3), 0)
+        with self.assertRaises(ValueError):
+            differentiate(8, 8, 8)
+        with self.assertRaises(ValueError):
+            differentiate(lambda x: x **2, "", 1)
+        with self.assertRaises(ValueError):
+            differentiate(lambda x: x**2, 3, "")
+
 if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()
-
-    def f(y):
-        return y**2 * y**4
-
-    print(differentiate(f, 9, 2))
+    unittest.main()

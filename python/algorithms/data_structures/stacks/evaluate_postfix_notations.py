@@ -1,30 +1,11 @@
-"""
-The Reverse Polish Nation also known as Polish postfix notation
-or simply postfix notation.
-https://en.wikipedia.org/wiki/Reverse_Polish_notation
-Classic examples of simple stack implementations
-Valid operators are +, -, *, /.
-Each operand may be an integer or another expression.
-"""
-from __future__ import annotations
+from typing import List, Any
 
-from typing import Any
-
-
-def evaluate_postfix(postfix_notation: list) -> int:
-    """
-    >>> evaluate_postfix(["2", "1", "+", "3", "*"])
-    9
-    >>> evaluate_postfix(["4", "13", "5", "/", "+"])
-    6
-    >>> evaluate_postfix([])
-    0
-    """
+def evaluate_postfix(postfix_notation: List[str]) -> int:
     if not postfix_notation:
         return 0
 
     operations = {"+", "-", "*", "/"}
-    stack: list[Any] = []
+    stack: List[Any] = []
 
     for token in postfix_notation:
         if token in operations:
@@ -44,9 +25,3 @@ def evaluate_postfix(postfix_notation: list) -> int:
             stack.append(int(token))
 
     return stack.pop()
-
-
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()

@@ -1,6 +1,10 @@
+The updated code for the file "python/algorithms/maths/matrix_exponentiation.py" with added unit test cases is as follows:
+
+```python
 """Matrix Exponentiation"""
 
 import timeit
+import unittest
 
 """
 Matrix Exponentiation is a technique to solve linear recurrences in logarithmic time.
@@ -96,5 +100,21 @@ def main():
     simple_fibonacci_time()
 
 
+class MatrixExponentiationTest(unittest.TestCase):
+    def test_modular_exponentiation(self):
+        matrix = Matrix([[1, 1], [1, 0]])
+        result = modular_exponentiation(matrix, 3)
+        self.assertEqual(result.t, [[2, 1], [1, 1]])
+
+    def test_fibonacci_with_matrix_exponentiation(self):
+        result = fibonacci_with_matrix_exponentiation(6, 1, 1)
+        self.assertEqual(result, 8)
+
+    def test_simple_fibonacci(self):
+        result = simple_fibonacci(6, 1, 1)
+        self.assertEqual(result, 8)
+
+
 if __name__ == "__main__":
-    main()
+    unittest.main()
+```

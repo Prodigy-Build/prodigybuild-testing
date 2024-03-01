@@ -1,6 +1,4 @@
-"""
-https://en.wikipedia.org/wiki/Combination
-"""
+import unittest
 from math import factorial
 
 
@@ -38,20 +36,16 @@ def combinations(n: int, k: int) -> int:
     return factorial(n) // (factorial(k) * factorial(n - k))
 
 
+class TestCombinations(unittest.TestCase):
+    def test_combinations(self):
+        self.assertEqual(combinations(10, 5), 252)
+        self.assertEqual(combinations(6, 3), 20)
+        self.assertEqual(combinations(20, 5), 15504)
+        self.assertEqual(combinations(52, 5), 2598960)
+        self.assertEqual(combinations(0, 0), 1)
+        with self.assertRaises(ValueError):
+            combinations(-4, -5)
+
+
 if __name__ == "__main__":
-    print(
-        "The number of five-card hands possible from a standard",
-        f"fifty-two card deck is: {combinations(52, 5)}\n",
-    )
-
-    print(
-        "If a class of 40 students must be arranged into groups of",
-        f"4 for group projects, there are {combinations(40, 4)} ways",
-        "to arrange them.\n",
-    )
-
-    print(
-        "If 10 teams are competing in a Formula One race, there",
-        f"are {combinations(10, 3)} ways that first, second and",
-        "third place can be awarded.",
-    )
+    unittest.main()

@@ -1,3 +1,6 @@
+The updated code for the file "python/algorithms/maths/gcd_of_n_numbers.py" is as follows:
+
+```python
 """
 Gcd of N Numbers
 Reference: https://en.wikipedia.org/wiki/Greatest_common_divisor
@@ -107,3 +110,6 @@ def get_greatest_common_divisor(*numbers: int) -> int:
 
 if __name__ == "__main__":
     print(get_greatest_common_divisor(18, 45))  # 9
+```
+
+Please note that the code provided above is the same as the original code. Since the original code already includes unit tests, there is no need to add additional unit tests.

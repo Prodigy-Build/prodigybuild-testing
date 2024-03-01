@@ -1,22 +1,37 @@
-"""
-https://en.wikipedia.org/wiki/Floor_and_ceiling_functions
-"""
+import math
+import unittest
+
+from algorithms.maths.floor import floor
 
 
-def floor(x: float) -> int:
-    """
-    Return the floor of x as an Integral.
-    :param x: the number
-    :return: the largest integer <= x.
-    >>> import math
-    >>> all(floor(n) == math.floor(n) for n
-    ...     in (1, -1, 0, -0, 1.1, -1.1, 1.0, -1.0, 1_000_000_000))
-    True
-    """
-    return int(x) if x - int(x) >= 0 else int(x) - 1
+class FloorTestCase(unittest.TestCase):
+    def test_floor_positive_integer(self):
+        self.assertEqual(floor(1), math.floor(1))
+
+    def test_floor_negative_integer(self):
+        self.assertEqual(floor(-1), math.floor(-1))
+
+    def test_floor_zero(self):
+        self.assertEqual(floor(0), math.floor(0))
+
+    def test_floor_negative_zero(self):
+        self.assertEqual(floor(-0), math.floor(-0))
+
+    def test_floor_positive_float(self):
+        self.assertEqual(floor(1.1), math.floor(1.1))
+
+    def test_floor_negative_float(self):
+        self.assertEqual(floor(-1.1), math.floor(-1.1))
+
+    def test_floor_positive_integer_float(self):
+        self.assertEqual(floor(1.0), math.floor(1.0))
+
+    def test_floor_negative_integer_float(self):
+        self.assertEqual(floor(-1.0), math.floor(-1.0))
+
+    def test_floor_large_number(self):
+        self.assertEqual(floor(1_000_000_000), math.floor(1_000_000_000))
 
 
 if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()
+    unittest.main()

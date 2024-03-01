@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import random
+import unittest
 
 
 class Dice:
@@ -38,7 +39,42 @@ def throw_dice(num_throws: int, num_dice: int = 2) -> list[float]:
     return probability[num_dice:]  # remove probability of sums that never appear
 
 
-if __name__ == "__main__":
-    import doctest
+class TestThrowDice(unittest.TestCase):
+    def test_throw_dice_10_1(self):
+        random.seed(0)
+        self.assertEqual(throw_dice(10, 1), [10.0, 0.0, 30.0, 50.0, 10.0, 0.0])
 
-    doctest.testmod()
+    def test_throw_dice_100_1(self):
+        random.seed(0)
+        self.assertEqual(throw_dice(100, 1), [19.0, 17.0, 17.0, 11.0, 23.0, 13.0])
+
+    def test_throw_dice_1000_1(self):
+        random.seed(0)
+        self.assertEqual(throw_dice(1000, 1), [18.8, 15.5, 16.3, 17.6, 14.2, 17.6])
+
+    def test_throw_dice_10000_1(self):
+        random.seed(0)
+        self.assertEqual(throw_dice(10000, 1), [16.35, 16.89, 16.93, 16.6, 16.52, 16.71])
+
+    def test_throw_dice_10000_2(self):
+        random.seed(0)
+        self.assertEqual(
+            throw_dice(10000, 2),
+            [
+                2.74,
+                5.6,
+                7.99,
+                11.26,
+                13.92,
+                16.7,
+                14.44,
+                10.63,
+                8.05,
+                5.92,
+                2.75,
+            ],
+        )
+
+
+if __name__ == "__main__":
+    unittest.main()

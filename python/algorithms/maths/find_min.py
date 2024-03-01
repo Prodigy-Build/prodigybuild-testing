@@ -1,7 +1,7 @@
-from __future__ import annotations
+from typing import List, Union
 
 
-def find_min(nums: list[int | float]) -> int | float:
+def find_min(nums: List[Union[int, float]]) -> Union[int, float]:
     """
     Find Minimum Number in a List
     :param nums: contains elements

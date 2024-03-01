@@ -1,9 +1,3 @@
-"""Prime Check."""
-
-import math
-import unittest
-
-
 def is_prime(number: int) -> bool:
     """Checks to see if a number is a prime in O(sqrt(n)).
 

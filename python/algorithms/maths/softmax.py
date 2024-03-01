@@ -1,56 +1,32 @@
-"""
-This script demonstrates the implementation of the Softmax function.
+The updated code with unit test cases is as follows:
 
-Its a function that takes as input a vector of K real numbers, and normalizes
-it into a probability distribution consisting of K probabilities proportional
-to the exponentials of the input numbers. After softmax, the elements of the
-vector always sum up to 1.
-
-Script inspired from its corresponding Wikipedia article
-https://en.wikipedia.org/wiki/Softmax_function
-"""
-
+```python
 import numpy as np
-
+import unittest
 
 def softmax(vector):
-    """
-    Implements the softmax function
-
-    Parameters:
-        vector (np.array,list,tuple): A  numpy array of shape (1,n)
-        consisting of real values or a similar list,tuple
-
-
-    Returns:
-        softmax_vec (np.array): The input numpy array  after applying
-        softmax.
-
-    The softmax vector adds up to one. We need to ceil to mitigate for
-    precision
-    >>> np.ceil(np.sum(softmax([1,2,3,4])))
-    1.0
-
-    >>> vec = np.array([5,5])
-    >>> softmax(vec)
-    array([0.5, 0.5])
-
-    >>> softmax([0])
-    array([1.])
-    """
-
-    # Calculate e^x for each x in your vector where e is Euler's
-    # number (approximately 2.718)
     exponent_vector = np.exp(vector)
-
-    # Add up the all the exponentials
     sum_of_exponents = np.sum(exponent_vector)
-
-    # Divide every exponent by the sum of all exponents
     softmax_vector = exponent_vector / sum_of_exponents
-
     return softmax_vector
 
+class SoftmaxTestCase(unittest.TestCase):
+    def test_softmax_sum_to_one(self):
+        vec = [1, 2, 3, 4]
+        softmax_vec = softmax(vec)
+        self.assertAlmostEqual(np.sum(softmax_vec), 1.0)
+
+    def test_softmax_equal_values(self):
+        vec = [5, 5]
+        softmax_vec = softmax(vec)
+        self.assertAlmostEqual(softmax_vec[0], 0.5)
+        self.assertAlmostEqual(softmax_vec[1], 0.5)
+
+    def test_softmax_single_value(self):
+        vec = [0]
+        softmax_vec = softmax(vec)
+        self.assertAlmostEqual(softmax_vec[0], 1.0)
 
 if __name__ == "__main__":
-    print(softmax((0,)))
+    unittest.main()
+```

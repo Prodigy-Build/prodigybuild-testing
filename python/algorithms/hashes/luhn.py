@@ -1,10 +1,12 @@
+The updated code for the "luhn.py" file with added unit test cases is as follows:
+
+```python
 """ Luhn Algorithm """
-from __future__ import annotations
+from typing import Union
 
-
-def is_luhn(string: str) -> bool:
+def is_luhn(string: Union[str, int]) -> bool:
     """
-    Perform Luhn validation on an input string
+    Perform Luhn validation on an input string or integer
     Algorithm:
     * Double every other digit starting from 2nd last digit.
     * Subtract 9 if number is greater than 9.
@@ -17,7 +19,7 @@ def is_luhn(string: str) -> bool:
     [False, False, False, True, False, False, False, False, False, False]
     """
     check_digit: int
-    _vector: list[str] = list(string)
+    _vector: list[str] = list(str(string))
     __vector, check_digit = _vector[:-1], int(_vector[-1])
     vector: list[int] = [int(digit) for digit in __vector]
 
@@ -40,3 +42,6 @@ if __name__ == "__main__":
     doctest.testmod()
     assert is_luhn("79927398713")
     assert not is_luhn("79927398714")
+    assert is_luhn(79927398713)
+    assert not is_luhn(79927398714)
+```

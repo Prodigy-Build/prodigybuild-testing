@@ -1,30 +1,9 @@
-# Python program to show the usage of Fermat's little theorem in a division
-# According to Fermat's little theorem, (a / b) mod p always equals
-# a * (b ^ (p - 2)) mod p
-# Here we assume that p is a prime number, b divides a, and p doesn't divide b
-# Wikipedia reference: https://en.wikipedia.org/wiki/Fermat%27s_little_theorem
+def test_fermat_little_theorem():
+    assert binary_exponentiation(2, 0, 5) == 1
+    assert binary_exponentiation(2, 1, 5) == 2
+    assert binary_exponentiation(2, 2, 5) == 4
+    assert binary_exponentiation(2, 3, 5) == 3
+    assert binary_exponentiation(2, 4, 5) == 1
 
-
-def binary_exponentiation(a, n, mod):
-    if n == 0:
-        return 1
-
-    elif n % 2 == 1:
-        return (binary_exponentiation(a, n - 1, mod) * a) % mod
-
-    else:
-        b = binary_exponentiation(a, n / 2, mod)
-        return (b * b) % mod
-
-
-# a prime number
-p = 701
-
-a = 1000000000
-b = 10
-
-# using binary exponentiation function, O(log(p)):
-print((a / b) % p == (a * binary_exponentiation(b, p - 2, p)) % p)
-
-# using Python operators:
-print((a / b) % p == (a * b ** (p - 2)) % p)
+    assert (1000000000 / 10) % 701 == (1000000000 * binary_exponentiation(10, 701 - 2, 701)) % 701
+    assert (1000000000 / 10) % 701 == (1000000000 * 10 ** (701 - 2)) % 701

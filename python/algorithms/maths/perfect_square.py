@@ -1,59 +1,22 @@
 import math
-
+import unittest
 
 def perfect_square(num: int) -> bool:
     """
     Check if a number is perfect square number or not
     :param num: the number to be checked
     :return: True if number is square number, otherwise False
-
-    >>> perfect_square(9)
-    True
-    >>> perfect_square(16)
-    True
-    >>> perfect_square(1)
-    True
-    >>> perfect_square(0)
-    True
-    >>> perfect_square(10)
-    False
     """
-    return math.sqrt(num) * math.sqrt(num) == num
-
+    return math.isqrt(num) ** 2 == num
 
 def perfect_square_binary_search(n: int) -> bool:
     """
     Check if a number is perfect square using binary search.
     Time complexity : O(Log(n))
     Space complexity: O(1)
-
-    >>> perfect_square_binary_search(9)
-    True
-    >>> perfect_square_binary_search(16)
-    True
-    >>> perfect_square_binary_search(1)
-    True
-    >>> perfect_square_binary_search(0)
-    True
-    >>> perfect_square_binary_search(10)
-    False
-    >>> perfect_square_binary_search(-1)
-    False
-    >>> perfect_square_binary_search(1.1)
-    False
-    >>> perfect_square_binary_search("a")
-    Traceback (most recent call last):
-        ...
-    TypeError: '<=' not supported between instances of 'int' and 'str'
-    >>> perfect_square_binary_search(None)
-    Traceback (most recent call last):
-        ...
-    TypeError: '<=' not supported between instances of 'int' and 'NoneType'
-    >>> perfect_square_binary_search([])
-    Traceback (most recent call last):
-        ...
-    TypeError: '<=' not supported between instances of 'int' and 'list'
     """
+    if not isinstance(n, int) or n < 0:
+        return False
     left = 0
     right = n
     while left <= right:
@@ -66,8 +29,25 @@ def perfect_square_binary_search(n: int) -> bool:
             left = mid + 1
     return False
 
+class PerfectSquareTestCase(unittest.TestCase):
+    def test_perfect_square(self):
+        self.assertTrue(perfect_square(9))
+        self.assertTrue(perfect_square(16))
+        self.assertTrue(perfect_square(1))
+        self.assertTrue(perfect_square(0))
+        self.assertFalse(perfect_square(10))
+
+    def test_perfect_square_binary_search(self):
+        self.assertTrue(perfect_square_binary_search(9))
+        self.assertTrue(perfect_square_binary_search(16))
+        self.assertTrue(perfect_square_binary_search(1))
+        self.assertTrue(perfect_square_binary_search(0))
+        self.assertFalse(perfect_square_binary_search(10))
+        self.assertFalse(perfect_square_binary_search(-1))
+        self.assertFalse(perfect_square_binary_search(1.1))
+        self.assertFalse(perfect_square_binary_search("a"))
+        self.assertFalse(perfect_square_binary_search(None))
+        self.assertFalse(perfect_square_binary_search([]))
 
 if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()
+    unittest.main()

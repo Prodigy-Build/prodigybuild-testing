@@ -1,31 +1,7 @@
-"""
-Given an array of integer elements and an integer 'k', we are required to find the
-maximum sum of 'k' consecutive elements in the array.
+from typing import List
+from random import randint
 
-Instead of using a nested for loop, in a Brute force approach we will use a technique
-called 'Window sliding technique' where the nested loops can be converted to a single
-loop to reduce time complexity.
-"""
-from __future__ import annotations
-
-
-def max_sum_in_array(array: list[int], k: int) -> int:
-    """
-    Returns the maximum sum of k consecutive elements
-    >>> arr = [1, 4, 2, 10, 2, 3, 1, 0, 20]
-    >>> k = 4
-    >>> max_sum_in_array(arr, k)
-    24
-    >>> k = 10
-    >>> max_sum_in_array(arr,k)
-    Traceback (most recent call last):
-        ...
-    ValueError: Invalid Input
-    >>> arr = [1, 4, 2, 10, 2, 13, 1, 0, 2]
-    >>> k = 4
-    >>> max_sum_in_array(arr, k)
-    27
-    """
+def max_sum_in_array(array: List[int], k: int) -> int:
     if len(array) < k or k < 0:
         raise ValueError("Invalid Input")
     max_sum = current_sum = sum(array[:k])
@@ -34,12 +10,61 @@ def max_sum_in_array(array: list[int], k: int) -> int:
         max_sum = max(max_sum, current_sum)
     return max_sum
 
+def test_max_sum_in_array():
+    arr = [1, 4, 2, 10, 2, 3, 1, 0, 20]
+    k = 4
+    assert max_sum_in_array(arr, k) == 24
 
-if __name__ == "__main__":
-    from doctest import testmod
-    from random import randint
+    k = 10
+    try:
+        max_sum_in_array(arr, k)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Expected ValueError")
 
-    testmod()
-    array = [randint(-1000, 1000) for i in range(100)]
+    arr = [1, 4, 2, 10, 2, 13, 1, 0, 2]
+    k = 4
+    assert max_sum_in_array(arr, k) == 27
+
+    # Additional test cases
+    arr = [1, 2, 3, 4, 5]
+    k = 2
+    assert max_sum_in_array(arr, k) == 9
+
+    arr = [1, 2, 3, 4, 5]
+    k = 5
+    assert max_sum_in_array(arr, k) == 15
+
+    arr = [1, 2, 3, 4, 5]
+    k = 6
+    try:
+        max_sum_in_array(arr, k)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Expected ValueError")
+
+    arr = []
+    k = 2
+    try:
+        max_sum_in_array(arr, k)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Expected ValueError")
+
+    arr = [1, 2, 3, 4, 5]
+    k = -1
+    try:
+        max_sum_in_array(arr, k)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Expected ValueError")
+
+    arr = [randint(-1000, 1000) for i in range(100)]
     k = randint(0, 110)
-    print(f"The maximum sum of {k} consecutive elements is {max_sum_in_array(array,k)}")
+    max_sum_in_array(arr, k)
+
+test_max_sum_in_array()

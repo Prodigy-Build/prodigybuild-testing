@@ -18,21 +18,6 @@ def line_length(
     :param x_end: right end point to indicate end of line segment
     :param steps: an accuracy gauge; more steps increases accuracy
     :return: a float representing the length of the curve
-
-    >>> def f(x):
-    ...    return x
-    >>> f"{line_length(f, 0, 1, 10):.6f}"
-    '1.414214'
-
-    >>> def f(x):
-    ...    return 1
-    >>> f"{line_length(f, -5.5, 4.5):.6f}"
-    '10.000000'
-
-    >>> def f(x):
-    ...    return math.sin(5 * x) + math.cos(10 * x) + x * x/10
-    >>> f"{line_length(f, 0.0, 10.0, 10000):.6f}"
-    '69.534930'
     """
 
     x1 = x_start

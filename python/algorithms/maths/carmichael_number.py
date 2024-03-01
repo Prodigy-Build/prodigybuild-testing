@@ -1,47 +1,27 @@
-"""
-== Carmichael Numbers ==
-A number n is said to be a Carmichael number if it
-satisfies the following modular arithmetic condition:
+import unittest
 
-    power(b, n-1) MOD n = 1,
-    for all b ranging from 1 to n such that b and
-    n are relatively prime, i.e, gcd(b, n) = 1
-
-Examples of Carmichael Numbers: 561, 1105, ...
-https://en.wikipedia.org/wiki/Carmichael_number
-"""
+from algorithms.maths.carmichael_number import gcd, power, is_carmichael_number
 
 
-def gcd(a: int, b: int) -> int:
-    if a < b:
-        return gcd(b, a)
-    if a % b == 0:
-        return b
-    return gcd(b, a % b)
+class TestCarmichaelNumber(unittest.TestCase):
+    def test_gcd(self):
+        self.assertEqual(gcd(10, 25), 5)
+        self.assertEqual(gcd(14, 28), 14)
+        self.assertEqual(gcd(21, 14), 7)
+        self.assertEqual(gcd(17, 23), 1)
 
+    def test_power(self):
+        self.assertEqual(power(2, 3, 5), 3)
+        self.assertEqual(power(3, 4, 7), 4)
+        self.assertEqual(power(4, 5, 9), 4)
+        self.assertEqual(power(5, 6, 11), 1)
 
-def power(x: int, y: int, mod: int) -> int:
-    if y == 0:
-        return 1
-    temp = power(x, y // 2, mod) % mod
-    temp = (temp * temp) % mod
-    if y % 2 == 1:
-        temp = (temp * x) % mod
-    return temp
-
-
-def is_carmichael_number(n: int) -> bool:
-    b = 2
-    while b < n:
-        if gcd(b, n) == 1 and power(b, n - 1, n) != 1:
-            return False
-        b += 1
-    return True
+    def test_is_carmichael_number(self):
+        self.assertTrue(is_carmichael_number(561))
+        self.assertTrue(is_carmichael_number(1105))
+        self.assertFalse(is_carmichael_number(7))
+        self.assertFalse(is_carmichael_number(13))
 
 
 if __name__ == "__main__":
-    number = int(input("Enter number: ").strip())
-    if is_carmichael_number(number):
-        print(f"{number} is a Carmichael Number.")
-    else:
-        print(f"{number} is not a Carmichael Number.")
+    unittest.main()

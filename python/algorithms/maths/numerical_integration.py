@@ -1,3 +1,6 @@
+The updated code for the file "python/algorithms/maths/numerical_integration.py" with added unit test cases is as follows:
+
+```python
 """
 Approximates the area under the curve using the trapezoidal rule
 """
@@ -20,19 +23,6 @@ def trapezoidal_area(
     :param x_end: right end point to indicate end of line segment
     :param steps: an accuracy gauge; more steps increases the accuracy
     :return: a float representing the length of the curve
-
-    >>> def f(x):
-    ...    return 5
-    >>> '%.3f' % trapezoidal_area(f, 12.0, 14.0, 1000)
-    '10.000'
-
-    >>> def f(x):
-    ...    return 9*x**2
-    >>> '%.4f' % trapezoidal_area(f, -4.0, 0, 10000)
-    '192.0000'
-
-    >>> '%.4f' % trapezoidal_area(f, -4.0, 4.0, 10000)
-    '384.0000'
     """
     x1 = x_start
     fx1 = fnc(x_start)
@@ -52,7 +42,6 @@ def trapezoidal_area(
 
 
 if __name__ == "__main__":
-
     def f(x):
         return x**3
 
@@ -63,3 +52,21 @@ if __name__ == "__main__":
         area = trapezoidal_area(f, -5, 5, i)
         print(f"with {i} steps: {area}")
         i *= 10
+
+
+# Unit Test Cases
+def test_trapezoidal_area():
+    def f(x):
+        return 5
+
+    assert '%.3f' % trapezoidal_area(f, 12.0, 14.0, 1000) == '10.000'
+
+    def f(x):
+        return 9*x**2
+
+    assert '%.4f' % trapezoidal_area(f, -4.0, 0, 10000) == '192.0000'
+    assert '%.4f' % trapezoidal_area(f, -4.0, 4.0, 10000) == '384.0000'
+
+
+test_trapezoidal_area()
+```

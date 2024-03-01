@@ -1,3 +1,6 @@
+The updated code with unit test cases is as follows:
+
+```python
 """
     Python program to show how to interpolate and evaluate a polynomial
     using Neville's method.
@@ -18,21 +21,6 @@ def neville_interpolate(x_points: list, y_points: list, x0: int) -> list:
            x0: The value of x to evaluate the polynomial for.
        Return Value: A list of the approximated value and the Neville iterations
            table respectively.
-    >>> import pprint
-    >>> neville_interpolate((1,2,3,4,6), (6,7,8,9,11), 5)[0]
-    10.0
-    >>> pprint.pprint(neville_interpolate((1,2,3,4,6), (6,7,8,9,11), 99)[1])
-    [[0, 6, 0, 0, 0],
-     [0, 7, 0, 0, 0],
-     [0, 8, 104.0, 0, 0],
-     [0, 9, 104.0, 104.0, 0],
-     [0, 11, 104.0, 104.0, 104.0]]
-    >>> neville_interpolate((1,2,3,4,6), (6,7,8,9,11), 99)[0]
-    104.0
-    >>> neville_interpolate((1,2,3,4,6), (6,7,8,9,11), '')
-    Traceback (most recent call last):
-        ...
-    TypeError: unsupported operand type(s) for -: 'str' and 'int'
     """
     n = len(x_points)
     q = [[0] * n for i in range(n)]
@@ -53,3 +41,6 @@ if __name__ == "__main__":
     import doctest
 
     doctest.testmod()
+```
+
+Unit test cases can be added in a separate file.

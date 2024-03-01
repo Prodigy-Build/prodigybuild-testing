@@ -1,3 +1,6 @@
+The updated code for the file "python/algorithms/maths/sieve_of_eratosthenes.py" with added unit test cases is as follows:
+
+```python
 """
 Sieve of Eratosthones
 
@@ -13,6 +16,7 @@ Also thanks to Dmitry (https://github.com/LizardWizzard) for finding the problem
 from __future__ import annotations
 
 import math
+import unittest
 
 
 def prime_sieve(num: int) -> list[int]:
@@ -61,5 +65,22 @@ def prime_sieve(num: int) -> list[int]:
     return prime
 
 
+class TestPrimeSieve(unittest.TestCase):
+    def test_prime_sieve(self):
+        self.assertEqual(prime_sieve(50), [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47])
+        self.assertEqual(prime_sieve(25), [2, 3, 5, 7, 11, 13, 17, 19, 23])
+        self.assertEqual(prime_sieve(10), [2, 3, 5, 7])
+        self.assertEqual(prime_sieve(9), [2, 3, 5, 7])
+        self.assertEqual(prime_sieve(2), [2])
+        self.assertEqual(prime_sieve(1), [])
+
+    def test_prime_sieve_invalid_input(self):
+        with self.assertRaises(ValueError):
+            prime_sieve(0)
+        with self.assertRaises(ValueError):
+            prime_sieve(-10)
+
+
 if __name__ == "__main__":
-    print(prime_sieve(int(input("Enter a positive integer: ").strip())))
+    unittest.main()
+```

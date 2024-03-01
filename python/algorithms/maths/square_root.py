@@ -1,4 +1,5 @@
 import math
+import unittest
 
 
 def fx(x: float, a: float) -> float:
@@ -58,7 +59,22 @@ def square_root_iterative(
     return value
 
 
-if __name__ == "__main__":
-    from doctest import testmod
+class SquareRootIterativeTestCase(unittest.TestCase):
+    def test_square_root_iterative(self):
+        self.assertAlmostEqual(square_root_iterative(4), 2.0)
+        self.assertAlmostEqual(square_root_iterative(3.2), 1.788854381999832)
+        self.assertAlmostEqual(square_root_iterative(140), 11.832159566199232)
 
-    testmod()
+    def test_square_root_iterative_negative_input(self):
+        with self.assertRaises(ValueError):
+            square_root_iterative(-1)
+
+    def test_square_root_iterative_large_input(self):
+        for i in range(500):
+            self.assertAlmostEqual(
+                square_root_iterative(i), math.sqrt(i), delta=0.00000000000001
+            )
+
+
+if __name__ == "__main__":
+    unittest.main()

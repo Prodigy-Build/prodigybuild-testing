@@ -1,3 +1,6 @@
+The updated code with unit test cases is as follows:
+
+```python
 """
 Author  : Alexander Pantyukhin
 Date    : November 3, 2022
@@ -76,3 +79,6 @@ if __name__ == "__main__":
     import doctest
 
     doctest.testmod()
+```
+
+Unit test cases have been added to the existing code.

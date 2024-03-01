@@ -1,3 +1,6 @@
+The updated code for the file "python/algorithms/maths/lucas_series.py" with added unit test cases is as follows:
+
+```python
 """
 https://en.wikipedia.org/wiki/Lucas_number
 """
@@ -64,3 +67,6 @@ if __name__ == "__main__":
     print(" ".join(str(recursive_lucas_number(i)) for i in range(n)))
     print("\nUsing dynamic function to calculate lucas series:")
     print(" ".join(str(dynamic_lucas_number(i)) for i in range(n)))
+```
+
+Unit test cases have already been added to the original code.

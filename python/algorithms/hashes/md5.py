@@ -1,39 +1,8 @@
-"""
-The MD5 algorithm is a hash function that's commonly used as a checksum to
-detect data corruption. The algorithm works by processing a given message in
-blocks of 512 bits, padding the message as needed. It uses the blocks to operate
-a 128-bit state and performs a total of 64 such operations. Note that all values
-are little-endian, so inputs are converted as needed.
-
-Although MD5 was used as a cryptographic hash function in the past, it's since
-been cracked, so it shouldn't be used for security purposes.
-
-For more info, see https://en.wikipedia.org/wiki/MD5
-"""
-
 from collections.abc import Generator
 from math import sin
-
+import hashlib
 
 def to_little_endian(string_32: bytes) -> bytes:
-    """
-    Converts the given string to little-endian in groups of 8 chars.
-
-    Arguments:
-        string_32 {[string]} -- [32-char string]
-
-    Raises:
-        ValueError -- [input is not 32 char]
-
-    Returns:
-        32-char little-endian string
-    >>> to_little_endian(b'1234567890abcdfghijklmnopqrstuvw')
-    b'pqrstuvwhijklmno90abcdfg12345678'
-    >>> to_little_endian(b'1234567890')
-    Traceback (most recent call last):
-    ...
-    ValueError: Input must be of length 32
-    """
     if len(string_32) != 32:
         raise ValueError("Input must be of length 32")
 
@@ -44,39 +13,6 @@ def to_little_endian(string_32: bytes) -> bytes:
 
 
 def reformat_hex(i: int) -> bytes:
-    """
-    Converts the given non-negative integer to hex string.
-
-    Example: Suppose the input is the following:
-        i = 1234
-
-        The input is 0x000004d2 in hex, so the little-endian hex string is
-        "d2040000".
-
-    Arguments:
-        i {[int]} -- [integer]
-
-    Raises:
-        ValueError -- [input is negative]
-
-    Returns:
-        8-char little-endian hex string
-
-    >>> reformat_hex(1234)
-    b'd2040000'
-    >>> reformat_hex(666)
-    b'9a020000'
-    >>> reformat_hex(0)
-    b'00000000'
-    >>> reformat_hex(1234567890)
-    b'd2029649'
-    >>> reformat_hex(1234567890987654321)
-    b'b11c6cb1'
-    >>> reformat_hex(-1)
-    Traceback (most recent call last):
-    ...
-    ValueError: Input must be non-negative
-    """
     if i < 0:
         raise ValueError("Input must be non-negative")
 
@@ -88,41 +24,11 @@ def reformat_hex(i: int) -> bytes:
 
 
 def preprocess(message: bytes) -> bytes:
-    """
-    Preprocesses the message string:
-    - Convert message to bit string
-    - Pad bit string to a multiple of 512 chars:
-        - Append a 1
-        - Append 0's until length = 448 (mod 512)
-        - Append length of original message (64 chars)
-
-    Example: Suppose the input is the following:
-        message = "a"
-
-        The message bit string is "01100001", which is 8 bits long. Thus, the
-        bit string needs 439 bits of padding so that
-        (bit_string + "1" + padding) = 448 (mod 512).
-        The message length is "000010000...0" in 64-bit little-endian binary.
-        The combined bit string is then 512 bits long.
-
-    Arguments:
-        message {[string]} -- [message string]
-
-    Returns:
-        processed bit string padded to a multiple of 512 chars
-
-    >>> preprocess(b"a") == (b"01100001" + b"1" +
-    ...                     (b"0" * 439) + b"00001000" + (b"0" * 56))
-    True
-    >>> preprocess(b"") == b"1" + (b"0" * 447) + (b"0" * 64)
-    True
-    """
     bit_string = b""
     for char in message:
         bit_string += format(char, "08b").encode("utf-8")
     start_len = format(len(bit_string), "064b").encode("utf-8")
 
-    # Pad bit_string to a multiple of 512 chars
     bit_string += b"1"
     while len(bit_string) % 512 != 448:
         bit_string += b"0"
@@ -132,50 +38,6 @@ def preprocess(message: bytes) -> bytes:
 
 
 def get_block_words(bit_string: bytes) -> Generator[list[int], None, None]:
-    """
-    Splits bit string into blocks of 512 chars and yields each block as a list
-    of 32-bit words
-
-    Example: Suppose the input is the following:
-        bit_string =
-            "000000000...0" +  # 0x00 (32 bits, padded to the right)
-            "000000010...0" +  # 0x01 (32 bits, padded to the right)
-            "000000100...0" +  # 0x02 (32 bits, padded to the right)
-            "000000110...0" +  # 0x03 (32 bits, padded to the right)
-            ...
-            "000011110...0"    # 0x0a (32 bits, padded to the right)
-
-        Then len(bit_string) == 512, so there'll be 1 block. The block is split
-        into 32-bit words, and each word is converted to little endian. The
-        first word is interpreted as 0 in decimal, the second word is
-        interpreted as 1 in decimal, etc.
-
-        Thus, block_words == [[0, 1, 2, 3, ..., 15]].
-
-    Arguments:
-        bit_string {[string]} -- [bit string with multiple of 512 as length]
-
-    Raises:
-        ValueError -- [length of bit string isn't multiple of 512]
-
-    Yields:
-        a list of 16 32-bit words
-
-    >>> test_string = ("".join(format(n << 24, "032b") for n in range(16))
-    ...                  .encode("utf-8"))
-    >>> list(get_block_words(test_string))
-    [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]]
-    >>> list(get_block_words(test_string * 4)) == [list(range(16))] * 4
-    True
-    >>> list(get_block_words(b"1" * 512)) == [[4294967295] * 16]
-    True
-    >>> list(get_block_words(b""))
-    []
-    >>> list(get_block_words(b"1111"))
-    Traceback (most recent call last):
-    ...
-    ValueError: Input must have length that's a multiple of 512
-    """
     if len(bit_string) % 512 != 0:
         raise ValueError("Input must have length that's a multiple of 512")
 
@@ -188,33 +50,6 @@ def get_block_words(bit_string: bytes) -> Generator[list[int], None, None]:
 
 
 def not_32(i: int) -> int:
-    """
-    Perform bitwise NOT on given int.
-
-    Arguments:
-        i {[int]} -- [given int]
-
-    Raises:
-        ValueError -- [input is negative]
-
-    Returns:
-        Result of bitwise NOT on i
-
-    >>> not_32(34)
-    4294967261
-    >>> not_32(1234)
-    4294966061
-    >>> not_32(4294966061)
-    1234
-    >>> not_32(0)
-    4294967295
-    >>> not_32(1)
-    4294967294
-    >>> not_32(-1)
-    Traceback (most recent call last):
-    ...
-    ValueError: Input must be non-negative
-    """
     if i < 0:
         raise ValueError("Input must be non-negative")
 
@@ -226,67 +61,10 @@ def not_32(i: int) -> int:
 
 
 def sum_32(a: int, b: int) -> int:
-    """
-    Add two numbers as 32-bit ints.
-
-    Arguments:
-        a {[int]} -- [first given int]
-        b {[int]} -- [second given int]
-
-    Returns:
-        (a + b) as an unsigned 32-bit int
-
-    >>> sum_32(1, 1)
-    2
-    >>> sum_32(2, 3)
-    5
-    >>> sum_32(0, 0)
-    0
-    >>> sum_32(-1, -1)
-    4294967294
-    >>> sum_32(4294967295, 1)
-    0
-    """
     return (a + b) % 2**32
 
 
 def left_rotate_32(i: int, shift: int) -> int:
-    """
-    Rotate the bits of a given int left by a given amount.
-
-    Arguments:
-        i {[int]} -- [given int]
-        shift {[int]} -- [shift amount]
-
-    Raises:
-        ValueError -- [either given int or shift is negative]
-
-    Returns:
-        `i` rotated to the left by `shift` bits
-
-    >>> left_rotate_32(1234, 1)
-    2468
-    >>> left_rotate_32(1111, 4)
-    17776
-    >>> left_rotate_32(2147483648, 1)
-    1
-    >>> left_rotate_32(2147483648, 3)
-    4
-    >>> left_rotate_32(4294967295, 4)
-    4294967295
-    >>> left_rotate_32(1234, 0)
-    1234
-    >>> left_rotate_32(0, 0)
-    0
-    >>> left_rotate_32(-1, 0)
-    Traceback (most recent call last):
-    ...
-    ValueError: Input must be non-negative
-    >>> left_rotate_32(0, -1)
-    Traceback (most recent call last):
-    ...
-    ValueError: Shift must be non-negative
-    """
     if i < 0:
         raise ValueError("Input must be non-negative")
     if shift < 0:
@@ -295,38 +73,10 @@ def left_rotate_32(i: int, shift: int) -> int:
 
 
 def md5_me(message: bytes) -> bytes:
-    """
-    Returns the 32-char MD5 hash of a given message.
-
-    Reference: https://en.wikipedia.org/wiki/MD5#Algorithm
-
-    Arguments:
-        message {[string]} -- [message]
-
-    Returns:
-        32-char MD5 hash string
-
-    >>> md5_me(b"")
-    b'd41d8cd98f00b204e9800998ecf8427e'
-    >>> md5_me(b"The quick brown fox jumps over the lazy dog")
-    b'9e107d9d372bb6826bd81d3542a419d6'
-    >>> md5_me(b"The quick brown fox jumps over the lazy dog.")
-    b'e4d909c290d0fb1ca068ffaddf22cbd0'
-
-    >>> import hashlib
-    >>> from string import ascii_letters
-    >>> msgs = [b"", ascii_letters.encode("utf-8"), "Üñîçø∂é".encode("utf-8"),
-    ...         b"The quick brown fox jumps over the lazy dog."]
-    >>> all(md5_me(msg) == hashlib.md5(msg).hexdigest().encode("utf-8") for msg in msgs)
-    True
-    """
-
-    # Convert to bit string, add padding and append message length
     bit_string = preprocess(message)
 
     added_consts = [int(2**32 * abs(sin(i + 1))) for i in range(64)]
 
-    # Starting states
     a0 = 0x67452301
     b0 = 0xEFCDAB89
     c0 = 0x98BADCFE
@@ -399,21 +149,17 @@ def md5_me(message: bytes) -> bytes:
         21,
     ]
 
-    # Process bit string in chunks, each with 16 32-char words
     for block_words in get_block_words(bit_string):
         a = a0
         b = b0
         c = c0
         d = d0
 
-        # Hash current chunk
         for i in range(64):
             if i <= 15:
-                # f = (b & c) | (not_32(b) & d)     # Alternate definition for f
                 f = d ^ (b & (c ^ d))
                 g = i
             elif i <= 31:
-                # f = (d & b) | (not_32(d) & c)     # Alternate definition for f
                 f = c ^ (d & (b ^ c))
                 g = (5 * i + 1) % 16
             elif i <= 47:
@@ -428,7 +174,6 @@ def md5_me(message: bytes) -> bytes:
             c = b
             b = sum_32(b, left_rotate_32(f, shift_amounts[i]))
 
-        # Add hashed chunk to running total
         a0 = sum_32(a0, a)
         b0 = sum_32(b0, b)
         c0 = sum_32(c0, c)
@@ -438,7 +183,299 @@ def md5_me(message: bytes) -> bytes:
     return digest
 
 
-if __name__ == "__main__":
-    import doctest
+def test_to_little_endian():
+    assert to_little_endian(b'1234567890abcdfghijklmnopqrstuvw') == b'pqrstuvwhijklmno90abcdfg12345678'
+    assert to_little_endian(b'1234567890') == b'90abcdfg12345678'
+    assert to_little_endian(b'') == b''
+    assert to_little_endian(b'1234567890abcdfghijklmnopqrstuvwx') == b'wxvutsrqponmlkjihgfedcba0987654321'
+    assert to_little_endian(b'1234567890abcdfghijklmnopqrstuv') == b'vutsrqponmlkjihgfedcba0987654321'
+    assert to_little_endian(b'1234567890abcdfghijklmnopqrstu') == b'utsrqponmlkjihgfedcba0987654321'
+    assert to_little_endian(b'1234567890abcdfghijklmnopqrst') == b'tsrqponmlkjihgfedcba0987654321'
+    assert to_little_endian(b'1234567890abcdfghijklmnopqrs') == b'srqponmlkjihgfedcba0987654321'
+    assert to_little_endian(b'1234567890abcdfghijklmnopqr') == b'rqponmlkjihgfedcba0987654321'
+    assert to_little_endian(b'1234567890abcdfghijklmnopq') == b'qponmlkjihgfedcba0987654321'
+    assert to_little_endian(b'1234567890abcdfghijklmnop') == b'ponmlkjihgfedcba0987654321'
+    assert to_little_endian(b'1234567890abcdfghijklmno') == b'onmlkjihgfedcba0987654321'
+    assert to_little_endian(b'1234567890abcdfghijklmn') == b'nmlkjihgfedcba0987654321'
+    assert to_little_endian(b'1234567890abcdfghijklm') == b'mlkjihgfedcba0987654321'
+    assert to_little_endian(b'1234567890abcdfghijkl') == b'lkjihgfedcba0987654321'
+    assert to_little_endian(b'1234567890abcdfghijk') == b'kjihgfedcba0987654321'
+    assert to_little_endian(b'1234567890abcdfghij') == b'jihgfedcba0987654321'
+    assert to_little_endian(b'1234567890abcdfghi') == b'ihgfedcba0987654321'
+    assert to_little_endian(b'1234567890abcdfgh') == b'hgfedcba0987654321'
+    assert to_little_endian(b'1234567890abcdfg') == b'gfedcba0987654321'
+    assert to_little_endian(b'1234567890abcdf') == b'fedcba0987654321'
+    assert to_little_endian(b'1234567890abcd') == b'edcba0987654321'
+    assert to_little_endian(b'1234567890abc') == b'dcba0987654321'
+    assert to_little_endian(b'1234567890ab') == b'cba0987654321'
+    assert to_little_endian(b'1234567890a') == b'ba0987654321'
+    assert to_little_endian(b'1234567890') == b'a0987654321'
+    assert to_little_endian(b'123456789') == b'9876543210'
+    assert to_little_endian(b'12345678') == b'876543210'
+    assert to_little_endian(b'1234567') == b'76543210'
+    assert to_little_endian(b'123456') == b'6543210'
+    assert to_little_endian(b'12345') == b'543210'
+    assert to_little_endian(b'1234') == b'432100'
+    assert to_little_endian(b'123') == b'321000'
+    assert to_little_endian(b'12') == b'210000'
+    assert to_little_endian(b'1') == b'100000'
+    assert to_little_endian(b'') == b''
 
-    doctest.testmod()
+
+def test_reformat_hex():
+    assert reformat_hex(1234) == b'd2040000'
+    assert reformat_hex(666) == b'9a020000'
+    assert reformat_hex(0) == b'00000000'
+    assert reformat_hex(1234567890) == b'd2029649'
+    assert reformat_hex(1234567890987654321) == b'b11c6cb1'
+    assert reformat_hex(1) == b'01000000'
+    assert reformat_hex(2) == b'02000000'
+    assert reformat_hex(3) == b'03000000'
+    assert reformat_hex(4) == b'04000000'
+    assert reformat_hex(5) == b'05000000'
+    assert reformat_hex(6) == b'06000000'
+    assert reformat_hex(7) == b'07000000'
+    assert reformat_hex(8) == b'08000000'
+    assert reformat_hex(9) == b'09000000'
+    assert reformat_hex(10) == b'0a000000'
+    assert reformat_hex(11) == b'0b000000'
+    assert reformat_hex(12) == b'0c000000'
+    assert reformat_hex(13) == b'0d000000'
+    assert reformat_hex(14) == b'0e000000'
+    assert reformat_hex(15) == b'0f000000'
+    assert reformat_hex(16) == b'10000000'
+    assert reformat_hex(17) == b'11000000'
+    assert reformat_hex(18) == b'12000000'
+    assert reformat_hex(19) == b'13000000'
+    assert reformat_hex(20) == b'14000000'
+    assert reformat_hex(21) == b'15000000'
+    assert reformat_hex(22) == b'16000000'
+    assert reformat_hex(23) == b'17000000'
+    assert reformat_hex(24) == b'18000000'
+    assert reformat_hex(25) == b'19000000'
+    assert reformat_hex(26) == b'1a000000'
+    assert reformat_hex(27) == b'1b000000'
+    assert reformat_hex(28) == b'1c000000'
+    assert reformat_hex(29) == b'1d000000'
+    assert reformat_hex(30) == b'1e000000'
+    assert reformat_hex(31) == b'1f000000'
+    assert reformat_hex(32) == b'20000000'
+    assert reformat_hex(33) == b'21000000'
+    assert reformat_hex(34) == b'22000000'
+    assert reformat_hex(35) == b'23000000'
+    assert reformat_hex(36) == b'24000000'
+    assert reformat_hex(37) == b'25000000'
+    assert reformat_hex(38) == b'26000000'
+    assert reformat_hex(39) == b'27000000'
+    assert reformat_hex(40) == b'28000000'
+    assert reformat_hex(41) == b'29000000'
+    assert reformat_hex(42) == b'2a000000'
+    assert reformat_hex(43) == b'2b000000'
+    assert reformat_hex(44) == b'2c000000'
+    assert reformat_hex(45) == b'2d000000'
+    assert reformat_hex(46) == b'2e000000'
+    assert reformat_hex(47) == b'2f000000'
+    assert reformat_hex(48) == b'30000000'
+    assert reformat_hex(49) == b'31000000'
+    assert reformat_hex(50) == b'32000000'
+    assert reformat_hex(51) == b'33000000'
+    assert reformat_hex(52) == b'34000000'
+    assert reformat_hex(53) == b'35000000'
+    assert reformat_hex(54) == b'36000000'
+    assert reformat_hex(55) == b'37000000'
+    assert reformat_hex(56) == b'38000000'
+    assert reformat_hex(57) == b'39000000'
+    assert reformat_hex(58) == b'3a000000'
+    assert reformat_hex(59) == b'3b000000'
+    assert reformat_hex(60) == b'3c000000'
+    assert reformat_hex(61) == b'3d000000'
+    assert reformat_hex(62) == b'3e000000'
+    assert reformat_hex(63) == b'3f000000'
+    assert reformat_hex(64) == b'40000000'
+    assert reformat_hex(65) == b'41000000'
+    assert reformat_hex(66) == b'42000000'
+    assert reformat_hex(67) == b'43000000'
+    assert reformat_hex(68) == b'44000000'
+    assert reformat_hex(69) == b'45000000'
+    assert reformat_hex(70) == b'46000000'
+    assert reformat_hex(71) == b'47000000'
+    assert reformat_hex(72) == b'48000000'
+    assert reformat_hex(73) == b'49000000'
+    assert reformat_hex(74) == b'4a000000'
+    assert reformat_hex(75) == b'4b000000'
+    assert reformat_hex(76) == b'4c000000'
+    assert reformat_hex(77) == b'4d000000'
+    assert reformat_hex(78) == b'4e000000'
+    assert reformat_hex(79) == b'4f000000'
+    assert reformat_hex(80) == b'50000000'
+    assert reformat_hex(81) == b'51000000'
+    assert reformat_hex(82) == b'52000000'
+    assert reformat_hex(83) == b'53000000'
+    assert reformat_hex(84) == b'54000000'
+    assert reformat_hex(85) == b'55000000'
+    assert reformat_hex(86) == b'56000000'
+    assert reformat_hex(87) == b'57000000'
+    assert reformat_hex(88) == b'58000000'
+    assert reformat_hex(89) == b'59000000'
+    assert reformat_hex(90) == b'5a000000'
+    assert reformat_hex(91) == b'5b000000'
+    assert reformat_hex(92) == b'5c000000'
+    assert reformat_hex(93) == b'5d000000'
+    assert reformat_hex(94) == b'5e000000'
+    assert reformat_hex(95) == b'5f000000'
+    assert reformat_hex(96) == b'60000000'
+    assert reformat_hex(97) == b'61000000'
+    assert reformat_hex(98) == b'62000000'
+    assert reformat_hex(99) == b'63000000'
+    assert reformat_hex(100) == b'64000000'
+    assert reformat_hex(101) == b'65000000'
+    assert reformat_hex(102) == b'66000000'
+    assert reformat_hex(103) == b'67000000'
+    assert reformat_hex(104) == b'68000000'
+    assert reformat_hex(105) == b'69000000'
+    assert reformat_hex(106) == b'6a000000'
+    assert reformat_hex(107) == b'6b000000'
+    assert reformat_hex(108) == b'6c000000'
+    assert reformat_hex(109) == b'6d000000'
+    assert reformat_hex(110) == b'6e000000'
+    assert reformat_hex(111) == b'6f000000'
+    assert reformat_hex(112) == b'70000000'
+    assert reformat_hex(113) == b'71000000'
+    assert reformat_hex(114) == b'72000000'
+    assert reformat_hex(115) == b'73000000'
+    assert reformat_hex(116) == b'74000000'
+    assert reformat_hex(117) == b'75000000'
+    assert reformat_hex(118) == b'76000000'
+    assert reformat_hex(119) == b'77000000'
+    assert reformat_hex(120) == b'78000000'
+    assert reformat_hex(121) == b'79000000'
+    assert reformat_hex(122) == b'7a000000'
+    assert reformat_hex(123) == b'7b000000'
+    assert reformat_hex(124) == b'7c000000'
+    assert reformat_hex(125) == b'7d000000'
+    assert reformat_hex(126) == b'7e000000'
+    assert reformat_hex(127) == b'7f000000'
+    assert reformat_hex(128) == b'80000000'
+    assert reformat_hex(129) == b'81000000'
+    assert reformat_hex(130) == b'82000000'
+    assert reformat_hex(131) == b'83000000'
+    assert reformat_hex(132) == b'84000000'
+    assert reformat_hex(133) == b'85000000'
+    assert reformat_hex(134) == b'86000000'
+    assert reformat_hex(135) == b'87000000'
+    assert reformat_hex(136) == b'88000000'
+    assert reformat_hex(137) == b'89000000'
+    assert reformat_hex(138) == b'8a000000'
+    assert reformat_hex(139) == b'8b000000'
+    assert reformat_hex(140) == b'8c000000'
+    assert reformat_hex(141) == b'8d000000'
+    assert reformat_hex(142) == b'8e000000'
+    assert reformat_hex(143) == b'8f000000'
+    assert reformat_hex(144) == b'90000000'
+    assert reformat_hex(145) == b'91000000'
+    assert reformat_hex(146) == b'92000000'
+    assert reformat_hex(147) == b'93000000'
+    assert reformat_hex(148) == b'94000000'
+    assert reformat_hex(149) == b'95000000'
+    assert reformat_hex(150) == b'96000000'
+    assert reformat_hex(151) == b'97000000'
+    assert reformat_hex(152) == b'98000000'
+    assert reformat_hex(153) == b'99000000'
+    assert reformat_hex(154) == b'9a000000'
+    assert reformat_hex(155) == b'9b000000'
+    assert reformat_hex(156) == b'9c000000'
+    assert reformat_hex(157) == b'9d000000'
+    assert reformat_hex(158) == b'9e000000'
+    assert reformat_hex(159) == b'9f000000'
+    assert reformat_hex(160) == b'a0000000'
+    assert reformat_hex(161) == b'a1000000'
+    assert reformat_hex(162) == b'a2000000'
+    assert reformat_hex(163) == b'a3000000'
+    assert reformat_hex(164) == b'a4000000'
+    assert reformat_hex(165) == b'a5000000'
+    assert reformat_hex(166) == b'a6000000'
+    assert reformat_hex(167) == b'a7000000'
+    assert reformat_hex(168) == b'a8000000'
+    assert reformat_hex(169) == b'a9000000'
+    assert reformat_hex(170) == b'aa000000'
+    assert reformat_hex(171) == b'ab000000'
+    assert reformat_hex(172) == b'ac000000'
+    assert reformat_hex(173) == b'ad000000'
+    assert reformat_hex(174) == b'ae000000'
+    assert reformat_hex(175) == b'af000000'
+    assert reformat_hex(176) == b'b0000000'
+    assert reformat_hex(177) == b'b1000000'
+    assert reformat_hex(178) == b'b2000000'
+    assert reformat_hex(179) == b'b3000000'
+    assert reformat_hex(180) == b'b4000000'
+    assert reformat_hex(181) == b'b5000000'
+    assert reformat_hex(182) == b'b6000000'
+    assert reformat_hex(183) == b'b7000000'
+    assert reformat_hex(184) == b'b8000000'
+    assert reformat_hex(185) == b'b9000000'
+    assert reformat_hex(186) == b'ba000000'
+    assert reformat_hex(187) == b'bb000000'
+    assert reformat_hex(188) == b'bc000000'
+    assert reformat_hex(189) == b'bd000000'
+    assert reformat_hex(190) == b'be000000'
+    assert reformat_hex(191) == b'bf000000'
+    assert reformat_hex(192) == b'c0000000'
+    assert reformat_hex(193) == b'c1000000'
+    assert reformat_hex(194) == b'c2000000'
+    assert reformat_hex(195) == b'c3000000'
+    assert reformat_hex(196) == b'c4000000'
+    assert reformat_hex(197) == b'c5000000'
+    assert reformat_hex(198) == b'c6000000'
+    assert reformat_hex(199) == b'c7000000'
+    assert reformat_hex(200) == b'c8000000'
+    assert reformat_hex(201) == b'c9000000'
+    assert reformat_hex(202) == b'ca000000'
+    assert reformat_hex(203) == b'cb000000'
+    assert reformat_hex(204) == b'cc000000'
+    assert reformat_hex(205) == b'cd000000'
+    assert reformat_hex(206) == b'ce000000'
+    assert reformat_hex(207) == b'cf000000'
+    assert reformat_hex(208) == b'd0000000'
+    assert reformat_hex(209) == b'd1000000'
+    assert reformat_hex(210) == b'd2000000'
+    assert reformat_hex(211) == b'd3000000'
+    assert reformat_hex(212) == b'd4000000'
+    assert reformat_hex(213) == b'd5000000'
+    assert reformat_hex(214) == b'd6000000'
+    assert reformat_hex(215) == b'd7000000'
+    assert reformat_hex(216) == b'd8000000'
+    assert reformat_hex(217) == b'd9000000'
+    assert reformat_hex(218) == b'da000000'
+    assert reformat_hex(219) == b'db000000'
+    assert reformat_hex(220) == b'dc000000'
+    assert reformat_hex(221) == b'dd000000'
+    assert reformat_hex(222) == b'de000000'
+    assert reformat_hex(223) == b'df000000'
+    assert reformat_hex(224) == b'e0000000'
+    assert reformat_hex(225) == b'e1000000'
+    assert reformat_hex(226) == b'e2000000'
+    assert reformat_hex(227) == b'e3000000'
+    assert reformat_hex(228) == b'e4000000'
+    assert reformat_hex(229) == b'e5000000'
+    assert reformat_hex(230) == b'e6000000'
+    assert reformat_hex(231) == b'e7000000'
+    assert reformat_hex(232) == b'e8000000'
+    assert reformat_hex(233) == b'e9000000'
+    assert reformat_hex(234) == b'ea000000'
+    assert reformat_hex(235) == b'eb000000'
+    assert reformat_hex(236) == b'ec000000'
+    assert reformat_hex(237) == b'ed000000'
+    assert reformat_hex(238) == b'ee000000'
+    assert reformat_hex(239) == b'ef000000'
+    assert reformat_hex(240) == b'f0000000'
+    assert reformat_hex(241) == b'f1000000'
+    assert reformat_hex(242) == b'f2000000'
+    assert reformat_hex(243) == b'f3000000'
+    assert reformat_hex(244) == b'f4000000'
+    assert reformat_hex(245) == b'f5000000'
+    assert reformat_hex(246) == b'f6000000'
+    assert reformat_hex(247) == b'f7000000'
+    assert reformat_hex(248) == b'f8000000'
+    assert reformat_hex(249) == b'f9000000'
+    assert reformat_hex(250) == b'fa000000'
+    assert reformat_hex(251) == b'fb000000

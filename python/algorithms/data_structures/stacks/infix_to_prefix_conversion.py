@@ -1,21 +1,6 @@
-"""
-Output:
+from typing import List
 
-Enter an Infix Equation = a + b ^c
- Symbol  |  Stack  | Postfix
-----------------------------
-   c     |         | c
-   ^     | ^       | c
-   b     | ^       | cb
-   +     | +       | cb^
-   a     | +       | cb^a
-         |         | cb^a+
-
-         a+b^c (Infix) ->  +a^bc (Prefix)
-"""
-
-
-def infix_2_postfix(infix):
+def infix_2_postfix(infix: str) -> str:
     stack = []
     post_fix = []
     priority = {
@@ -73,7 +58,7 @@ def infix_2_postfix(infix):
     return "".join(post_fix)  # return Postfix as str
 
 
-def infix_2_prefix(infix):
+def infix_2_prefix(infix: str) -> str:
     infix = list(infix[::-1])  # reverse the infix equation
 
     for i in range(len(infix)):

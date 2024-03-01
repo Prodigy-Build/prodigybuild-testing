@@ -1,10 +1,3 @@
-"""
-References: https://en.wikipedia.org/wiki/M%C3%B6bius_function
-References: wikipedia:square free number
-psf/black : True
-ruff : True
-"""
-
 from maths.is_square_free import is_square_free
 from maths.prime_factors import prime_factors
 

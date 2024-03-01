@@ -1,5 +1,6 @@
 import random
-
+import unittest
+from math import pi
 
 class Point:
     def __init__(self, x: float, y: float) -> None:
@@ -56,12 +57,9 @@ def estimate_pi(number_of_simulations: int) -> float:
     return 4 * number_in_unit_circle / number_of_simulations
 
 
+class TestPiMonteCarloEstimation(unittest.TestCase):
+    def test_estimate_pi(self):
+        self.assertAlmostEqual(estimate_pi(1000000), pi, delta=0.01)
+
 if __name__ == "__main__":
-    # import doctest
-
-    # doctest.testmod()
-    from math import pi
-
-    prompt = "Please enter the desired number of Monte Carlo simulations: "
-    my_pi = estimate_pi(int(input(prompt).strip()))
-    print(f"An estimate of PI is {my_pi} with an error of {abs(my_pi - pi)}")
+    unittest.main()

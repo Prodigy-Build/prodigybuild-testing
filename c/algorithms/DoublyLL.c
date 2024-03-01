@@ -1,6 +1,6 @@
-// Implementing Doubly linked list.
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct Node {
     int value;
@@ -48,16 +48,57 @@ void ReverseDisplay() {
     printf("\n");
 }
 
-void main() {
-    int n, val;
-    printf("Enter number of elements: ");
-    scanf("%d",&n);
+void test_Insert() {
+    Insert(1);
+    assert(head->value == 1);
+    assert(head->next == NULL);
+    assert(head->prev == NULL);
 
-    for (int i=0; i<n; i++) {
-        printf("Enter element: ");
-        scanf("%d",&val);
-        Insert(val); /*Inserting value everytime loop executes*/
-    }
+    Insert(2);
+    assert(head->value == 2);
+    assert(head->next->value == 1);
+    assert(head->next->prev == head);
+    assert(head->next->next == NULL);
+
+    Insert(3);
+    assert(head->value == 3);
+    assert(head->next->value == 2);
+    assert(head->next->prev == head);
+    assert(head->next->next->value == 1);
+    assert(head->next->next->prev == head->next);
+    assert(head->next->next->next == NULL);
+}
+
+void test_Display() {
+    head = NULL;
+    Display(); // Nothing to display
+
+    Insert(1);
+    Insert(2);
+    Insert(3);
+    printf("\nExpected Output: 3 2 1\n");
+    printf("Actual Output: ");
     Display();
+    printf("\n");
+}
+
+void test_ReverseDisplay() {
+    head = NULL;
+    ReverseDisplay(); // Nothing to display
+
+    Insert(1);
+    Insert(2);
+    Insert(3);
+    printf("\nExpected Output: 1 2 3\n");
+    printf("Actual Output: ");
     ReverseDisplay();
+    printf("\n");
+}
+
+int main() {
+    test_Insert();
+    test_Display();
+    test_ReverseDisplay();
+
+    return 0;
 }

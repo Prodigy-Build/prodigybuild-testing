@@ -1,40 +1,43 @@
-def kth_permutation(k, n):
-    """
-    Finds k'th lexicographic permutation (in increasing order) of
-    0,1,2,...n-1 in O(n^2) time.
-
-    Examples:
-    First permutation is always 0,1,2,...n
-    >>> kth_permutation(0,5)
-    [0, 1, 2, 3, 4]
-
-    The order of permutation of 0,1,2,3 is [0,1,2,3], [0,1,3,2], [0,2,1,3],
-    [0,2,3,1], [0,3,1,2], [0,3,2,1], [1,0,2,3], [1,0,3,2], [1,2,0,3],
-    [1,2,3,0], [1,3,0,2]
-    >>> kth_permutation(10,4)
-    [1, 3, 0, 2]
-    """
-    # Factorails from 1! to (n-1)!
-    factorials = [1]
-    for i in range(2, n):
-        factorials.append(factorials[-1] * i)
-    assert 0 <= k < factorials[-1] * n, "k out of bounds"
-
-    permutation = []
-    elements = list(range(n))
-
-    # Find permutation
-    while factorials:
-        factorial = factorials.pop()
-        number, k = divmod(k, factorial)
-        permutation.append(elements[number])
-        elements.remove(elements[number])
-    permutation.append(elements[0])
-
-    return permutation
-
-
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()
+def test_kth_permutation():
+    assert kth_permutation(0, 5) == [0, 1, 2, 3, 4]
+    assert kth_permutation(10, 4) == [1, 3, 0, 2]
+    assert kth_permutation(1, 3) == [0, 2, 1]
+    assert kth_permutation(5, 3) == [2, 1, 0]
+    assert kth_permutation(23, 4) == [1, 3, 2, 0]
+    assert kth_permutation(119, 5) == [4, 3, 2, 1, 0]
+    assert kth_permutation(0, 1) == [0]
+    assert kth_permutation(1, 1) == [1]
+    assert kth_permutation(0, 2) == [0, 1]
+    assert kth_permutation(1, 2) == [1, 0]
+    assert kth_permutation(2, 2) == [1, 0]
+    assert kth_permutation(0, 3) == [0, 1, 2]
+    assert kth_permutation(1, 3) == [0, 2, 1]
+    assert kth_permutation(2, 3) == [1, 0, 2]
+    assert kth_permutation(3, 3) == [1, 2, 0]
+    assert kth_permutation(4, 3) == [2, 0, 1]
+    assert kth_permutation(5, 3) == [2, 1, 0]
+    assert kth_permutation(6, 3) == [2, 1, 0]
+    assert kth_permutation(0, 4) == [0, 1, 2, 3]
+    assert kth_permutation(1, 4) == [0, 1, 3, 2]
+    assert kth_permutation(2, 4) == [0, 2, 1, 3]
+    assert kth_permutation(3, 4) == [0, 2, 3, 1]
+    assert kth_permutation(4, 4) == [0, 3, 1, 2]
+    assert kth_permutation(5, 4) == [0, 3, 2, 1]
+    assert kth_permutation(6, 4) == [1, 0, 2, 3]
+    assert kth_permutation(7, 4) == [1, 0, 3, 2]
+    assert kth_permutation(8, 4) == [1, 2, 0, 3]
+    assert kth_permutation(9, 4) == [1, 2, 3, 0]
+    assert kth_permutation(10, 4) == [1, 3, 0, 2]
+    assert kth_permutation(11, 4) == [1, 3, 2, 0]
+    assert kth_permutation(12, 4) == [2, 0, 1, 3]
+    assert kth_permutation(13, 4) == [2, 0, 3, 1]
+    assert kth_permutation(14, 4) == [2, 1, 0, 3]
+    assert kth_permutation(15, 4) == [2, 1, 3, 0]
+    assert kth_permutation(16, 4) == [2, 3, 0, 1]
+    assert kth_permutation(17, 4) == [2, 3, 1, 0]
+    assert kth_permutation(18, 4) == [3, 0, 1, 2]
+    assert kth_permutation(19, 4) == [3, 0, 2, 1]
+    assert kth_permutation(20, 4) == [3, 1, 0, 2]
+    assert kth_permutation(21, 4) == [3, 1, 2, 0]
+    assert kth_permutation(22, 4) == [3, 2, 0, 1]
+    assert kth_permutation(23, 4) == [3, 2, 1, 0]

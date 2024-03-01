@@ -1,3 +1,6 @@
+The updated code with unit test cases is as follows:
+
+```python
 """
 Calculate the rank of a matrix.
 
@@ -12,46 +15,7 @@ def rank_of_matrix(matrix: list[list[int | float]]) -> int:
         matrix: The matrix as a list of lists.
     Returns:
         The rank of the matrix.
-    Example:
-    >>> matrix1 = [[1, 2, 3],
-    ...            [4, 5, 6],
-    ...            [7, 8, 9]]
-    >>> rank_of_matrix(matrix1)
-    2
-    >>> matrix2 = [[1, 0, 0],
-    ...            [0, 1, 0],
-    ...            [0, 0, 0]]
-    >>> rank_of_matrix(matrix2)
-    2
-    >>> matrix3 = [[1, 2, 3, 4],
-    ...            [5, 6, 7, 8],
-    ...            [9, 10, 11, 12]]
-    >>> rank_of_matrix(matrix3)
-    2
-    >>> rank_of_matrix([[2,3,-1,-1],
-    ...                [1,-1,-2,4],
-    ...                [3,1,3,-2],
-    ...                [6,3,0,-7]])
-    4
-    >>> rank_of_matrix([[2,1,-3,-6],
-    ...                [3,-3,1,2],
-    ...                [1,1,1,2]])
-    3
-    >>> rank_of_matrix([[2,-1,0],
-    ...                [1,3,4],
-    ...                [4,1,-3]])
-    3
-    >>> rank_of_matrix([[3,2,1],
-    ...                [-6,-4,-2]])
-    1
-    >>> rank_of_matrix([[],[]])
-    0
-    >>> rank_of_matrix([[1]])
-    1
-    >>> rank_of_matrix([[]])
-    0
     """
-
     rows = len(matrix)
     columns = len(matrix[0])
     rank = min(rows, columns)
@@ -87,3 +51,55 @@ if __name__ == "__main__":
     import doctest
 
     doctest.testmod()
+```
+
+Unit test cases:
+
+```python
+def test_rank_of_matrix():
+    matrix1 = [[1, 2, 3],
+               [4, 5, 6],
+               [7, 8, 9]]
+    assert rank_of_matrix(matrix1) == 2
+
+    matrix2 = [[1, 0, 0],
+               [0, 1, 0],
+               [0, 0, 0]]
+    assert rank_of_matrix(matrix2) == 2
+
+    matrix3 = [[1, 2, 3, 4],
+               [5, 6, 7, 8],
+               [9, 10, 11, 12]]
+    assert rank_of_matrix(matrix3) == 2
+
+    matrix4 = [[2, 3, -1, -1],
+               [1, -1, -2, 4],
+               [3, 1, 3, -2],
+               [6, 3, 0, -7]]
+    assert rank_of_matrix(matrix4) == 4
+
+    matrix5 = [[2, 1, -3, -6],
+               [3, -3, 1, 2],
+               [1, 1, 1, 2]]
+    assert rank_of_matrix(matrix5) == 3
+
+    matrix6 = [[2, -1, 0],
+               [1, 3, 4],
+               [4, 1, -3]]
+    assert rank_of_matrix(matrix6) == 3
+
+    matrix7 = [[3, 2, 1],
+               [-6, -4, -2]]
+    assert rank_of_matrix(matrix7) == 1
+
+    matrix8 = [[], []]
+    assert rank_of_matrix(matrix8) == 0
+
+    matrix9 = [[1]]
+    assert rank_of_matrix(matrix9) == 1
+
+    matrix10 = [[]]
+    assert rank_of_matrix(matrix10) == 0
+
+test_rank_of_matrix()
+```

@@ -1,22 +1,3 @@
-"""
-Output:
-
-Enter a Postfix Equation (space separated) = 5 6 9 * +
- Symbol  |    Action    | Stack
------------------------------------
-       5 | push(5)      | 5
-       6 | push(6)      | 5,6
-       9 | push(9)      | 5,6,9
-         | pop(9)       | 5,6
-         | pop(6)       | 5
-       * | push(6*9)    | 5,54
-         | pop(54)      | 5
-         | pop(5)       |
-       + | push(5+54)   | 59
-
-        Result =  59
-"""
-
 import operator as op
 
 
@@ -66,3 +47,25 @@ def solve(post_fix):
 if __name__ == "__main__":
     Postfix = input("\n\nEnter a Postfix Equation (space separated) = ").split(" ")
     print("\n\tResult = ", solve(Postfix))
+
+# Unit Test 1: post_fix = ['5', '6', '9', '*', '+']
+# Expected Output: 59
+assert solve(['5', '6', '9', '*', '+']) == 59
+
+# Unit Test 2: post_fix = ['2', '3', '4', '*', '+']
+# Expected Output: 14
+assert solve(['2', '3', '4', '*', '+']) == 14
+
+# Unit Test 3: post_fix = ['1', '2', '3', '*', '+']
+# Expected Output: 7
+assert solve(['1', '2', '3', '*', '+']) == 7
+
+# Unit Test 4: post_fix = ['9', '8', '7', '*', '+']
+# Expected Output: 79
+assert solve(['9', '8', '7', '*', '+']) == 79
+
+# Unit Test 5: post_fix = ['4', '5', '6', '*', '+']
+# Expected Output: 34
+assert solve(['4', '5', '6', '*', '+']) == 34
+
+print("All unit tests pass")

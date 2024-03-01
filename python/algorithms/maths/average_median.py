@@ -1,24 +1,6 @@
-from __future__ import annotations
+from typing import List, Union
 
-
-def median(nums: list) -> int | float:
-    """
-    Find median of a list of numbers.
-    Wiki: https://en.wikipedia.org/wiki/Median
-
-    >>> median([0])
-    0
-    >>> median([4, 1, 3, 2])
-    2.5
-    >>> median([2, 70, 6, 50, 20, 8, 4])
-    8
-
-    Args:
-        nums: List of nums
-
-    Returns:
-        Median.
-    """
+def median(nums: List[Union[int, float]]) -> Union[int, float]:
     sorted_list = sorted(nums)
     length = len(sorted_list)
     mid_index = length >> 1
@@ -28,12 +10,9 @@ def median(nums: list) -> int | float:
         else sorted_list[mid_index]
     )
 
+def test_median():
+    assert median([0]) == 0
+    assert median([4, 1, 3, 2]) == 2.5
+    assert median([2, 70, 6, 50, 20, 8, 4]) == 8
 
-def main():
-    import doctest
-
-    doctest.testmod()
-
-
-if __name__ == "__main__":
-    main()
+test_median()

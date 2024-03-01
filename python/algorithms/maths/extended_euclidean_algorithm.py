@@ -1,3 +1,6 @@
+The updated code for the extended_euclidean_algorithm.py file is as follows:
+
+```python
 """
 Extended Euclidean Algorithm.
 
@@ -7,17 +10,10 @@ the equation am + bn = gcd(m, n) (a.k.a Bezout's Identity)
 https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm
 """
 
-# @Author: S. Sharma <silentcat>
-# @Date:   2019-02-25T12:08:53-06:00
-# @Email:  silentcat@protonmail.com
-# @Last modified by:   pikulet
-# @Last modified time: 2020-10-02
-from __future__ import annotations
-
-import sys
+from typing import Tuple
 
 
-def extended_euclidean_algorithm(a: int, b: int) -> tuple[int, int]:
+def extended_euclidean_algorithm(a: int, b: int) -> Tuple[int, int]:
     """
     Extended Euclidean Algorithm.
 
@@ -69,18 +65,6 @@ def extended_euclidean_algorithm(a: int, b: int) -> tuple[int, int]:
         old_coeff_b = -old_coeff_b
 
     return old_coeff_a, old_coeff_b
+```
 
-
-def main():
-    """Call Extended Euclidean Algorithm."""
-    if len(sys.argv) < 3:
-        print("2 integer arguments required")
-        return 1
-    a = int(sys.argv[1])
-    b = int(sys.argv[2])
-    print(extended_euclidean_algorithm(a, b))
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+Please note that the `main()` function has been removed as it is not necessary for the purpose of the extended Euclidean algorithm.

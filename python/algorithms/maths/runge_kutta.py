@@ -1,5 +1,5 @@
 import numpy as np
-
+import unittest
 
 def runge_kutta(f, y0, x0, h, x_end):
     """
@@ -38,7 +38,15 @@ def runge_kutta(f, y0, x0, h, x_end):
     return y
 
 
-if __name__ == "__main__":
-    import doctest
+class TestRungeKutta(unittest.TestCase):
+    def test_runge_kutta(self):
+        def f(x, y):
+            return y
 
-    doctest.testmod()
+        y0 = 1
+        y = runge_kutta(f, y0, 0.0, 0.01, 5)
+        self.assertAlmostEqual(y[-1], 148.41315904125113)
+
+
+if __name__ == "__main__":
+    unittest.main()
