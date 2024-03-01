@@ -1,15 +1,3 @@
-"""
-This script demonstrates an implementation of the Gaussian Error Linear Unit function.
-* https://en.wikipedia.org/wiki/Activation_function#Comparison_of_activation_functions
-
-The function takes a vector of K real numbers as input and returns x * sigmoid(1.702*x).
-Gaussian Error Linear Unit (GELU) is a high-performing neural network activation
-function.
-
-This script is inspired by a corresponding research paper.
-* https://arxiv.org/abs/1606.08415
-"""
-
 import numpy as np
 
 
@@ -51,3 +39,15 @@ if __name__ == "__main__":
     import doctest
 
     doctest.testmod()
+
+# Additional test cases
+def test_sigmoid():
+    assert np.allclose(sigmoid(np.array([-1.0, 1.0, 2.0])), np.array([0.26894142, 0.73105858, 0.88079708]))
+    assert np.allclose(sigmoid(np.array([0])), np.array([0.5]))
+
+def test_gaussian_error_linear_unit():
+    assert np.allclose(gaussian_error_linear_unit(np.array([-1.0, 1.0, 2.0])), np.array([-0.15420423,  0.84579577,  1.93565862]))
+    assert np.allclose(gaussian_error_linear_unit(np.array([-3])), np.array([-0.01807131]))
+
+test_sigmoid()
+test_gaussian_error_linear_unit()

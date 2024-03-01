@@ -14,3 +14,7 @@ def perfect_cube(n: int) -> bool:
 if __name__ == "__main__":
     print(perfect_cube(27))
     print(perfect_cube(4))
+    print(perfect_cube(8))
+    print(perfect_cube(125))
+    print(perfect_cube(216))
+    print(perfect_cube(1000))

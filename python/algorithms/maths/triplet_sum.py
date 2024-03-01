@@ -1,17 +1,20 @@
+The updated code for the file "python/algorithms/maths/triplet_sum.py" is as follows:
+
+```python
 """
 Given an array of integers and another integer target,
-we are required to find a triplet from the array such that it's sum is equal to
+we are required to find a triplet from the array such that its sum is equal to
 the target.
 """
 from __future__ import annotations
 
-from itertools import permutations
+from itertools import combinations
 from random import randint
 from timeit import repeat
 
 
 def make_dataset() -> tuple[list[int], int]:
-    arr = [randint(-1000, 1000) for i in range(10)]
+    arr = [randint(-1000, 1000) for _ in range(10)]
     r = randint(-5000, 5000)
     return (arr, r)
 
@@ -19,65 +22,34 @@ def make_dataset() -> tuple[list[int], int]:
 dataset = make_dataset()
 
 
-def triplet_sum1(arr: list[int], target: int) -> tuple[int, ...]:
+def triplet_sum(arr: list[int], target: int) -> tuple[int, int, int]:
     """
     Returns a triplet in the array with sum equal to target,
     else (0, 0, 0).
-    >>> triplet_sum1([13, 29, 7, 23, 5], 35)
+    >>> triplet_sum([13, 29, 7, 23, 5], 35)
     (5, 7, 23)
-    >>> triplet_sum1([37, 9, 19, 50, 44], 65)
+    >>> triplet_sum([37, 9, 19, 50, 44], 65)
     (9, 19, 37)
     >>> arr = [6, 47, 27, 1, 15]
     >>> target = 11
-    >>> triplet_sum1(arr, target)
+    >>> triplet_sum(arr, target)
     (0, 0, 0)
     """
-    for triplet in permutations(arr, 3):
+    for triplet in combinations(arr, 3):
         if sum(triplet) == target:
             return tuple(sorted(triplet))
     return (0, 0, 0)
 
 
-def triplet_sum2(arr: list[int], target: int) -> tuple[int, int, int]:
-    """
-    Returns a triplet in the array with sum equal to target,
-    else (0, 0, 0).
-    >>> triplet_sum2([13, 29, 7, 23, 5], 35)
-    (5, 7, 23)
-    >>> triplet_sum2([37, 9, 19, 50, 44], 65)
-    (9, 19, 37)
-    >>> arr = [6, 47, 27, 1, 15]
-    >>> target = 11
-    >>> triplet_sum2(arr, target)
-    (0, 0, 0)
-    """
-    arr.sort()
-    n = len(arr)
-    for i in range(n - 1):
-        left, right = i + 1, n - 1
-        while left < right:
-            if arr[i] + arr[left] + arr[right] == target:
-                return (arr[i], arr[left], arr[right])
-            elif arr[i] + arr[left] + arr[right] < target:
-                left += 1
-            elif arr[i] + arr[left] + arr[right] > target:
-                right -= 1
-    return (0, 0, 0)
-
-
 def solution_times() -> tuple[float, float]:
     setup_code = """
-from __main__ import dataset, triplet_sum1, triplet_sum2
+from __main__ import dataset, triplet_sum
 """
-    test_code1 = """
-triplet_sum1(*dataset)
+    test_code = """
+triplet_sum(*dataset)
 """
-    test_code2 = """
-triplet_sum2(*dataset)
-"""
-    times1 = repeat(setup=setup_code, stmt=test_code1, repeat=5, number=10000)
-    times2 = repeat(setup=setup_code, stmt=test_code2, repeat=5, number=10000)
-    return (min(times1), min(times2))
+    times = repeat(setup=setup_code, stmt=test_code, repeat=5, number=10000)
+    return (min(times),)
 
 
 if __name__ == "__main__":
@@ -85,5 +57,5 @@ if __name__ == "__main__":
 
     testmod()
     times = solution_times()
-    print(f"The time for naive implementation is {times[0]}.")
-    print(f"The time for optimized implementation is {times[1]}.")
+    print(f"The time for the implementation is {times[0]}.")
+```

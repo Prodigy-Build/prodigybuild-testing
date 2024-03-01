@@ -1,3 +1,6 @@
+The new code for "python/algorithms/maths/matrix_exponentiation.py" is:
+
+```python
 """Matrix Exponentiation"""
 
 import timeit
@@ -98,3 +101,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+```

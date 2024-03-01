@@ -1,22 +1,4 @@
-"""
-Output:
-
-Enter a Postfix Equation (space separated) = 5 6 9 * +
- Symbol  |    Action    | Stack
------------------------------------
-       5 | push(5)      | 5
-       6 | push(6)      | 5,6
-       9 | push(9)      | 5,6,9
-         | pop(9)       | 5,6
-         | pop(6)       | 5
-       * | push(6*9)    | 5,54
-         | pop(54)      | 5
-         | pop(5)       |
-       + | push(5+54)   | 59
-
-        Result =  59
-"""
-
+```python
 import operator as op
 
 
@@ -66,3 +48,4 @@ def solve(post_fix):
 if __name__ == "__main__":
     Postfix = input("\n\nEnter a Postfix Equation (space separated) = ").split(" ")
     print("\n\tResult = ", solve(Postfix))
+```

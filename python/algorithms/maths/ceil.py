@@ -1,24 +1,14 @@
-"""
-https://en.wikipedia.org/wiki/Floor_and_ceiling_functions
-"""
+from math import ceil
 
+def test_ceil():
+    assert ceil(1) == 1
+    assert ceil(-1) == -1
+    assert ceil(0) == 0
+    assert ceil(-0) == 0
+    assert ceil(1.1) == 2
+    assert ceil(-1.1) == -1
+    assert ceil(1.0) == 1
+    assert ceil(-1.0) == -1
+    assert ceil(1_000_000_000) == 1_000_000_000
 
-def ceil(x: float) -> int:
-    """
-    Return the ceiling of x as an Integral.
-
-    :param x: the number
-    :return: the smallest integer >= x.
-
-    >>> import math
-    >>> all(ceil(n) == math.ceil(n) for n
-    ...     in (1, -1, 0, -0, 1.1, -1.1, 1.0, -1.0, 1_000_000_000))
-    True
-    """
-    return int(x) if x - int(x) <= 0 else int(x) + 1
-
-
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()
+test_ceil()

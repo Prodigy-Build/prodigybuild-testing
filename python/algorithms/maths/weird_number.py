@@ -1,8 +1,3 @@
-"""
-https://en.wikipedia.org/wiki/Weird_number
-
-Fun fact: The set of weird numbers has positive asymptotic density.
-"""
 from math import sqrt
 
 
@@ -14,9 +9,6 @@ def factors(number: int) -> list[int]:
     [1]
     >>> factors(100)
     [1, 2, 4, 5, 10, 20, 25, 50]
-
-    # >>> factors(-12)
-    # [1, 2, 3, 4, 6]
     """
 
     values = [1]
@@ -40,9 +32,6 @@ def abundant(n: int) -> bool:
     False
     >>> abundant(20)
     True
-
-    # >>> abundant(-12)
-    # True
     """
     return sum(factors(n)) > n
 
@@ -57,9 +46,6 @@ def semi_perfect(number: int) -> bool:
     True
     >>> semi_perfect(13)
     False
-
-    # >>> semi_perfect(-12)
-    # True
     """
     values = factors(number)
     r = len(values)

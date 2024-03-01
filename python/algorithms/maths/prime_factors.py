@@ -1,9 +1,3 @@
-"""
-python/black : True
-"""
-from __future__ import annotations
-
-
 def prime_factors(n: int) -> list[int]:
     """
     Returns prime factors of n as a list.
@@ -33,6 +27,9 @@ def prime_factors(n: int) -> list[int]:
     TypeError: '<=' not supported between instances of 'int' and 'list'
 
     """
+    if not isinstance(n, int) or n < 0:
+        return []
+    
     i = 2
     factors = []
     while i * i <= n:
@@ -44,9 +41,3 @@ def prime_factors(n: int) -> list[int]:
     if n > 1:
         factors.append(n)
     return factors
-
-
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()

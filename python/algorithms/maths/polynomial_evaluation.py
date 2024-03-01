@@ -11,6 +11,10 @@ def evaluate_poly(poly: Sequence[float], x: float) -> float:
 
     >>> evaluate_poly((0.0, 0.0, 5.0, 9.3, 7.0), 10.0)
     79800.0
+    >>> evaluate_poly((0.0, 0.0, 0.0, 0.0, 0.0), 10.0)
+    0.0
+    >>> evaluate_poly((1.0, 2.0, 3.0), 2.0)
+    17.0
     """
     return sum(c * (x**i) for i, c in enumerate(poly))
 
@@ -32,6 +36,10 @@ def horner(poly: Sequence[float], x: float) -> float:
 
     >>> horner((0.0, 0.0, 5.0, 9.3, 7.0), 10.0)
     79800.0
+    >>> horner((0.0, 0.0, 0.0, 0.0, 0.0), 10.0)
+    0.0
+    >>> horner((1.0, 2.0, 3.0), 2.0)
+    17.0
     """
     result = 0.0
     for coeff in reversed(poly):
@@ -46,6 +54,8 @@ if __name__ == "__main__":
     >>> x = -13.0
     >>> # f(-13) = 7.0(-13)^4 + 9.3(-13)^3 + 5.0(-13)^2 = 180339.9
     >>> evaluate_poly(poly, x)
+    180339.9
+    >>> horner(poly, x)
     180339.9
     """
     poly = (0.0, 0.0, 5.0, 9.3, 7.0)

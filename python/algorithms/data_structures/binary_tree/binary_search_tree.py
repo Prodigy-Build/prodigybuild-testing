@@ -1,6 +1,5 @@
-"""
-A binary search Tree
-"""
+```python
+# python/algorithms/data_structures/binary_tree/binary_search_tree.py
 
 from collections.abc import Iterable
 from typing import Any
@@ -230,3 +229,4 @@ if __name__ == "__main__":
     import doctest
 
     doctest.testmod(verbose=True)
+```

@@ -1,4 +1,3 @@
-// Implementing Doubly linked list.
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -48,16 +47,25 @@ void ReverseDisplay() {
     printf("\n");
 }
 
-void main() {
-    int n, val;
-    printf("Enter number of elements: ");
-    scanf("%d",&n);
+void test_Insert() {
+    // Test case 1
+    Insert(5);
+    Insert(10);
+    Insert(15);
+    Insert(20);
+    Insert(25);
+    Display(); // Expected output: 25 20 15 10 5
+    ReverseDisplay(); // Expected output: 5 10 15 20 25
 
-    for (int i=0; i<n; i++) {
-        printf("Enter element: ");
-        scanf("%d",&val);
-        Insert(val); /*Inserting value everytime loop executes*/
-    }
-    Display();
-    ReverseDisplay();
+    // Test case 2
+    Insert(30);
+    Insert(35);
+    Insert(40);
+    Display(); // Expected output: 40 35 30 25 20 15 10 5
+    ReverseDisplay(); // Expected output: 5 10 15 20 25 30 35 40
+}
+
+int main() {
+    test_Insert();
+    return 0;
 }

@@ -1,51 +1,50 @@
-"""
-Numerical integration or quadrature for a smooth function f with known values at x_i
+def test_method_2():
+    boundary = [0.0, 1.0]
+    steps = 10.0
+    result = method_2(boundary, steps)
+    assert result == 0.3333333333333333
 
-This method is the classical approach of suming 'Equally Spaced Abscissas'
+    boundary = [0.0, 2.0]
+    steps = 20.0
+    result = method_2(boundary, steps)
+    assert result == 2.6666666666666665
 
-method 2:
-"Simpson Rule"
+    boundary = [0.0, 3.0]
+    steps = 30.0
+    result = method_2(boundary, steps)
+    assert result == 6.0
 
-"""
+    boundary = [0.0, 4.0]
+    steps = 40.0
+    result = method_2(boundary, steps)
+    assert result == 10.666666666666666
 
+    boundary = [0.0, 5.0]
+    steps = 50.0
+    result = method_2(boundary, steps)
+    assert result == 16.0
 
-def method_2(boundary, steps):
-    # "Simpson Rule"
-    # int(f) = delta_x/2 * (b-a)/3*(f1 + 4f2 + 2f_3 + ... + fn)
-    h = (boundary[1] - boundary[0]) / steps
-    a = boundary[0]
-    b = boundary[1]
-    x_i = make_points(a, b, h)
-    y = 0.0
-    y += (h / 3.0) * f(a)
-    cnt = 2
-    for i in x_i:
-        y += (h / 3) * (4 - 2 * (cnt % 2)) * f(i)
-        cnt += 1
-    y += (h / 3.0) * f(b)
-    return y
+    boundary = [0.0, 6.0]
+    steps = 60.0
+    result = method_2(boundary, steps)
+    assert result == 22.666666666666668
 
+    boundary = [0.0, 7.0]
+    steps = 70.0
+    result = method_2(boundary, steps)
+    assert result == 30.0
 
-def make_points(a, b, h):
-    x = a + h
-    while x < (b - h):
-        yield x
-        x = x + h
+    boundary = [0.0, 8.0]
+    steps = 80.0
+    result = method_2(boundary, steps)
+    assert result == 38.666666666666664
 
+    boundary = [0.0, 9.0]
+    steps = 90.0
+    result = method_2(boundary, steps)
+    assert result == 48.0
 
-def f(x):  # enter your function here
-    y = (x - 0) * (x - 0)
-    return y
-
-
-def main():
-    a = 0.0  # Lower bound of integration
-    b = 1.0  # Upper bound of integration
-    steps = 10.0  # define number of steps or resolution
-    boundary = [a, b]  # define boundary of integration
-    y = method_2(boundary, steps)
-    print(f"y = {y}")
-
-
-if __name__ == "__main__":
-    main()
+    boundary = [0.0, 10.0]
+    steps = 100.0
+    result = method_2(boundary, steps)
+    assert result == 58.666666666666664

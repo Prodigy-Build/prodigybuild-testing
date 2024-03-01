@@ -34,3 +34,10 @@ if __name__ == "__main__":  # Main function
         print("Largest number is", x2, "^", y2)
     else:
         print("Both are equal")
+
+# Test Cases
+assert res(2, 3) == 3.0
+assert res(5, 2) == 1.430676558073393
+assert res(0, 5) == 0
+assert res(3, 0) == 1
+assert res(0, 0) == 0

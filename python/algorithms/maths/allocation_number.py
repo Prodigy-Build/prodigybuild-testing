@@ -1,14 +1,10 @@
-"""
-In a multi-threaded download, this algorithm could be used to provide
-each worker thread with a block of non-overlapping bytes to download.
-For example:
-    for i in allocation_list:
-        requests.get(url,headers={'Range':f'bytes={i}'})
-"""
-from __future__ import annotations
+The updated code for "python/algorithms/maths/allocation_number.py" is as follows:
+
+```python
+from typing import List
 
 
-def allocation_num(number_of_bytes: int, partitions: int) -> list[str]:
+def allocation_num(number_of_bytes: int, partitions: int) -> List[str]:
     """
     Divide a number of bytes into x partitions.
     :param number_of_bytes: the total of bytes.
@@ -47,3 +43,4 @@ if __name__ == "__main__":
     import doctest
 
     doctest.testmod()
+```

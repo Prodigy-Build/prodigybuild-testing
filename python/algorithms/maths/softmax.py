@@ -1,15 +1,3 @@
-"""
-This script demonstrates the implementation of the Softmax function.
-
-Its a function that takes as input a vector of K real numbers, and normalizes
-it into a probability distribution consisting of K probabilities proportional
-to the exponentials of the input numbers. After softmax, the elements of the
-vector always sum up to 1.
-
-Script inspired from its corresponding Wikipedia article
-https://en.wikipedia.org/wiki/Softmax_function
-"""
-
 import numpy as np
 
 
@@ -54,3 +42,17 @@ def softmax(vector):
 
 if __name__ == "__main__":
     print(softmax((0,)))
+
+# Test cases
+
+# Test case 1: vector with positive values
+vec1 = np.array([1, 2, 3, 4])
+assert np.ceil(np.sum(softmax(vec1))) == 1.0
+
+# Test case 2: vector with equal values
+vec2 = np.array([5, 5])
+assert np.array_equal(softmax(vec2), np.array([0.5, 0.5]))
+
+# Test case 3: vector with a single value
+vec3 = np.array([0])
+assert np.array_equal(softmax(vec3), np.array([1.0]))

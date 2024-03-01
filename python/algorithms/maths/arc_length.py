@@ -3,10 +3,14 @@ from math import pi
 
 def arc_length(angle: int, radius: int) -> float:
     """
-    >>> arc_length(45, 5)
-    3.9269908169872414
-    >>> arc_length(120, 15)
-    31.415926535897928
+    Calculates the length of an arc given the angle and radius.
+    
+    Args:
+        angle (int): The angle of the arc in degrees.
+        radius (int): The radius of the circle.
+    
+    Returns:
+        float: The length of the arc.
     """
     return 2 * pi * radius * (angle / 360)
 

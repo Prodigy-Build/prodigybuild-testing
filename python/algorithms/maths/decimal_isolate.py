@@ -1,9 +1,6 @@
-"""
-Isolate the Decimal part of a Number
-https://stackoverflow.com/questions/3886402/how-to-get-numbers-after-decimal-point
-"""
+The updated code for "python/algorithms/maths/decimal_isolate.py" is as follows:
 
-
+```python
 def decimal_isolate(number: float, digit_amount: int) -> float:
     """
     Isolates the decimal part of a number.
@@ -30,15 +27,6 @@ def decimal_isolate(number: float, digit_amount: int) -> float:
     if digit_amount > 0:
         return round(number - int(number), digit_amount)
     return number - int(number)
+```
 
-
-if __name__ == "__main__":
-    print(decimal_isolate(1.53, 0))
-    print(decimal_isolate(35.345, 1))
-    print(decimal_isolate(35.345, 2))
-    print(decimal_isolate(35.345, 3))
-    print(decimal_isolate(-14.789, 3))
-    print(decimal_isolate(0, 2))
-    print(decimal_isolate(-14.123, 1))
-    print(decimal_isolate(-14.123, 2))
-    print(decimal_isolate(-14.123, 3))
+Please note that the original code provided is already testable and includes test cases.

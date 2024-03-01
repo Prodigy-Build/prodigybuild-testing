@@ -1,27 +1,3 @@
-"""
-Author  : Alexander Pantyukhin
-Date    : November 2, 2022
-
-Task:
-Given the root of a binary tree, determine if it is a valid binary search
-tree (BST).
-
-A valid binary search tree is defined as follows:
-
-- The left subtree of a node contains only nodes with keys less than the node's key.
-- The right subtree of a node contains only nodes with keys greater than the node's key.
-- Both the left and right subtrees must also be binary search trees.
-
-Implementation notes:
-Depth-first search approach.
-
-leetcode: https://leetcode.com/problems/validate-binary-search-tree/
-
-Let n is the number of nodes in tree
-Runtime: O(n)
-Space: O(1)
-"""
-
 from __future__ import annotations
 
 from dataclasses import dataclass

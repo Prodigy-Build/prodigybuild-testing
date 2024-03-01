@@ -1,6 +1,3 @@
-"""
-https://en.wikipedia.org/wiki/Combination
-"""
 from math import factorial
 
 

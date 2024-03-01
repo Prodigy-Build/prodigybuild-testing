@@ -1,3 +1,5 @@
+import unittest
+
 def binomial_coefficient(n, r):
     """
     Find binomial coefficient using pascals triangle.
@@ -17,4 +19,10 @@ def binomial_coefficient(n, r):
     return c[r]
 
 
-print(binomial_coefficient(n=10, r=5))
+class TestBinomialCoefficient(unittest.TestCase):
+    def test_binomial_coefficient(self):
+        self.assertEqual(binomial_coefficient(10, 5), 252)
+
+
+if __name__ == '__main__':
+    unittest.main()

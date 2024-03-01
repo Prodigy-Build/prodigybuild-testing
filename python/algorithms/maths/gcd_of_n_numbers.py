@@ -1,8 +1,3 @@
-"""
-Gcd of N Numbers
-Reference: https://en.wikipedia.org/wiki/Greatest_common_divisor
-"""
-
 from collections import Counter
 
 

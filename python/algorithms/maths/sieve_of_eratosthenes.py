@@ -1,21 +1,11 @@
-"""
-Sieve of Eratosthones
+The new code for the file "python/algorithms/maths/sieve_of_eratosthenes.py" is:
 
-The sieve of Eratosthenes is an algorithm used to find prime numbers, less than or
-equal to a given value.
-Illustration:
-https://upload.wikimedia.org/wikipedia/commons/b/b9/Sieve_of_Eratosthenes_animation.gif
-Reference: https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
-
-doctest provider: Bruno Simas Hadlich (https://github.com/brunohadlich)
-Also thanks to Dmitry (https://github.com/LizardWizzard) for finding the problem
-"""
-from __future__ import annotations
-
+```python
+from typing import List
 import math
 
 
-def prime_sieve(num: int) -> list[int]:
+def prime_sieve(num: int) -> List[int]:
     """
     Returns a list with all prime numbers up to n.
 
@@ -38,28 +28,24 @@ def prime_sieve(num: int) -> list[int]:
         raise ValueError(msg)
 
     sieve = [True] * (num + 1)
-    prime = []
+    primes = []
     start = 2
     end = int(math.sqrt(num))
 
     while start <= end:
-        # If start is a prime
-        if sieve[start] is True:
-            prime.append(start)
-
-            # Set multiples of start be False
+        if sieve[start]:
+            primes.append(start)
             for i in range(start * start, num + 1, start):
-                if sieve[i] is True:
-                    sieve[i] = False
-
+                sieve[i] = False
         start += 1
 
     for j in range(end + 1, num + 1):
-        if sieve[j] is True:
-            prime.append(j)
+        if sieve[j]:
+            primes.append(j)
 
-    return prime
+    return primes
 
 
 if __name__ == "__main__":
     print(prime_sieve(int(input("Enter a positive integer: ").strip())))
+```

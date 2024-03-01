@@ -129,5 +129,100 @@ def test_stack() -> None:
     assert 55 not in stack
 
 
+def test_stack_overflow() -> None:
+    """
+    >>> test_stack_overflow()
+    """
+    stack: Stack[int] = Stack(5)
+    for i in range(5):
+        stack.push(i)
+    try:
+        stack.push(5)
+        raise AssertionError  # This should not happen
+    except StackOverflowError:
+        assert True  # This should happen
+
+
+def test_stack_underflow() -> None:
+    """
+    >>> test_stack_underflow()
+    """
+    stack: Stack[int] = Stack(5)
+    try:
+        _ = stack.pop()
+        raise AssertionError  # This should not happen
+    except StackUnderflowError:
+        assert True  # This should happen
+
+
+def test_stack_peek() -> None:
+    """
+    >>> test_stack_peek()
+    """
+    stack: Stack[int] = Stack(5)
+    stack.push(1)
+    assert stack.peek() == 1
+    stack.push(2)
+    assert stack.peek() == 2
+    stack.pop()
+    assert stack.peek() == 1
+
+
+def test_stack_is_empty() -> None:
+    """
+    >>> test_stack_is_empty()
+    """
+    stack: Stack[int] = Stack(5)
+    assert stack.is_empty() is True
+    stack.push(1)
+    assert stack.is_empty() is False
+    stack.pop()
+    assert stack.is_empty() is True
+
+
+def test_stack_is_full() -> None:
+    """
+    >>> test_stack_is_full()
+    """
+    stack: Stack[int] = Stack(5)
+    assert stack.is_full() is False
+    for i in range(5):
+        stack.push(i)
+    assert stack.is_full() is True
+
+
+def test_stack_size() -> None:
+    """
+    >>> test_stack_size()
+    """
+    stack: Stack[int] = Stack(5)
+    assert stack.size() == 0
+    stack.push(1)
+    assert stack.size() == 1
+    stack.push(2)
+    assert stack.size() == 2
+    stack.pop()
+    assert stack.size() == 1
+
+
+def test_stack_contains() -> None:
+    """
+    >>> test_stack_contains()
+    """
+    stack: Stack[int] = Stack(5)
+    stack.push(1)
+    stack.push(2)
+    assert 1 in stack
+    assert 2 in stack
+    assert 3 not in stack
+
+
 if __name__ == "__main__":
     test_stack()
+    test_stack_overflow()
+    test_stack_underflow()
+    test_stack_peek()
+    test_stack_is_empty()
+    test_stack_is_full()
+    test_stack_size()
+    test_stack_contains()

@@ -1,115 +1,61 @@
-"""Queue implementation using two stacks"""
+class TestQueueByTwoStacks:
+    def test_init_empty(self):
+        queue = QueueByTwoStacks()
+        assert len(queue) == 0
+        assert str(queue) == "Queue(())"
 
-from collections.abc import Iterable
-from typing import Generic, TypeVar
+    def test_init_with_iterable(self):
+        queue = QueueByTwoStacks([10, 20, 30])
+        assert len(queue) == 3
+        assert str(queue) == "Queue((10, 20, 30))"
 
-_T = TypeVar("_T")
+    def test_init_with_generator(self):
+        queue = QueueByTwoStacks((i**2 for i in range(1, 4)))
+        assert len(queue) == 3
+        assert str(queue) == "Queue((1, 4, 9))"
 
+    def test_len_empty(self):
+        queue = QueueByTwoStacks()
+        assert len(queue) == 0
 
-class QueueByTwoStacks(Generic[_T]):
-    def __init__(self, iterable: Iterable[_T] | None = None) -> None:
-        """
-        >>> QueueByTwoStacks()
-        Queue(())
-        >>> QueueByTwoStacks([10, 20, 30])
-        Queue((10, 20, 30))
-        >>> QueueByTwoStacks((i**2 for i in range(1, 4)))
-        Queue((1, 4, 9))
-        """
-        self._stack1: list[_T] = list(iterable or [])
-        self._stack2: list[_T] = []
+    def test_len_non_empty(self):
+        queue = QueueByTwoStacks([10, 20, 30])
+        assert len(queue) == 3
 
-    def __len__(self) -> int:
-        """
-        >>> len(QueueByTwoStacks())
-        0
-        >>> from string import ascii_lowercase
-        >>> len(QueueByTwoStacks(ascii_lowercase))
-        26
-        >>> queue = QueueByTwoStacks()
-        >>> for i in range(1, 11):
-        ...     queue.put(i)
-        ...
-        >>> len(queue)
-        10
-        >>> for i in range(2):
-        ...   queue.get()
-        1
-        2
-        >>> len(queue)
-        8
-        """
+    def test_len_after_put(self):
+        queue = QueueByTwoStacks()
+        for i in range(1, 11):
+            queue.put(i)
+        assert len(queue) == 10
 
-        return len(self._stack1) + len(self._stack2)
+    def test_get(self):
+        queue = QueueByTwoStacks((10, 20, 30))
+        assert queue.get() == 10
 
-    def __repr__(self) -> str:
-        """
-        >>> queue = QueueByTwoStacks()
-        >>> queue
-        Queue(())
-        >>> str(queue)
-        'Queue(())'
-        >>> queue.put(10)
-        >>> queue
-        Queue((10,))
-        >>> queue.put(20)
-        >>> queue.put(30)
-        >>> queue
-        Queue((10, 20, 30))
-        """
-        return f"Queue({tuple(self._stack2[::-1] + self._stack1)})"
+    def test_get_after_put(self):
+        queue = QueueByTwoStacks((10, 20, 30))
+        queue.put(40)
+        assert queue.get() == 20
+        assert queue.get() == 30
+        assert len(queue) == 1
+        assert queue.get() == 40
 
-    def put(self, item: _T) -> None:
-        """
-        Put `item` into the Queue
+    def test_get_empty(self):
+        queue = QueueByTwoStacks()
+        try:
+            queue.get()
+        except IndexError:
+            assert True
+        else:
+            assert False
 
-        >>> queue = QueueByTwoStacks()
-        >>> queue.put(10)
-        >>> queue.put(20)
-        >>> len(queue)
-        2
-        >>> queue
-        Queue((10, 20))
-        """
+    def test_repr_empty(self):
+        queue = QueueByTwoStacks()
+        assert repr(queue) == "Queue(())"
 
-        self._stack1.append(item)
-
-    def get(self) -> _T:
-        """
-        Get `item` from the Queue
-
-        >>> queue = QueueByTwoStacks((10, 20, 30))
-        >>> queue.get()
-        10
-        >>> queue.put(40)
-        >>> queue.get()
-        20
-        >>> queue.get()
-        30
-        >>> len(queue)
-        1
-        >>> queue.get()
-        40
-        >>> queue.get()
-        Traceback (most recent call last):
-            ...
-        IndexError: Queue is empty
-        """
-
-        # To reduce number of attribute look-ups in `while` loop.
-        stack1_pop = self._stack1.pop
-        stack2_append = self._stack2.append
-
-        if not self._stack2:
-            while self._stack1:
-                stack2_append(stack1_pop())
-
-        if not self._stack2:
-            raise IndexError("Queue is empty")
-        return self._stack2.pop()
-
-
-if __name__ == "__main__":
-    from doctest import testmod
-
-    testmod()
+    def test_repr_non_empty(self):
+        queue = QueueByTwoStacks()
+        queue.put(10)
+        queue.put(20)
+        queue.put(30)
+        assert repr(queue) == "Queue((10, 20, 30))"

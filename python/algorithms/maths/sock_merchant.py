@@ -15,6 +15,3 @@ if __name__ == "__main__":
     import doctest
 
     doctest.testmod()
-
-    colors = [int(x) for x in input("Enter socks by color :").rstrip().split()]
-    print(f"sock_merchant({colors}) = {sock_merchant(colors)}")

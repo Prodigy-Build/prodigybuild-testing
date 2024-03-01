@@ -60,6 +60,8 @@ class Test(unittest.TestCase):
         self.assertTrue(is_prime(19))
         self.assertTrue(is_prime(23))
         self.assertTrue(is_prime(29))
+        self.assertTrue(is_prime(31))  # additional test case
+        self.assertTrue(is_prime(37))  # additional test case
 
     def test_not_primes(self):
         with self.assertRaises(AssertionError):
@@ -77,6 +79,8 @@ class Test(unittest.TestCase):
         self.assertFalse(is_prime(3 * 3))
         self.assertFalse(is_prime(3 * 5))
         self.assertFalse(is_prime(3 * 5 * 7))
+        self.assertFalse(is_prime(4))  # additional test case
+        self.assertFalse(is_prime(6))  # additional test case
 
 
 if __name__ == "__main__":

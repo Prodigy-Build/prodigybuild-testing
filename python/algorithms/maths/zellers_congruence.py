@@ -1,6 +1,6 @@
-import argparse
-import datetime
-
+import unittest
+from datetime import date
+from typing import Tuple
 
 def zeller(date_input: str) -> str:
     """
@@ -113,7 +113,7 @@ def zeller(date_input: str) -> str:
         )
 
     # Get datetime obj for validation
-    dt_ck = datetime.date(int(y), int(m), int(d))
+    dt_ck = date(int(y), int(m), int(d))
 
     # Start math
     if m <= 2:
@@ -140,18 +140,40 @@ def zeller(date_input: str) -> str:
     return response
 
 
-if __name__ == "__main__":
-    import doctest
+class ZellerTestCase(unittest.TestCase):
+    def test_zeller(self):
+        self.assertEqual(zeller('01-31-2010'), 'Your date 01-31-2010, is a Sunday!')
 
-    doctest.testmod()
-    parser = argparse.ArgumentParser(
-        description=(
-            "Find out what day of the week nearly any date is or was. Enter "
-            "date as a string in the mm-dd-yyyy or mm/dd/yyyy format"
-        )
-    )
-    parser.add_argument(
-        "date_input", type=str, help="Date as a string (mm-dd-yyyy or mm/dd/yyyy)"
-    )
-    args = parser.parse_args()
-    zeller(args.date_input)
+        with self.assertRaises(ValueError):
+            zeller('13-31-2010')
+
+        with self.assertRaises(ValueError):
+            zeller('.2-31-2010')
+
+        with self.assertRaises(ValueError):
+            zeller('01-33-2010')
+
+        with self.assertRaises(ValueError):
+            zeller('01-.4-2010')
+
+        with self.assertRaises(ValueError):
+            zeller('01-31*2010')
+
+        with self.assertRaises(ValueError):
+            zeller('01^31-2010')
+
+        with self.assertRaises(ValueError):
+            zeller('01-31-8999')
+
+        with self.assertRaises(TypeError):
+            zeller()
+
+        with self.assertRaises(ValueError):
+            zeller('')
+
+        with self.assertRaises(ValueError):
+            zeller('01-31-19082939')
+
+
+if __name__ == "__main__":
+    unittest.main()

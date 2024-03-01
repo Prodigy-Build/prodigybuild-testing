@@ -139,3 +139,94 @@ if __name__ == "__main__":
         return y**2 * y**4
 
     print(differentiate(f, 9, 2))
+
+# Test Cases
+
+def test_dual_init():
+    d = Dual(2, 3)
+    assert d.real == 2
+    assert d.duals == [1, 1, 1]
+
+def test_dual_repr():
+    d = Dual(2, 3)
+    assert repr(d) == "2+1E1+1E2+1E3"
+
+def test_dual_reduce():
+    d = Dual(2, [1, 1, 0, 0])
+    reduced = d.reduce()
+    assert reduced.real == 2
+    assert reduced.duals == [1, 1]
+
+def test_dual_add():
+    d1 = Dual(2, 3)
+    d2 = Dual(3, [1, 2, 3])
+    result = d1 + d2
+    assert result.real == 5
+    assert result.duals == [2, 3, 3]
+
+def test_dual_sub():
+    d1 = Dual(2, 3)
+    d2 = Dual(3, [1, 2, 3])
+    result = d1 - d2
+    assert result.real == -1
+    assert result.duals == [-1, -2, -3]
+
+def test_dual_mul():
+    d1 = Dual(2, 3)
+    d2 = Dual(3, [1, 2, 3])
+    result = d1 * d2
+    assert result.real == 6
+    assert result.duals == [2, 7, 12, 11, 6]
+
+def test_dual_div():
+    d1 = Dual(6, [2, 7, 12, 11, 6])
+    result = d1 / 3
+    assert result.real == 2
+    assert result.duals == [2.0/3, 7.0/3, 4.0, 11.0/3, 2.0]
+
+def test_dual_pow():
+    d = Dual(2, 3)
+    result = d ** 3
+    assert result.real == 8
+    assert result.duals == [12, 12, 8]
+
+def test_differentiate():
+    result = differentiate(lambda x: x**2, 2, 2)
+    assert result == 2
+
+    result = differentiate(lambda x: x**2 * x**4, 9, 2)
+    assert result == 196830
+
+    result = differentiate(lambda y: 0.5 * (y + 3) ** 6, 3.5, 4)
+    assert result == 7605.0
+
+    result = differentiate(lambda y: y ** 2, 4, 3)
+    assert result == 0
+
+    try:
+        differentiate(8, 8, 8)
+        assert False, "Expected ValueError"
+    except ValueError:
+        pass
+
+    try:
+        differentiate(lambda x: x **2, "", 1)
+        assert False, "Expected ValueError"
+    except ValueError:
+        pass
+
+    try:
+        differentiate(lambda x: x**2, 3, "")
+        assert False, "Expected ValueError"
+    except ValueError:
+        pass
+
+test_dual_init()
+test_dual_repr()
+test_dual_reduce()
+test_dual_add()
+test_dual_sub()
+test_dual_mul()
+test_dual_div()
+test_dual_pow()
+test_differentiate()

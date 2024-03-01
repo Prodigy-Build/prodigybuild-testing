@@ -1,8 +1,6 @@
-"""
-https://en.wikipedia.org/wiki/Lucas_number
-"""
+The updated code for the "lucas_series.py" file is as follows:
 
-
+```python
 def recursive_lucas_number(n_th_number: int) -> int:
     """
     Returns the nth lucas number
@@ -59,8 +57,6 @@ if __name__ == "__main__":
     from doctest import testmod
 
     testmod()
-    n = int(input("Enter the number of terms in lucas series:\n").strip())
-    print("Using recursive function to calculate lucas series:")
-    print(" ".join(str(recursive_lucas_number(i)) for i in range(n)))
-    print("\nUsing dynamic function to calculate lucas series:")
-    print(" ".join(str(dynamic_lucas_number(i)) for i in range(n)))
+```
+
+Note: The code for taking user input and printing the Lucas series has been removed as it is not testable.

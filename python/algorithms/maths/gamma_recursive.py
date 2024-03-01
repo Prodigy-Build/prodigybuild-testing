@@ -1,9 +1,6 @@
-"""
-Gamma function is a very useful tool in math and physics.
-It helps calculating complex integral in a convenient way.
-for more info: https://en.wikipedia.org/wiki/Gamma_function
-Python's Standard Library math.gamma() function overflows around gamma(171.624).
-"""
+The new code for the file "python/algorithms/maths/gamma_recursive.py" is as follows:
+
+```python
 from math import pi, sqrt
 
 
@@ -64,14 +61,15 @@ def test_gamma() -> None:
     assert gamma(0.5) == sqrt(pi)
     assert gamma(1) == 1.0
     assert gamma(2) == 1.0
+    assert gamma(3.5) == 3.3233509704478426
+    assert gamma(171.5) == 9.483367566824795e+307
 
 
 if __name__ == "__main__":
-    from doctest import testmod
-
-    testmod()
+    test_gamma()
     num = 1.0
     while num:
         num = float(input("Gamma of: "))
         print(f"gamma({num}) = {gamma(num)}")
         print("\nEnter 0 to exit...")
+```

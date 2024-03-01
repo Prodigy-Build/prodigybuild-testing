@@ -1,41 +1,13 @@
-"""
-https://en.wikipedia.org/wiki/Infix_notation
-https://en.wikipedia.org/wiki/Reverse_Polish_notation
-https://en.wikipedia.org/wiki/Shunting-yard_algorithm
-"""
-
-from .balanced_parentheses import balanced_parentheses
-from .stack import Stack
+from typing import List
+from algorithms.data_structures.stacks.balanced_parentheses import balanced_parentheses
+from algorithms.data_structures.stacks.stack import Stack
 
 
 def precedence(char: str) -> int:
-    """
-    Return integer value representing an operator's precedence, or
-    order of operation.
-    https://en.wikipedia.org/wiki/Order_of_operations
-    """
     return {"+": 1, "-": 1, "*": 2, "/": 2, "^": 3}.get(char, -1)
 
 
 def infix_to_postfix(expression_str: str) -> str:
-    """
-    >>> infix_to_postfix("(1*(2+3)+4))")
-    Traceback (most recent call last):
-        ...
-    ValueError: Mismatched parentheses
-    >>> infix_to_postfix("")
-    ''
-    >>> infix_to_postfix("3+2")
-    '3 2 +'
-    >>> infix_to_postfix("(3+4)*5-6")
-    '3 4 + 5 * 6 -'
-    >>> infix_to_postfix("(1+2)*3/4-5")
-    '1 2 + 3 * 4 / 5 -'
-    >>> infix_to_postfix("a+b*c+(d*e+f)*g")
-    'a b c * + d e * f + g * +'
-    >>> infix_to_postfix("x^y/(5*z)+2")
-    'x y ^ 5 z * / 2 +'
-    """
     if not balanced_parentheses(expression_str):
         raise ValueError("Mismatched parentheses")
     stack: Stack[str] = Stack()
@@ -58,12 +30,15 @@ def infix_to_postfix(expression_str: str) -> str:
     return " ".join(postfix)
 
 
-if __name__ == "__main__":
-    from doctest import testmod
+def test_infix_to_postfix():
+    assert infix_to_postfix("(1*(2+3)+4))") == ValueError("Mismatched parentheses")
+    assert infix_to_postfix("") == ""
+    assert infix_to_postfix("3+2") == "3 2 +"
+    assert infix_to_postfix("(3+4)*5-6") == "3 4 + 5 * 6 -"
+    assert infix_to_postfix("(1+2)*3/4-5") == "1 2 + 3 * 4 / 5 -"
+    assert infix_to_postfix("a+b*c+(d*e+f)*g") == "a b c * + d e * f + g * +"
+    assert infix_to_postfix("x^y/(5*z)+2") == "x y ^ 5 z * / 2 +"
+    assert infix_to_postfix("a+b*(c^d-e)^(f+g*h)-i") == "a b c d ^ e - f g h * + ^ * i -"
 
-    testmod()
-    expression = "a+b*(c^d-e)^(f+g*h)-i"
 
-    print("Infix to Postfix Notation demonstration:\n")
-    print("Infix notation: " + expression)
-    print("Postfix notation: " + infix_to_postfix(expression))
+test_infix_to_postfix()

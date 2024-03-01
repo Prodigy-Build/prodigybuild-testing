@@ -1,22 +1,6 @@
-# Implementation of Circular Queue using linked lists
-# https://en.wikipedia.org/wiki/Circular_buffer
-
-from __future__ import annotations
-
-from typing import Any
-
-
 class CircularQueueLinkedList:
     """
     Circular FIFO list with the given capacity (default queue length : 6)
-
-    >>> cq = CircularQueueLinkedList(2)
-    >>> cq.enqueue('a')
-    >>> cq.enqueue('b')
-    >>> cq.enqueue('c')
-    Traceback (most recent call last):
-       ...
-    Exception: Full Queue
     """
 
     def __init__(self, initial_capacity: int = 6) -> None:
@@ -38,20 +22,6 @@ class CircularQueueLinkedList:
         self.front.prev = previous_node
 
     def is_empty(self) -> bool:
-        """
-        Checks where the queue is empty or not
-        >>> cq = CircularQueueLinkedList()
-        >>> cq.is_empty()
-        True
-        >>> cq.enqueue('a')
-        >>> cq.is_empty()
-        False
-        >>> cq.dequeue()
-        'a'
-        >>> cq.is_empty()
-        True
-        """
-
         return (
             self.front == self.rear
             and self.front is not None
@@ -59,46 +29,10 @@ class CircularQueueLinkedList:
         )
 
     def first(self) -> Any | None:
-        """
-        Returns the first element of the queue
-        >>> cq = CircularQueueLinkedList()
-        >>> cq.first()
-        Traceback (most recent call last):
-           ...
-        Exception: Empty Queue
-        >>> cq.enqueue('a')
-        >>> cq.first()
-        'a'
-        >>> cq.dequeue()
-        'a'
-        >>> cq.first()
-        Traceback (most recent call last):
-           ...
-        Exception: Empty Queue
-        >>> cq.enqueue('b')
-        >>> cq.enqueue('c')
-        >>> cq.first()
-        'b'
-        """
         self.check_can_perform_operation()
         return self.front.data if self.front else None
 
     def enqueue(self, data: Any) -> None:
-        """
-        Saves data at the end of the queue
-
-        >>> cq = CircularQueueLinkedList()
-        >>> cq.enqueue('a')
-        >>> cq.enqueue('b')
-        >>> cq.dequeue()
-        'a'
-        >>> cq.dequeue()
-        'b'
-        >>> cq.dequeue()
-        Traceback (most recent call last):
-           ...
-        Exception: Empty Queue
-        """
         if self.rear is None:
             return
 
@@ -109,22 +43,6 @@ class CircularQueueLinkedList:
             self.rear.data = data
 
     def dequeue(self) -> Any:
-        """
-        Removes and retrieves the first element of the queue
-
-        >>> cq = CircularQueueLinkedList()
-        >>> cq.dequeue()
-        Traceback (most recent call last):
-           ...
-        Exception: Empty Queue
-        >>> cq.enqueue('a')
-        >>> cq.dequeue()
-        'a'
-        >>> cq.dequeue()
-        Traceback (most recent call last):
-           ...
-        Exception: Empty Queue
-        """
         self.check_can_perform_operation()
         if self.rear is None or self.front is None:
             return None

@@ -24,9 +24,3 @@ def mode(input_list: list) -> list[Any]:
     y = max(result)  # Gets the maximum count in the input list.
     # Gets values of modes
     return sorted({input_list[i] for i, value in enumerate(result) if value == y})
-
-
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()

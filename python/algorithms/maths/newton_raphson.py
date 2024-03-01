@@ -1,12 +1,6 @@
-"""
-    Author: P Shreyas Shetty
-    Implementation of Newton-Raphson method for solving equations of kind
-    f(x) = 0. It is an iterative method where solution is found by the expression
-        x[n+1] = x[n] + f(x[n])/f'(x[n])
-    If no solution exists, then either the solution will not be found when iteration
-    limit is reached or the gradient f'(x[n]) approaches zero. In both cases, exception
-    is raised. If iteration limit is reached, try increasing maxiter.
-    """
+The new code for the file "python/algorithms/maths/newton_raphson.py" is as follows:
+
+```python
 import math as m
 
 
@@ -51,3 +45,33 @@ if __name__ == "__main__":
     plt.ylabel("error")
     plt.show()
     print(f"solution = {{{solution:f}}}, error = {{{error:f}}}")
+
+
+# Test Cases
+def test_calc_derivative():
+    f = lambda x: x ** 2
+    assert calc_derivative(f, 2) == 4.0
+    assert calc_derivative(f, 3) == 6.0
+    assert calc_derivative(f, 4) == 8.0
+
+    g = lambda x: m.sin(x)
+    assert calc_derivative(g, 0) == 1.0
+    assert calc_derivative(g, m.pi / 2) == 0.0
+    assert calc_derivative(g, m.pi) == -1.0
+
+
+def test_newton_raphson():
+    f = lambda x: x ** 2 - 4
+    solution, error = newton_raphson(f, x0=2, maxiter=100, step=0.0001, maxerror=1e-6)
+    assert round(solution, 2) == 2.0
+    assert round(error, 2) == 0.0
+
+    g = lambda x: m.cos(x) - x
+    solution, error = newton_raphson(g, x0=0.5, maxiter=100, step=0.0001, maxerror=1e-6)
+    assert round(solution, 2) == 0.74
+    assert round(error, 2) == 0.0
+
+
+test_calc_derivative()
+test_newton_raphson()
+```

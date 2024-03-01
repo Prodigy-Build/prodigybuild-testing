@@ -1,11 +1,3 @@
-r"""
-Problem: Given root of a binary tree, return the:
-1. binary-tree-right-side-view
-2. binary-tree-left-side-view
-3. binary-tree-top-side-view
-4. binary-tree-bottom-side-view
-"""
-
 from __future__ import annotations
 
 from collections import defaultdict

@@ -3,37 +3,17 @@ from __future__ import annotations
 import math
 
 
-class SegmentTree:
+class LazySegmentTree:
     def __init__(self, size: int) -> None:
         self.size = size
-        # approximate the overall size of segment tree with given value
         self.segment_tree = [0 for i in range(0, 4 * size)]
-        # create array to store lazy update
         self.lazy = [0 for i in range(0, 4 * size)]
-        self.flag = [0 for i in range(0, 4 * size)]  # flag for lazy update
+        self.flag = [0 for i in range(0, 4 * size)]
 
     def left(self, idx: int) -> int:
-        """
-        >>> segment_tree = SegmentTree(15)
-        >>> segment_tree.left(1)
-        2
-        >>> segment_tree.left(2)
-        4
-        >>> segment_tree.left(12)
-        24
-        """
         return idx * 2
 
     def right(self, idx: int) -> int:
-        """
-        >>> segment_tree = SegmentTree(15)
-        >>> segment_tree.right(1)
-        3
-        >>> segment_tree.right(2)
-        5
-        >>> segment_tree.right(12)
-        25
-        """
         return idx * 2 + 1
 
     def build(
@@ -52,12 +32,6 @@ class SegmentTree:
     def update(
         self, idx: int, left_element: int, right_element: int, a: int, b: int, val: int
     ) -> bool:
-        """
-        update with O(lg n) (Normal segment tree without lazy update will take O(nlg n)
-        for each update)
-
-        update(1, 1, size, a, b, v) for update val v to [a,b]
-        """
         if self.flag[idx] is True:
             self.segment_tree[idx] = self.lazy[idx]
             self.flag[idx] = False
@@ -85,22 +59,9 @@ class SegmentTree:
         )
         return True
 
-    # query with O(lg n)
     def query(
         self, idx: int, left_element: int, right_element: int, a: int, b: int
     ) -> int | float:
-        """
-        query(1, 1, size, a, b) for query max of [a,b]
-        >>> A = [1, 2, -4, 7, 3, -5, 6, 11, -20, 9, 14, 15, 5, 2, -8]
-        >>> segment_tree = SegmentTree(15)
-        >>> segment_tree.build(1, 1, 15, A)
-        >>> segment_tree.query(1, 1, 15, 4, 6)
-        7
-        >>> segment_tree.query(1, 1, 15, 7, 11)
-        14
-        >>> segment_tree.query(1, 1, 15, 7, 12)
-        15
-        """
         if self.flag[idx] is True:
             self.segment_tree[idx] = self.lazy[idx]
             self.flag[idx] = False
@@ -125,7 +86,7 @@ class SegmentTree:
 if __name__ == "__main__":
     A = [1, 2, -4, 7, 3, -5, 6, 11, -20, 9, 14, 15, 5, 2, -8]
     size = 15
-    segt = SegmentTree(size)
+    segt = LazySegmentTree(size)
     segt.build(1, 1, size, A)
     print(segt.query(1, 1, size, 4, 6))
     print(segt.query(1, 1, size, 7, 11))

@@ -1,19 +1,13 @@
-"""
-Just to check
-"""
+def test_add():
+    assert add(2, 2) == 4
+    assert add(2, -2) == 0
+    assert add(0, 0) == 0
+    assert add(0, 5) == 5
+    assert add(-5, -5) == -10
+    assert add(3.5, 2.5) == 6.0
+    assert add(-3.5, 2.5) == -1.0
+    assert add(10, -10) == 0
+    assert add(1000000, 1) == 1000001
+    assert add(1, 1000000) == 1000001
 
-
-def add(a: float, b: float) -> float:
-    """
-    >>> add(2, 2)
-    4
-    >>> add(2, -2)
-    0
-    """
-    return a + b
-
-
-if __name__ == "__main__":
-    a = 5
-    b = 6
-    print(f"The sum of {a} + {b} is {add(a, b)}")
+test_add()

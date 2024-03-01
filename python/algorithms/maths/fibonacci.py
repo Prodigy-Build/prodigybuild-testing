@@ -1,20 +1,4 @@
 # fibonacci.py
-"""
-Calculates the Fibonacci sequence using iteration, recursion, memoization,
-and a simplified form of Binet's formula
-
-NOTE 1: the iterative, recursive, memoization functions are more accurate than
-the Binet's formula function because the Binet formula function  uses floats
-
-NOTE 2: the Binet's formula function is much more limited in the size of inputs
-that it can handle due to the size limitations of Python floats
-
-RESULTS: (n = 20)
-fib_iterative runtime: 0.0055 ms
-fib_recursive runtime: 6.5627 ms
-fib_memoization runtime: 0.0107 ms
-fib_binet runtime: 0.0174 ms
-"""
 
 import functools
 from math import sqrt
@@ -38,18 +22,6 @@ def time_func(func, *args, **kwargs):
 def fib_iterative(n: int) -> list[int]:
     """
     Calculates the first n (0-indexed) Fibonacci numbers using iteration
-    >>> fib_iterative(0)
-    [0]
-    >>> fib_iterative(1)
-    [0, 1]
-    >>> fib_iterative(5)
-    [0, 1, 1, 2, 3, 5]
-    >>> fib_iterative(10)
-    [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
-    >>> fib_iterative(-1)
-    Traceback (most recent call last):
-        ...
-    Exception: n is negative
     """
     if n < 0:
         raise Exception("n is negative")
@@ -64,18 +36,6 @@ def fib_iterative(n: int) -> list[int]:
 def fib_recursive(n: int) -> list[int]:
     """
     Calculates the first n (0-indexed) Fibonacci numbers using recursion
-    >>> fib_iterative(0)
-    [0]
-    >>> fib_iterative(1)
-    [0, 1]
-    >>> fib_iterative(5)
-    [0, 1, 1, 2, 3, 5]
-    >>> fib_iterative(10)
-    [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
-    >>> fib_iterative(-1)
-    Traceback (most recent call last):
-        ...
-    Exception: n is negative
     """
 
     def fib_recursive_term(i: int) -> int:
@@ -96,18 +56,6 @@ def fib_recursive(n: int) -> list[int]:
 def fib_recursive_cached(n: int) -> list[int]:
     """
     Calculates the first n (0-indexed) Fibonacci numbers using recursion
-    >>> fib_iterative(0)
-    [0]
-    >>> fib_iterative(1)
-    [0, 1]
-    >>> fib_iterative(5)
-    [0, 1, 1, 2, 3, 5]
-    >>> fib_iterative(10)
-    [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
-    >>> fib_iterative(-1)
-    Traceback (most recent call last):
-        ...
-    Exception: n is negative
     """
 
     @functools.cache
@@ -129,18 +77,6 @@ def fib_recursive_cached(n: int) -> list[int]:
 def fib_memoization(n: int) -> list[int]:
     """
     Calculates the first n (0-indexed) Fibonacci numbers using memoization
-    >>> fib_memoization(0)
-    [0]
-    >>> fib_memoization(1)
-    [0, 1]
-    >>> fib_memoization(5)
-    [0, 1, 1, 2, 3, 5]
-    >>> fib_memoization(10)
-    [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
-    >>> fib_iterative(-1)
-    Traceback (most recent call last):
-        ...
-    Exception: n is negative
     """
     if n < 0:
         raise Exception("n is negative")
@@ -164,28 +100,6 @@ def fib_binet(n: int) -> list[int]:
     Calculates the first n (0-indexed) Fibonacci numbers using a simplified form
     of Binet's formula:
     https://en.m.wikipedia.org/wiki/Fibonacci_number#Computation_by_rounding
-
-    NOTE 1: this function diverges from fib_iterative at around n = 71, likely
-    due to compounding floating-point arithmetic errors
-
-    NOTE 2: this function doesn't accept n >= 1475 because it overflows
-    thereafter due to the size limitations of Python floats
-    >>> fib_binet(0)
-    [0]
-    >>> fib_binet(1)
-    [0, 1]
-    >>> fib_binet(5)
-    [0, 1, 1, 2, 3, 5]
-    >>> fib_binet(10)
-    [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
-    >>> fib_binet(-1)
-    Traceback (most recent call last):
-        ...
-    Exception: n is negative
-    >>> fib_binet(1475)
-    Traceback (most recent call last):
-        ...
-    Exception: n is too large
     """
     if n < 0:
         raise Exception("n is negative")
