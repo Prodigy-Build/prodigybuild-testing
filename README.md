@@ -1,1 +1,52 @@
-# prodigybuild-testing
+# prodigybuild-testing 
+
+Welcome to Prodigybuild-testing, a repository that provides a wide range of C programming algorithm examples. Noted for its performance and flexibility, C language remains an important tool in various domains and this project serves as a dictionary for different types of algorithms. It serves as an open source project for all those who love problem solving in C. You will find different types of algorithms designed in the most simplified way.
+
+## Setup Steps
+
+### Dependencies:
+
+You need gcc (GNU Project C and C++ compiler) to run the programs.
+To check if gcc is installed:
+- On Windows: gcc --version
+- On Mac: gcc --version
+
+If gcc is not installed:
+- For Windows, download from [here](https://gcc.gnu.org/install/binaries.html).
+- For Mac, install XCode command-line tools (which includes gcc): xcode-select --install
+
+### Software Requirements:
+
+All the codes are written in C language, so you need C compiler to run the programs.
+
+- Mac: GCC is recommended. You can install it with Homebrew: brew install gcc
+- Windows: MinGW is recommended. You can download it from [here](http://www.mingw.org/).
+
+### Database Tools:
+
+No explicit database tools are required to run the project locally.
+
+## Local Development Steps:
+
+1. Make sure you have gcc installed. (check with gcc --version command in terminal/cmd)
+2. Clone the repository.
+3. Navigate into the project directory where the C file is located.
+4. Compile the C file with: gcc -o output filename.c
+5. Run the compiled file with: ./output
+
+## Environment Setup:
+
+The C environment, GCC and a text editor (like VS Code, Atom, Sublime, Notepad++) are required to run and edit these codes.
+
+## Deployment Steps:
+
+Follow the CI/CD pipeline configurations if any in the project for automated build and deployment.
+
+Remember the contributation guidelines provided in the CONTRIBUTING.md file while making any changes.
+
+
+## Contributing:
+
+We encourage you to contribute to this repository (check the contributing rules in CONTRIBUTING.md file).
+
+    
