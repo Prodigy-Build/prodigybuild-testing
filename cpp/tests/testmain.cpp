@@ -137,7 +137,7 @@ TEST_CASE("Lagrange Interpolation", "[Lagrange]") {
     Interpolation::Data<long double> data{
         std::vector<long double>{0, 1, 3, 4, 7},
         std::vector<long double>{1, 3, 49, 129, 813}};
-    auto poly = lagrangePoly(data);
+    auto poly = Interpolation::lagrangePoly(data);
     REQUIRE(std::abs(poly(0.3) - 1.83) < 1e-2);
   }
 }
